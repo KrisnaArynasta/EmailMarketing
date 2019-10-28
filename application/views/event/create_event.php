@@ -20,7 +20,7 @@
 		//PHOTO MULTI INPUTS
 		function newInput(e){
 			var element = 	"<div class='col-md-4 mt-4 input-field'>"+
-								"<input type='file' class='new-input dropify-event' id='event_photos' name='event_photos' data-max-file-size='1M' />"+
+								"<input type='file' class='new-input dropify-event' id='event_photos' name='event_photos[]' data-max-file-size='1M' />"+
 							"</div>";
 			$("#event_photos_parent").append($(element));
 
@@ -57,19 +57,25 @@
 		// form.append('event_desc ',$('#event_desc').val());
 		// form.append('event_email ',CKEDITOR.instances.event_email.getData());
 		
-		var i = 0;
-		var totalfiles = $("input[name='event_photos[]']").length;
-		$("input[name='event_photos[]']").each(function(index){
-			i++;
-			if(i < totalfiles) {
-				form.append("photos_event["+index+"]", $( this )[0].files[0]);
+		// var i = 0;
+		// var photos_event = [];
+		// var totalfiles = $("input[name='event_photos[]']").length;
+		// $("input[name='event_photos[]']").each(function(index){
+			// i++;
+			// if(i < totalfiles) {
+				// photos_event.push($( this )[0].files[0]);
+				//photos_event.push("X "+index);
+				//form.append(photos_event[index], $( this )[0].files[0]);
+				//form.append("photos_event", $( this )[0].files[0]);
+				//form.append("photos_event["+index+"]", "a"+index);
 				//console.log( index + ": " + $( this )[0].files[0] );
-			}
-		});
+			// }
+		// });
+		// form.append("photos_event[]", photos_event);
 		
-		for (var pair of form.entries()) {
-			console.log(pair[0]+ ', ' + pair[1]); 
-		}
+		// for (var pair of form.entries()) {
+			// console.log(pair[0]+ ', ' + pair[1]); 
+		// }
 
 		$('.loading-wrap').show();		
 		$.ajax({
@@ -161,7 +167,7 @@
 								<label class="form-label">Event Photos</label>
 								<div id="event_photos_parent" class="row"> 
 									<div class="col-md-4 mt-4 input-field">
-										<input type="file" class="new-input dropify-event" id="event_photos" name="event_photos" data-max-file-size="1M" />
+										<input type="file" class="new-input dropify-event" id="event_photos" name="event_photos[]" data-max-file-size="1M" />
 									</div>
 								</div>								
 							</div>

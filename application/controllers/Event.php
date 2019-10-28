@@ -33,7 +33,7 @@ class Event extends CI_Controller {
 		}
 		
 		$config['upload_path']          = './images/event_photos/';
-		$config['allowed_types']        = 'gif|jpg|png';
+		$config['allowed_types']        = 'jpg|png|jpeg';
 		$config['file_name']        	= 'Event_'.$this->session->userdata('user_id').'_'.$this->input->post('event_name').'_'.date("Ymdhis").'.jpg';
 		//$config['max_size']             = 100;
 		//$config['max_width']            = 1024;
@@ -81,26 +81,30 @@ class Event extends CI_Controller {
 			
 			if($this->EventModel->insert($data)){
 			
-				$event_photos = $this->input->post('event_photos');
-				
-				// looping buat ngupload foto ke tabel foto event	
-				foreach($event_photos as $event_photo){
-				//echo $event_photo
-				
+
+				echo count($_FILES["event_photos"]["name"]);
+				// LOOPING BUAT NGUPLOAD FOTO KE TABEL FOTO EVENT	
+				for($count = 0; $count<count($_FILES["event_photos"]["name"]); $count++){
+					
 					$config['upload_path']          = './images/event_photos/';
-					$config['allowed_types']        = 'gif|jpg|png';
+					$config['allowed_types']        = 'jpg|png|jpeg';
 					$config['file_name']        	= 'Event_photos_'.$this->session->userdata('user_id').'_'.$this->input->post('event_name').'_'.date("Ymdhis").'.jpg';
 					 
-					//set custom objek untuk foto-foto event
+					//set custom objek (event_photos_config maksdnya) untuk foto-foto event karena diatas udh make yg default buat upload main foto
 					$this->load->library('upload', $config, 'event_photos_config'); 
 					 
-					if( !$this->event_photos_config->do_upload('event_photos')){
+					$_FILES["file"]["name"] = $_FILES["event_photos"]["name"][$count];
+					$_FILES["file"]["type"] = $_FILES["event_photos"]["type"][$count];
+					$_FILES["file"]["tmp_name"] = $_FILES["event_photos"]["tmp_name"][$count];
+					$_FILES["file"]["error"] = $_FILES["event_photos"]["error"][$count];
+					$_FILES["file"]["size"] = $_FILES["event_photos"]["size"][$count]; 
+					 
+					if( !$this->event_photos_config->do_upload('file')){
 						$error = $this->event_photos_config->display_errors();
-						//echo $error;
-						echo "error upload event photo";	
+						echo $error;
+						//echo "error upload event photo";	
 					}else{			
-
-					
+				
 						//dapatkan data file foto-foto event yg d upload
 						$event_photos_config = $this->event_photos_config->data();
 						
