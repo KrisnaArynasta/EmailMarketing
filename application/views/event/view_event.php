@@ -4,87 +4,11 @@
 ?>
 
 <script>
-
 	$(document).ready(function(){
 		$('#wait').hide();
 		$('#loading-wrap').hide();
 	});
 
-	function get_email_body(inbox_id){
-
-		$.ajax({
-			type: "GET", 
-			url: "<?php echo base_url(''); ?>"+"EmailInbox/load_email_body/"+inbox_id,
-			dataType : "json", 
-			success: function(data) {			 
-				//cek kalo body emailnya ada
-				if(data.data_email_body.inbox_body){
-					email_body = $.parseHTML(data.data_email_body.inbox_body);
-					$("#mail-body").html(email_body);
-				}else{
-					$("#mail-body").html("<h3 style='opacity:0.2'>Email has no content body</h3>");
-				}
-				// set ck editor untuk texarea body email kosong
-				CKEDITOR.instances.email_builder.setData("");
-
-				$("#largeModalLabel").text(data.data_email_body.inbox_guest_name);
-				$("#emailTime").text(data.data_email_body.inbox_date);
-				$("#emailSingle").modal();
-				
-				// set inout type di form reply email
-				$("#to").val(data.data_email_body.inbox_from);
-				$("#guest_id").val(data.data_email_body.guest_id);
-				$("#subject").val("Re: "+data.data_email_body.inbox_subject);
-			}
-
-	   });
-	}
-	
-	function send_email(){
-		
-		for ( instance in CKEDITOR.instances )
-        CKEDITOR.instances[instance].updateElement();
-		
-		to = $("#to").val();
-		guest_id = $("#guest_id").val();
-		sender = $("#sender").val();
-		subject = $("#subject").val();
-		msg = CKEDITOR.instances.email_builder.getData();
-		
-		if(to=="")alert('Please fill To field!')
-		else if(sender=="")alert('Please fill Sender field!')
-		else if(subject=="")alert('Please fill Subject field!')
-		else if(msg=="")alert('Please fill Email Message field!')
-		else{
-			
-			$('#replayEmail').hide();
-			$('#emailSingle').hide();
-			$('#wait').show();
-			$('#loading-wrap').show();
-		  
-			//alert("gst email : "+to+"\n sender id : "+sender+"\n"+subject+"\n"+msg);
-		  
-			$.ajax({
-				type: "POST", 
-				url: "<?php echo base_url(); ?>"+"EmailSenderAuto/input_to_outbox/",
-				datatype : "json", 
-				data: $("#formSendEmail").serialize(), 
-				success: function(data) {
-					if(data=="success"){
-						$('#wait').hide();
-						$('#loading-wrap').hide();	
-						$("#myModalSuccess").modal();
-				   
-					}else{
-						$("#myModalFail").modal();
-						$('#wait').hide();
-						$('#loading-wrap').hide();
-					}
-				}
-			}); 
-		}
-	}
-	
 </script>
 <!-- Data table css -->
 <link href="assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -133,7 +57,7 @@
 					?>				
 						<div class="col-lg-4 col-sm-12">
 							<div class="card shadow">
-								<img class="card-img-top img-fluid" src="<?=base_url()?>images/event_photos/<?=$row_event->event_main_photo?>" alt="Failed to load image" style="object-fit: cover;height: 250px;">
+								<img class="card-img-top img-fluid" src="<?=base_url()?>images/event_photos/event_main_photos/<?=$row_event->event_main_photo?>" alt="Failed to load image" style="object-fit: cover;height: 250px;">
 								<div class="card-body">
 									<div class="col-md-12">
 										<div class="row">

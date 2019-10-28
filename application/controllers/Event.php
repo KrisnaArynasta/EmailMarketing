@@ -32,7 +32,7 @@ class Event extends CI_Controller {
 			redirect(base_url(),'location');
 		}
 		
-		$config['upload_path']          = './images/event_photos/';
+		$config['upload_path']          = './images/event_photos/event_main_photos/';
 		$config['allowed_types']        = 'jpg|png|jpeg';
 		$config['file_name']        	= 'Event_'.$this->session->userdata('user_id').'_'.$this->input->post('event_name').'_'.date("Ymdhis").'.jpg';
 		//$config['max_size']             = 100;
@@ -76,19 +76,19 @@ class Event extends CI_Controller {
 				  "event_main_photo"				=> $file_name,
 				  "event_status_active"				=> '1'
 				);	
-				
-			$this->EventModel->insert($data); 
 			
-			if($this->EventModel->insert($data)){
-			
+			// JIKA BERJASIL INSERT KE TABLE EVENT
+			$event_id = $this->EventModel->insert($data);
+			if($event_id){
 
-				echo count($_FILES["event_photos"]["name"]);
+
+				//echo count($_FILES["event_photos"]["name"]);
 				// LOOPING BUAT NGUPLOAD FOTO KE TABEL FOTO EVENT	
 				for($count = 0; $count<count($_FILES["event_photos"]["name"]); $count++){
 					
-					$config['upload_path']          = './images/event_photos/';
+					$config['upload_path']          = './images/event_photos/events_photos/';
 					$config['allowed_types']        = 'jpg|png|jpeg';
-					$config['file_name']        	= 'Event_photos_'.$this->session->userdata('user_id').'_'.$this->input->post('event_name').'_'.date("Ymdhis").'.jpg';
+					$config['file_name']        	= 'Event_photos_'.$event_id.'_'.$this->input->post('event_name').'_'.date("Ymdhis").'.jpg';
 					 
 					//set custom objek (event_photos_config maksdnya) untuk foto-foto event karena diatas udh make yg default buat upload main foto
 					$this->load->library('upload', $config, 'event_photos_config'); 
@@ -101,7 +101,7 @@ class Event extends CI_Controller {
 					 
 					if( !$this->event_photos_config->do_upload('file')){
 						$error = $this->event_photos_config->display_errors();
-						echo $error;
+						//echo $error;
 						//echo "error upload event photo";	
 					}else{			
 				
@@ -122,12 +122,17 @@ class Event extends CI_Controller {
 			 
 						//dapatkan nama foto-foto event 
 						$file_name_event_photo = $event_photos_config['file_name'];		
-						echo $file_name_event_photo;				
+
+						// DATA KE TABLE EVENT PHOTOS
+						$data = array(
+										  "event_id" 						=> $event_id,
+										  "event_photo" 					=> $file_name_event_photo,
+										  "event_photo_upload_date" 		=> date('Y-m-d')
+										);
+										
+						$this->EventModel->insert_to_event_photos($data);										
 					}
-				}
-					
-				
-				
+				}	
 				echo "success";
 			}else{
 				echo "fail";

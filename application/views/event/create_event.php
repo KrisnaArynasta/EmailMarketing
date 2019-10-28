@@ -10,6 +10,7 @@
 		 $('#loading-wrap').hide();
 
 		CKEDITOR.replace( 'event_email' );
+		
 		$("#event_main_photo").dropify();
 		$("#event_photos").dropify();
 		$("#event_date").datepicker();
