@@ -147,6 +147,7 @@ class Event extends CI_Controller {
 		}
 		
 		$result['data_edit'] = $this->EventModel->view_event_by_id($id);
+		$result['data_edit_event_photos'] = $this->EventModel->view_event_photos_by_id($id);
 		$this->load->view('Event/edit_event',$result);
 	}
 	

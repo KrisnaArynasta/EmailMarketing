@@ -25,6 +25,14 @@ class EventModel extends CI_Model {
 		return $query; 
 	}
 	
+	public function view_event_photos_by_id($id){ 
+		$this->db->select('*');
+		$this->db->from('tbl_event_photos');
+		$this->db->where('event_id', $id);
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
 	public function insert($data){
 		if($this->db->insert('tbl_event', $data)){
 		

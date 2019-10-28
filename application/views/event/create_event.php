@@ -4,7 +4,6 @@
 ?>
 
 <script>
-
 	$(document).ready(function(){
 		 $('#wait').hide();
 		 $('#loading-wrap').hide();
@@ -103,8 +102,7 @@
 				}
 			}
 		})		
-	}
-	
+	}	
 </script>
 <!-- Data table css -->
 <link href="assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />

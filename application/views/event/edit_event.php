@@ -4,31 +4,53 @@
 ?>
 
 <script>
-
 	$(document).ready(function(){
 		 $('#wait').hide();
 		 $('#loading-wrap').hide();
 
-		CKEDITOR.replace('event_email');
+		CKEDITOR.replace( 'event_email' );
+		
 		$("#edit_event_main_photo").dropify();
 		$("#edit_event_photos").dropify();
 		$("#event_date").datepicker();
 		$("#send_on").datepicker();
+		
+		$(".dropify-event").dropify();
+		
+		//PHOTO MULTI INPUTS
+		function newInput(e){
+			var element = 	"<div class='col-md-4 mt-4 input-field'>"+
+								"<input type='file' class='new-input dropify-event' id='event_photos' name='event_photos[]' data-max-file-size='1M' />"+
+							"</div>";
+			$("#event_photos_parent").append($(element));
+
+			$(e).removeClass('new-input');
+			
+			var drEvent = $('.dropify-event').dropify();
+			drEvent.on('dropify.afterClear', function(event, element){
+				$(this).parents('.input-field').remove();
+			});
+
+			$('.new-input').change(function(){
+				newInput(this);
+			});
+		}
+		
+		$('.new-input').change(function(){
+			newInput(this);
+		});
+			
 	});
 	
+	
+	// UPDATE EVENT
 	function update_event(){
 		
 		for ( instance in CKEDITOR.instances )
         CKEDITOR.instances[instance].updateElement();
 		
 		var form = new FormData(document.getElementById("inputEvent"));
-		form.append('event_main_photo',$('#event_main_photo')[0].files[0]);
-		form.append('event_name ',$('#event_name').val());
-		form.append('event_date ',$('#event_date').val());
-		form.append('send_on ',$('#send_on').val());
-		form.append('event_desc ',$('#event_desc').val());
-		form.append('event_email ',CKEDITOR.instances.event_email.getData());
-	
+
 		$('.loading-wrap').show();		
 		$.ajax({
 			type: "POST", 
@@ -47,7 +69,7 @@
 						window.location.href = "<?php echo base_url(); ?>"+"Event";
 					});
 					$('.confirm').addClass('sweet-alert-success');
-				}else if(data=="photo is empty"){
+				}else if(data=="main photo is empty"){
 					swal({title:"Main Photo Cannot Be Empty!", text:"Failed add new event", type:"error"});
 				}else{
 					swal({title:"Failed add new event!", text:"Failed add new event", type:"error"});
@@ -72,74 +94,78 @@
 		</ol>
 
 	</div>
-	<div class="email-app card shadow">
-		<div class="inbox p-0">
-		
-			<div class="card-body">
-				<form id="inputEvent" action="" method="POST" enctype="multipart/form-data">
-					<div class="row">
-					<?php foreach($data_edit as $event){?>
-						<div class="col-md-12">     
-							<div class="form-group form-alert" id="lat-valid">
-								<label class="form-label" >Event Name</label>
-								<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="event_name" name="event_name" placeholder="e.g Christmas" onchange="" onfocusout="" value="<?=$event->event_name?>">
-							</div>
+	<div class="email-app card shadow">		
+		<div class="card-body">
+			<form id="inputEvent" action="" method="POST" enctype="multipart/form-data">
+				<div class="row">
+				<?php foreach($data_edit as $event){?>
+					<div class="col-md-12">     
+						<div class="form-group form-alert" id="lat-valid">
+							<label class="form-label" >Event Name</label>
+							<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="event_name" name="event_name" placeholder="e.g Christmas" onchange="" onfocusout="" value="<?=$event->event_name?>">
 						</div>
-						<div class="col-md-6">     
-							<div class="form-group form-alert" id="lat-valid">
-								<label class="form-label" >Event Date</label>
-								<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="event_date" name="event_date" placeholder="e.g 2019-12-25" onchange="" onfocusout="" value="<?=$event->event_date?>">
-							</div>
-						</div>
-						<div class="col-md-6" >
-							<div class="form-group form-alert" id="lng-evalid">
-								<label class="form-label" >Send Email On</label>
-								<input type="text" class="form-control empty-validator" id="send_on" name="send_on" placeholder="e.g 2019-08-01" onchange="" onfocusout="" value="<?=date_format(date_sub(date_create($event->event_date),date_interval_create_from_date_string("$event->message_send_before days")),"Y-m-d")?>">
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group form-alert">
-								<label class="form-label">Event Description</label>
-								<textarea class="form-control empty-validator" onfocusout="" id="event_desc" name="event_desc" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."><?=$event->event_description?></textarea>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group form-alert">
-								<label class="form-label">Message to Send</label>
-								<textarea class="form-control empty-validator" onfocusout="" id="event_email" name="event_email" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."><?=$event->event_message?></textarea>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group form-alert">
-								<label class="form-label">Event Main Photo</label>
-								<input type="file" class="dropify" id="edit_event_main_photo" name="edit_event_main_photo" data-max-file-size="1M" data-height="300"/>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group form-alert">
-								<label class="form-label">Current Main Photo</label>
-								<img class="card-img-top img-fluid" src="<?=base_url()?>images/event_photos/<?=$event->event_main_photo?>" alt="Failed to load image">
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group form-alert">
-								<label class="form-label">Event Photos</label>
-								<div class="col-md-4">
-									<input type="file" class="dropify" id="edit_event_photos" name="edit_event_photos" data-max-file-size="1M" />
-								</div>	
-							</div>
-						</div>							
-						<div class="col-md-12 mt-4">  
-							<button class="btn btn-icon btn-outline-primary btn-block mt-1 mb-1" type="button" onclick="save_event()">
-								<span class="btn-inner--icon"><i class="fe fe-save"></i></span>
-								<span class="btn-inner--text">Simpan</span>
-							</button>
-						</div>
-					<?php }?>
 					</div>
-				</form>		
-			</div>			
-		</div>
+					<div class="col-md-6">     
+						<div class="form-group form-alert" id="lat-valid">
+							<label class="form-label" >Event Date</label>
+							<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="event_date" name="event_date" placeholder="e.g 2019-12-25" onchange="" onfocusout="" value="<?=$event->event_date?>">
+						</div>
+					</div>
+					<div class="col-md-6" >
+						<div class="form-group form-alert" id="lng-evalid">
+							<label class="form-label" >Send Email On</label>
+							<input type="text" class="form-control empty-validator" id="send_on" name="send_on" placeholder="e.g 2019-08-01" onchange="" onfocusout="" value="<?=date_format(date_sub(date_create($event->event_date),date_interval_create_from_date_string("$event->message_send_before days")),"Y-m-d")?>">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-alert">
+							<label class="form-label">Event Description</label>
+							<textarea class="form-control empty-validator" onfocusout="" id="event_desc" name="event_desc" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."><?=$event->event_description?></textarea>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group form-alert">
+							<label class="form-label">Message to Send</label>
+							<textarea class="form-control empty-validator" onfocusout="" id="event_email" name="event_email" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."><?=$event->event_message?></textarea>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group form-alert">
+							<label class="form-label">Event Main Photo</label>
+							<input type="file" class="dropify" id="edit_event_main_photo" name="edit_event_main_photo" data-default-file="<?=base_url()?>images/event_photos/event_main_photos/<?=$event->event_main_photo?>" data-max-file-size="1M" data-height="300"/>
+						</div>
+					</div>
+					<div class="col-md-6" style="display:none">
+						<div class="form-group form-alert">
+							<label class="form-label">Current Main Photo</label>
+							<img class="card-img-top img-fluid" src="<?=base_url()?>images/event_photos/<?=$event->event_main_photo?>" alt="Failed to load image">
+						</div>
+					</div>
+					<?php }?>
+					<div class="col-md-12">
+						<div class="form-group form-alert">
+							<label class="form-label">Event Photos</label>
+							<div id="event_photos_parent" class="row"> 
+								<?php foreach($data_edit_event_photos as $event_photo){?>
+									<div class="col-md-4 mt-4 input-field">
+										<input type="file" class="new-input dropify-event" id="edit_event_photos" name="edit_event_photos[]" data-default-file="<?=base_url()?>images/event_photos/events_photos/<?=$event_photo->event_photo?>" data-max-file-size="1M" />
+									</div>
+								<?php }?>
+								<div class="col-md-4 mt-4 input-field">
+									<input type="file" class="new-input dropify-event" id="edit_event_photos" name="edit_event_photos[]" data-max-file-size="1M" />
+								</div>
+							</div>					
+						</div>
+					</div>						
+					<div class="col-md-12 mt-4">  
+						<button class="btn btn-icon btn-outline-primary btn-block mt-1 mb-1" type="button" onclick="save_event()">
+							<span class="btn-inner--icon"><i class="fe fe-save"></i></span>
+							<span class="btn-inner--text">Simpan</span>
+						</button>
+					</div>
+				</div>
+			</form>		
+		</div>					
 	</div>
 </div>
 
