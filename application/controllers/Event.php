@@ -294,6 +294,15 @@ class Event extends CI_Controller {
 
 	}
 	
+	public function view_event_email($event_id){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}		
+		
+		$data['data_detail']=$this->EventModel->view_event_email($event_id);
+		echo json_encode($data);
+	}
+	
 }
 
 

@@ -74,5 +74,15 @@ class EventModel extends CI_Model {
 		$this->db->where_not_in('event_photo', $photo);
 		$this->db->delete('tbl_event_photos');
 	}
+	
+	public function view_event_email($id){ 
+		$this->db->select('*');
+		$this->db->from('tbl_event e');
+		$this->db->join('tbl_user u','e.user_id=u.user_id');
+		$this->db->join('tbl_event_photos ep', 'e.event_id=ep.event_id');
+		$this->db->where('e.event_id', $id);
+		$query = $this->db->get()->result();
+		return $query; 
+	}
 
 }

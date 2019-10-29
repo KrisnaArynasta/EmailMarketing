@@ -8,7 +8,6 @@
 		$('#wait').hide();
 		$('#loading-wrap').hide();
 	});
-
 </script>
 <!-- Data table css -->
 <link href="assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -54,41 +53,43 @@
 						if( !empty($event)){
 							// dapetin event dari tbl_event							
 							foreach($event as $row_event){
+							$send_on = date('Y-m-d', strtotime($row_event->event_date.' - '.$row_event->message_send_before.'days'));
 					?>				
-						<div class="col-lg-4 col-sm-12">
+						<div class="col-lg-4 col-sm-12" style="opacity:<?=($send_on < date('Y-m-d')? 0.4 : 1)?>">
 							<div class="card shadow">
-								<img class="card-img-top img-fluid" src="<?=base_url()?>images/event_photos/event_main_photos/<?=$row_event->event_main_photo?>" alt="Failed to load image" style="object-fit: cover;height: 250px;">
+								<a data-tooltip="tooltip" data-placement="top" title="" data-original-title="View Email Tamplate" href="javascript:view_email_event(<?=$row_event->event_id?>);">
+									<img class="card-img-top img-fluid" src="<?=base_url()?>images/event_photos/event_main_photos/<?=$row_event->event_main_photo?>" alt="Failed to load image" style="object-fit: cover;height: 250px;">
+								</a>
 								<div class="card-body">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="col-md-8">
-												<h4 class="card-title"><?=$row_event->event_name?></h4>
-											</div>
-											<div class="col-md-4">
-												<a class="tooltipped" data-position="top" data-tooltip="Edit Event" href="<?=base_url('Event/')?>edit/<?=$row_event->event_id?>"><span class="btn-inner--icon"><i class="fe fe-edit"></i></span></a>
+												<center>
+												<a class="tooltipped" data-position="top" data-tooltip="Edit Event" href="<?=base_url('Event/')?>edit/<?=$row_event->event_id?>"><span class="btn-inner--icon"><i class="fe fe-edit-3"></i></span></a>
 												<?php if(!$row_event->event_status_active){?>
-													<span data-tooltip="tooltip" data-placement="top" title="" data-original-title="Activate Event"><a class="icon-gray" href="javascript:conformAktif(<?=$row_event->event_id?>);"><i class="fe fe-eye"></i></a></span>														
+													<span data-tooltip="tooltip" data-placement="top" title="" data-original-title="Activate Event"><a class="icon-gray" href="javascript:conformAktif(<?=$row_event->event_id?>);"><i class="fe fe-check-square"></i></a></span>														
 												<?php } else{ ?>
-													<span data-tooltip="tooltip" data-placement="top" title="" data-original-title="Non-activate Event"><a class="icon-warning" href="javascript:conformDiaktif(<?=$row_event->event_id?>);"><i class="fe fe-eye-off"></i></a></span>														
+													<span data-tooltip="tooltip" data-placement="top" title="" data-original-title="Non-activate Event"><a class="icon-warning" href="javascript:conformDiaktif(<?=$row_event->event_id?>);"><i class="fe fe-x-square"></i></a></span>														
 												<?php } ?>
-											</div>
-										</div>	
-									</div>	
-									<p class="card-text">
-										<?php if(strlen($row_event->event_description)<80) echo $row_event->event_description."<br><br>"; 
-												else echo substr($row_event->event_description, 0, 80)."...";?>
-									</p>
-									<div class="col-md-12" style="opacity:0.6">
-										<div class="row">
-											<div class="col-md-6"><div class="row"><small>
-												Event Date<br><b><?=$row_event->event_date?></b>
-											</small></div></div>
-											<div class="col-md-6"><div class="row"><small>
-												Send On<br><b><?=$row_event->event_date?></b>
-											</small></div></div>
+												<h3 class="card-title"><?=$row_event->event_name?></h3>
+												</center>
 										
+									</div>	
+									<a href="" style="color:#000000c9">
+										<p class="card-text">
+											<?php if(strlen($row_event->event_description)<80) echo $row_event->event_description."<br><br>"; 
+													else echo substr($row_event->event_description, 0, 80)."...";?>
+										</p>
+										<div class="col-md-12" style="opacity:0.6">
+											<div class="row">
+												<div class="col-md-6"><div class="row"><small>
+													Event Date<br><b><?=$row_event->event_date?></b>
+												</small></div></div>
+												<div class="col-md-6"><div class="row"><small>
+													Send On<br><b><?=$send_on?></b>
+												</small></div></div>
+											
+											</div>
 										</div>
-									</div>
+									</a>	
 								</div>
 							</div>
 						</div>
@@ -121,6 +122,7 @@
 </div>
 
 <?php
+	$this->load->view('event/event_modal');
 	$this->load->view('modal');
 	$this->load->view('footer');
 ?>
