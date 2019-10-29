@@ -33,6 +33,16 @@ class EventModel extends CI_Model {
 		return $query; 
 	}
 	
+	public function view_event_photos_by_name($id,$photo){ 
+		$this->db->select('event_photo');
+		$this->db->from('tbl_event_photos');
+		$this->db->where('event_id', $id);
+		$this->db->where_not_in('event_photo', $photo);
+		$query = $this->db->get()->result();
+		
+		return $query;
+	}
+	
 	public function insert($data){
 		if($this->db->insert('tbl_event', $data)){
 		
@@ -50,6 +60,19 @@ class EventModel extends CI_Model {
 
 	public function insert_to_event_photos($data){
 		$this->db->insert('tbl_event_photos', $data);
+	}
+	
+	public function update($id,$data){
+		$this->db->where('event_id', $id);
+		if($this->db->update('tbl_event', $data)){ 
+			return 1;
+		}
+	}
+	
+	public function delete_old_event_photos($id,$photo){
+	    $this->db->where('event_id', $id);
+		$this->db->where_not_in('event_photo', $photo);
+		$this->db->delete('tbl_event_photos');
 	}
 
 }

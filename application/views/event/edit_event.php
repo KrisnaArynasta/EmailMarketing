@@ -11,16 +11,21 @@
 		CKEDITOR.replace( 'event_email' );
 		
 		$("#edit_event_main_photo").dropify();
-		$("#edit_event_photos").dropify();
+		//$("#edit_event_photos").dropify();
 		$("#event_date").datepicker();
 		$("#send_on").datepicker();
 		
 		$(".dropify-event").dropify();
+		var drEvent = $('.dropify-event').dropify();
+
+        drEvent.on('dropify.afterClear', function(event, element){
+            $(this).parents('.input-field').remove();
+        });
 		
 		//PHOTO MULTI INPUTS
 		function newInput(e){
 			var element = 	"<div class='col-md-4 mt-4 input-field'>"+
-								"<input type='file' class='new-input dropify-event' id='event_photos' name='event_photos[]' data-max-file-size='1M' />"+
+								"<input type='file' class='new-input dropify-event' id='event_photos' name='edit_event_photos[]' data-max-file-size='3M' />"+
 							"</div>";
 			$("#event_photos_parent").append($(element));
 
@@ -49,12 +54,12 @@
 		for ( instance in CKEDITOR.instances )
         CKEDITOR.instances[instance].updateElement();
 		
-		var form = new FormData(document.getElementById("inputEvent"));
+		var form = new FormData(document.getElementById("updateEvent"));
 
 		$('.loading-wrap').show();		
 		$.ajax({
 			type: "POST", 
-			url: "<?php echo base_url(); ?>"+"Event/insert/",
+			url: "<?php echo base_url(); ?>"+"Event/update/",
 			mimeType: "multipart/form-data",
 			datatype : "json", 
 			data: form, 
@@ -64,7 +69,7 @@
 			success: function(data) {
 				$('.loading-wrap').hide();
 				if(data=="success"){
-					swal({title:"Event Created!", text:"successfully add new event", type:"success"},
+					swal({title:"Event Updated!", text:"successfully update event", type:"success"},
 					function(){ 
 						window.location.href = "<?php echo base_url(); ?>"+"Event";
 					});
@@ -96,49 +101,48 @@
 	</div>
 	<div class="email-app card shadow">		
 		<div class="card-body">
-			<form id="inputEvent" action="" method="POST" enctype="multipart/form-data">
+			<form id="updateEvent" action="" method="POST" enctype="multipart/form-data">
 				<div class="row">
 				<?php foreach($data_edit as $event){?>
+					<!-- DAPETIN NAMA FOTO MAIN EVENT LAMA BUAT NANTI DI HAPUS D CONTROLLER !-->
+					<input type="hidden" id="old_main_photo" name="old_main_photo" value="<?=$event->event_main_photo?>">	
+					
+					<input type="hidden" id="event_id" name="event_id" value="<?=$event->event_id?>">	
+					
 					<div class="col-md-12">     
 						<div class="form-group form-alert" id="lat-valid">
 							<label class="form-label" >Event Name</label>
-							<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="event_name" name="event_name" placeholder="e.g Christmas" onchange="" onfocusout="" value="<?=$event->event_name?>">
+							<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="event_name" name="edit_event_name" placeholder="e.g Christmas" onchange="" onfocusout="" value="<?=$event->event_name?>">
 						</div>
 					</div>
 					<div class="col-md-6">     
 						<div class="form-group form-alert" id="lat-valid">
 							<label class="form-label" >Event Date</label>
-							<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="event_date" name="event_date" placeholder="e.g 2019-12-25" onchange="" onfocusout="" value="<?=$event->event_date?>">
+							<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="event_date" name="edit_event_date" placeholder="e.g 2019-12-25" onchange="" onfocusout="" value="<?=$event->event_date?>">
 						</div>
 					</div>
 					<div class="col-md-6" >
 						<div class="form-group form-alert" id="lng-evalid">
 							<label class="form-label" >Send Email On</label>
-							<input type="text" class="form-control empty-validator" id="send_on" name="send_on" placeholder="e.g 2019-08-01" onchange="" onfocusout="" value="<?=date_format(date_sub(date_create($event->event_date),date_interval_create_from_date_string("$event->message_send_before days")),"Y-m-d")?>">
+							<input type="text" class="form-control empty-validator" id="send_on" name="edit_send_on" placeholder="e.g 2019-08-01" onchange="" onfocusout="" value="<?=date_format(date_sub(date_create($event->event_date),date_interval_create_from_date_string("$event->message_send_before days")),"Y-m-d")?>">
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group form-alert">
 							<label class="form-label">Event Description</label>
-							<textarea class="form-control empty-validator" onfocusout="" id="event_desc" name="event_desc" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."><?=$event->event_description?></textarea>
+							<textarea class="form-control empty-validator" onfocusout="" id="event_desc" name="edit_event_desc" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."><?=$event->event_description?></textarea>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group form-alert">
 							<label class="form-label">Message to Send</label>
-							<textarea class="form-control empty-validator" onfocusout="" id="event_email" name="event_email" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."><?=$event->event_message?></textarea>
+							<textarea class="form-control empty-validator" onfocusout="" id="event_email" name="edit_event_email" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."><?=$event->event_message?></textarea>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-alert">
 							<label class="form-label">Event Main Photo</label>
-							<input type="file" class="dropify" id="edit_event_main_photo" name="edit_event_main_photo" data-default-file="<?=base_url()?>images/event_photos/event_main_photos/<?=$event->event_main_photo?>" data-max-file-size="1M" data-height="300"/>
-						</div>
-					</div>
-					<div class="col-md-6" style="display:none">
-						<div class="form-group form-alert">
-							<label class="form-label">Current Main Photo</label>
-							<img class="card-img-top img-fluid" src="<?=base_url()?>images/event_photos/<?=$event->event_main_photo?>" alt="Failed to load image">
+							<input type="file" class="dropify" id="edit_event_main_photo" name="edit_event_main_photo" data-default-file="<?=base_url()?>images/event_photos/event_main_photos/<?=$event->event_main_photo?>" data-max-file-size="3M" data-height="300"/>
 						</div>
 					</div>
 					<?php }?>
@@ -148,17 +152,20 @@
 							<div id="event_photos_parent" class="row"> 
 								<?php foreach($data_edit_event_photos as $event_photo){?>
 									<div class="col-md-4 mt-4 input-field">
-										<input type="file" class="new-input dropify-event" id="edit_event_photos" name="edit_event_photos[]" data-default-file="<?=base_url()?>images/event_photos/events_photos/<?=$event_photo->event_photo?>" data-max-file-size="1M" />
+										<!-- DAPETIN NAMA FOTO EVENT LAMA BUAT NANTI DI HAPUS D CONTROLLER !-->
+										<input type="hidden" id="old_event_photo" name="old_event_photo[]" value="<?=$event_photo->event_photo?>">
+										<input type="hidden" id="old_event_photo" name="old_event_photo_id[]" value="<?=$event_photo->event_photo_id?>">
+										<input type="file" class="new-input dropify-event" id="edit_event_photos" name="edit_event_photos[]" data-default-file="<?=base_url()?>images/event_photos/events_photos/<?=$event_photo->event_photo?>" data-max-file-size="3M" />
 									</div>
 								<?php }?>
 								<div class="col-md-4 mt-4 input-field">
-									<input type="file" class="new-input dropify-event" id="edit_event_photos" name="edit_event_photos[]" data-max-file-size="1M" />
+									<input type="file" class="new-input dropify-event" id="edit_event_photos" name="edit_event_photos[]" data-max-file-size="3M" />
 								</div>
 							</div>					
 						</div>
 					</div>						
 					<div class="col-md-12 mt-4">  
-						<button class="btn btn-icon btn-outline-primary btn-block mt-1 mb-1" type="button" onclick="save_event()">
+						<button class="btn btn-icon btn-outline-primary btn-block mt-1 mb-1" type="button" onclick="update_event()">
 							<span class="btn-inner--icon"><i class="fe fe-save"></i></span>
 							<span class="btn-inner--text">Simpan</span>
 						</button>

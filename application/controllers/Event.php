@@ -8,6 +8,7 @@ class Event extends CI_Controller {
 		$this->load->Model('EventModel');
 		$this->load->library('session');
 		$this->load->library('image_lib');
+		$this->load->helper("file");
     }
 	
 	public function index(){
@@ -83,7 +84,7 @@ class Event extends CI_Controller {
 
 
 				//echo count($_FILES["event_photos"]["name"]);
-				// LOOPING BUAT NGUPLOAD FOTO KE TABEL FOTO EVENT	
+				// LOOPING BUAT NGUPLOAD FOTO KE PATH DAN INSERT KE TABEL FOTO EVENT	
 				for($count = 0; $count<count($_FILES["event_photos"]["name"]); $count++){
 					
 					$config['upload_path']          = './images/event_photos/events_photos/';
@@ -149,6 +150,148 @@ class Event extends CI_Controller {
 		$result['data_edit'] = $this->EventModel->view_event_by_id($id);
 		$result['data_edit_event_photos'] = $this->EventModel->view_event_photos_by_id($id);
 		$this->load->view('Event/edit_event',$result);
+	}
+	
+	public function update(){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}
+		
+		$config['upload_path']          = './images/event_photos/event_main_photos/';
+		$config['allowed_types']        = 'jpg|png|jpeg';
+		$config['file_name']        	= 'Event_'.$this->session->userdata('user_id').'_'.$this->input->post('edit_event_name').'_'.date("Ymdhis").'.jpg';
+		//$config['max_size']             = 100;
+		//$config['max_width']            = 1024;
+		//$config['max_height']           = 768;
+	 
+		$this->load->library('upload', $config);  
+		
+		// CEK KALO MAIN FOTO ADA ATAU ENGGAK(BISA JADI GK DIISI ATAU MASIH MAKE YANG LAMA) 
+		// KALO MISAL GAK ISI KASI NAMA FILE = FILE LAMA, FOTO LAMA JUGA GK DIHAPUS
+		if( !$this->upload->do_upload('edit_event_main_photo')){
+				$error = $this->upload->display_errors();
+				//echo $error;
+				//echo "main photo is empty";	
+				$file_name = $this->input->post('old_main_photo');
+		}else{
+  			//dapatkan data file foto event utama yg d upload
+			$upload_data = $this->upload->data();
+			
+			//HAPUS FILE LAMA YANG NAMANYA DI AMBIL DARI HIDDEN INPUT KALO MAIN FOTO DIPERBAHARUI
+			$path = './images/event_photos/event_main_photos/'.$this->input->post('old_main_photo');
+			unlink($path);
+			
+  			//comprase foto event utama 
+			$configer['image_library'] = 'gd2';
+			$configer['source_image'] = $upload_data['full_path'];
+			$configer['create_thumb'] = FALSE;
+			$configer['maintain_ration'] = FALSE;
+			$configer['width'] = 1280;
+			$configer['new_image'] = $upload_data['full_path'];
+			
+			$this->image_lib->clear();
+			$this->image_lib->initialize($configer);
+			$this->image_lib->resize();
+ 
+			//dapatkan nama foto event utama baru
+			$file_name = $upload_data['file_name'];
+		}
+		
+		// data ke tabel event
+		$data = array(
+			  "user_id" 						=> $this->session->userdata('user_id'),
+			  "event_name" 						=> $this->input->post('edit_event_name'),
+			  "event_date" 						=> $this->input->post('edit_event_date'),
+			  "message_send_before"				=> date_diff(date_create($this->input->post('edit_event_date')),date_create($this->input->post('edit_send_on')))->format("%a"),
+			  "event_description"				=> $this->input->post('edit_event_desc'),
+			  "event_message"					=> $this->input->post('edit_event_email'),
+			  "event_main_photo"				=> $file_name,
+			  "event_status_active"				=> '1'
+			);	
+		
+		// JIKA BERHASIL UPDATE KE TABLE EVENT
+		$id = $this->input->post('event_id');
+		
+		if($this->EventModel->update($id,$data)){
+			
+			//DAPETIN NAMA FOTO EVENT LAMA YANG DIINPUT LAGI DARI INPUT TYPE HIDDEN
+			if($this->input->post('old_event_photo')){
+				foreach($this->input->post('old_event_photo') as $old_event_photo){
+					//SIMPAN NAMA FOTO EVENT LAMA YANG DI INPUT KEMBALI D VAR ARRAY
+					$undelete_photos[] = $old_event_photo;
+				}
+				
+			}else{
+				$undelete_photos[] = "";
+			}
+				//DELETE DATA FOTO EVENT LAMA YANG TIDAK DI UPLOAD ULANG D TABLE EVENT PHOTOS
+				$this->EventModel->delete_old_event_photos($id,$undelete_photos);
+			
+			//SELECT FOTO YANG HARUS D HAPUS DI FOLDER (BRARTI YANG GK DIUPLOAD ULANG)
+			// $delete_photos['delete_photos'] = $this->EventModel->view_event_photos_by_name($id,$undelete_photos);
+			// foreach($delete_photos['delete_photos'] as $delete_photo){
+				// echo $delete_photo->event_photo;
+				// $path = './images/event_photos/events_photos/'.$delete_photo->event_photo;
+				// unlink($path);
+			// }
+			
+					
+			// LOOPING BUAT UPDATE KE TABEL FOTO EVENT	
+			for($count = 0; $count<count($_FILES["edit_event_photos"]["name"]); $count++){
+				
+				$config['upload_path']          = './images/event_photos/events_photos/';
+				$config['allowed_types']        = 'jpg|png|jpeg';
+				$config['file_name']        	= 'Event_photos_'.$id.'_'.$this->input->post('edit_event_name').'_'.date("Ymdhis").'.jpg';
+				 
+				//set custom objek (edit_event_photos_config maksdnya) untuk foto-foto event karena diatas udh make yg default buat upload main foto
+				$this->load->library('upload', $config, 'edit_event_photos_config'); 
+				 
+				$_FILES["file"]["name"] 	= $_FILES["edit_event_photos"]["name"][$count];
+				$_FILES["file"]["type"] 	= $_FILES["edit_event_photos"]["type"][$count];
+				$_FILES["file"]["tmp_name"] = $_FILES["edit_event_photos"]["tmp_name"][$count];
+				$_FILES["file"]["error"]	= $_FILES["edit_event_photos"]["error"][$count];
+				$_FILES["file"]["size"] 	= $_FILES["edit_event_photos"]["size"][$count]; 
+				 
+				if( !$this->edit_event_photos_config->do_upload('file')){
+					$error = $this->edit_event_photos_config->display_errors();
+					//echo $error;
+					//echo "error upload event photo";	
+				}else{			
+			
+					//dapatkan data file foto-foto event yg d upload
+					$edit_event_photos_config = $this->edit_event_photos_config->data();
+					
+					//comprase foto-foto event  
+					$configer['image_library'] = 'gd2';
+					$configer['source_image'] = $edit_event_photos_config['full_path'];
+					$configer['create_thumb'] = FALSE;
+					$configer['maintain_ration'] = FALSE;
+					$configer['width'] = 1280;
+					$configer['new_image'] = $edit_event_photos_config['full_path'];
+					
+					$this->image_lib->clear();
+					$this->image_lib->initialize($configer);
+					$this->image_lib->resize();
+		 
+					//dapatkan nama foto-foto event 
+					$edit_file_name_event_photo = $edit_event_photos_config['file_name'];		
+
+					// DATA KE TABLE EVENT PHOTOS
+					$data = array(
+									  "event_id" 						=> $id,
+									  "event_photo" 					=> $edit_file_name_event_photo,
+									  "event_photo_upload_date" 		=> date('Y-m-d')
+									);
+					
+					// INSERT DATA BARU KE TABEL EVENT PHOTOS
+					$this->EventModel->insert_to_event_photos($data);										
+				}
+			}	
+			echo "success";
+		}else{
+			echo "fail";
+		}
+
 	}
 	
 }

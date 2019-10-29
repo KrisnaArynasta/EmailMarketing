@@ -20,7 +20,7 @@
 		//PHOTO MULTI INPUTS
 		function newInput(e){
 			var element = 	"<div class='col-md-4 mt-4 input-field'>"+
-								"<input type='file' class='new-input dropify-event' id='event_photos' name='event_photos[]' data-max-file-size='1M' />"+
+								"<input type='file' class='new-input dropify-event' id='event_photos' name='event_photos[]' data-max-file-size='3M' />"+
 							"</div>";
 			$("#event_photos_parent").append($(element));
 
@@ -158,7 +158,7 @@
 						<div class="col-md-6">
 							<div class="form-group form-alert">
 								<label class="form-label">Event Main Photo</label>
-								<input type="file" class="dropify" id="event_main_photo" name="event_main_photo" data-max-file-size="1M" data-height="300"/>
+								<input type="file" class="dropify" id="event_main_photo" name="event_main_photo" data-max-file-size="3M" data-height="300"/>
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -166,7 +166,7 @@
 								<label class="form-label">Event Photos</label>
 								<div id="event_photos_parent" class="row"> 
 									<div class="col-md-4 mt-4 input-field">
-										<input type="file" class="new-input dropify-event" id="event_photos" name="event_photos[]" data-max-file-size="1M" />
+										<input type="file" class="new-input dropify-event" id="event_photos" name="event_photos[]" data-max-file-size="3M" />
 									</div>
 								</div>								
 							</div>
