@@ -48,6 +48,7 @@ class EmailSenderEventModel extends CI_Model {
 		$where = array(
 						'user_id' => $user_id,
 						'event_status_active' => 1,
+						'event_status_delete' => 0,
 						'(event_date - INTERVAL message_send_before DAY) =' => date("Y-m-d")
 						);
 		

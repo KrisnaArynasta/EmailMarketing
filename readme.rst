@@ -1,70 +1,91 @@
-###################
-What is CodeIgniter
-###################
+	udh bisa login, udh bisa nampilin sesson ✔
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+GET MESSAGE
+     get message parameter last get email di db pas load email simpen tanggalnya. ✔
+	 get detail email dgn ajax 
+ 
+     encode base64url (gmail)
+	 encode utf-8 (yahoo)
+	 
+	 Imap get inbox dari lebih dari 1 email dan pengirim ✔
+     limit message  (via tanggal) ✔
+     get message spesific from   ✔
+     get mesaage SENT label (ambil dari database)  ✔
+	 
+	 
+SEND MESSAGE
+	
+	insert data ke outbox ✔
+	buat controler, model ✔
+	buat controler email sender flag 0 ✔
+	
+	pas ngirim email auto :
+	update status sent
+	update tgl & waktu kirim 
 
-*******************
-Release Information
-*******************
+	kirim email ke spesific user secara masal ✔
+	
+	kirim email sesuai event yang berlangsung ✔
+	
+	limit email sender ✔
+	
+	get email from multi account ✔
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+	get email from multi host ✔
+	
+	sort email by time receive 
+	
+	read single email
 
-**************************
-Changelog and New Features
-**************************
+	*pesan dikirm tidak dapat dilakukan dengan gmail API karna 
+	account sender tidak dapat diset secara permanent. 
+	
+	Balas pesan manual
+	
+	makai cronjob php atau build dengan python ? cronjob
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+	email di ganti ketika id tamu masih ada yang belum d kirimkan email suatu event
+	
 
-*******************
-Server Requirements
-*******************
+	
+CRUD EVENT
+	Create event
+		datepicker
+		tooltip
+		validation 
+		multi event photos ✔
+	Read event
+		search ✔
+		paggination ✔
+		show email tamplate ✔
+	Edit event
+		multi event photos ✔
+		validation 
+	Non-actived event 
+		activating or deactivating using ajax ✔
+	Delete event 	
+	
 
-PHP version 5.6 or newer is recommended.
+CRUD USER (inget build API key)
+	create emails user
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+apa perlu CRUD GUEST ?
+ 	GUEST data XCL upload
+ 
+WEBSERVICE
+	create guest  ✔
+	update guest  ✔
+	deactived guest  ✔
+	update visiting guest data  ✔
+	guest photos create  (single upload) ✔
+		create folder per user ✔
+		rename nama foto ✔
+	guest photo delete ?
+	
 
-************
-Installation
-************
+BUILD API DOCUMENTASION 
+(aplikasi pengguna ditanamkan cooding untuk mengirimkan data ke servis kita)
 
-Please see the `installation section <https://codeigniter.com/user_guide/installation/index.html>`_
-of the CodeIgniter User Guide.
-
-*******
-License
-*******
-
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
-
-*********
-Resources
-*********
-
--  `User Guide <https://codeigniter.com/docs>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
-
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
-
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+uji coba 
+bab 3
+sop

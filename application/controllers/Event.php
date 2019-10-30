@@ -8,6 +8,7 @@ class Event extends CI_Controller {
 		$this->load->Model('EventModel');
 		$this->load->library('session');
 		$this->load->library('image_lib');
+		$this->load->library('pagination');
 		$this->load->helper("file");
     }
 	
@@ -16,8 +17,75 @@ class Event extends CI_Controller {
 			redirect(base_url(),'location');
 		}
 		
-		$data['event'] = $this->EventModel->view_event($this->session->userdata('user_id'));	
-		$this->load->view('event/view_event',$data);
+		$user_id = $this->session->userdata('user_id');	
+		
+		$search = $this->input->post('search');
+		if($search){
+			$total_records = $this->EventModel->get_filter($user_id,$search);
+		}else {
+			$total_records = $this->EventModel->get_total($user_id);
+		}
+			
+			
+			// init params
+			$params = array();
+			$limit_per_page = 6;
+			$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+			$page = $start_index / $limit_per_page + 1;
+   
+	 
+			if ($total_records > 0) {
+				// get current page records
+				if($search){
+					$params['event']=$this->EventModel->get_current_page_records_filter($user_id, $limit_per_page, $start_index, $search);
+				}else{
+					$params['event']=$this->EventModel->get_current_page_records($user_id, $limit_per_page, $start_index);
+				}
+
+				
+				$config['base_url'] = base_url().'Event/index';
+				$config['total_rows'] = $total_records;
+				$config['per_page'] = $limit_per_page;
+				$config["uri_segment"] = 3;
+
+				//bootstrap class
+				$config['first_link']       = '<i class="fe fe-chevrons-left"></i>';
+				$config['last_link']        = '<i class="fe fe-chevrons-right"></i>';
+				$config['next_link']        = '<i class="fe fe-chevron-right"></i>';
+				$config['prev_link']        = '<i class="fe fe-chevron-left"></i>';
+				$config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+				$config['full_tag_close']   = '</ul></nav></div>';
+				$config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+				$config['num_tag_close']    = '</span></li>';
+				$config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+				$config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+				$config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+				$config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+				$config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+				$config['prev_tagl_close']  = '</span>Next</li>';
+				$config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+				$config['first_tagl_close'] = '</span></li>';
+				$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+				$config['last_tagl_close']  = '</span></li>';
+				 
+				$this->pagination->initialize($config);
+				 
+				// build paging links
+				$params["links"] = $this->pagination->create_links();
+				if($page != 1){
+					$params['sidebar_pemeriksaan'] = "is-expanded";
+					$params['active_menu_pemeriksaan'] = "active";
+					$params['active_tekanan_manometer'] = "active";
+				} else{
+					$params['sidebar_pemeriksaan'] = "is-expanded";
+					$params['active_menu_pemeriksaan'] = "active";
+					$params['active_tekanan_manometer'] = "active";
+				}
+			}
+			 
+			//$hasil['data']=$this->ManometerModel->view_all_manometer();
+			$this->load->view('event/view_event',$params);
+			
 	}
 
 	public function create(){
@@ -80,7 +148,7 @@ class Event extends CI_Controller {
 			
 			// JIKA BERJASIL INSERT KE TABLE EVENT
 			$event_id = $this->EventModel->insert($data);
-			if($event_id){
+			if($_FILES["event_photos"]["name"]){
 
 
 				//echo count($_FILES["event_photos"]["name"]);
@@ -301,6 +369,19 @@ class Event extends CI_Controller {
 		
 		$data['data_detail']=$this->EventModel->view_event_email($event_id);
 		echo json_encode($data);
+	}
+	
+	public function aktif(){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}
+
+		$id = $this->input->post('id'); 
+		$data = array(
+		  "event_status_active" => $this->input->post('aktif_sts')
+		);	 
+		$this->EventModel->aktif($id,$data); 
+		echo "success";
 	}
 	
 }
