@@ -70,7 +70,7 @@
 					</div>
 
 					<div class="text-center pt-1">
-						<a class="txt2" href="register.html">
+						<a class="txt2" href="javascript:openForm();">
 							Create new Account
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
@@ -85,6 +85,8 @@
 	<script src="<?=base_url()?>assets/plugins/jquery/dist/jquery.min.js"></script>
 	<script src="<?=base_url()?>assets/js/popper.js"></script>
 	<script src="<?=base_url()?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	
+	<?php $this->load->view('login/signup_modal');?>
 
 </body>
 

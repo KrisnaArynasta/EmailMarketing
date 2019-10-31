@@ -13,7 +13,7 @@ class Login extends CI_Controller {
 	
 public function index(){
   		if($this->session->userdata('login_status') != "login"){
-			$this->load->view('login');
+			$this->load->view('login/login');
 		}else{
 			echo 'loged';
 			//$hasil['data']=$this->AdminModel->view_content();
