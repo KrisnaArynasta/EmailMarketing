@@ -99,6 +99,13 @@ class EventModel extends CI_Model {
 	public function aktif($id,$data){
 		$this->db->where('event_id', $id);
 		$this->db->update('tbl_event', $data); 
+	}	
+	
+	
+	//UPDATE DATA EVENT JADI DELETED (1)
+	public function delete($id,$data){
+		$this->db->where('event_id', $id);
+		$this->db->update('tbl_event', $data); 
 	}
 	
 	// SEARCH FUCTION

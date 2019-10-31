@@ -9,6 +9,38 @@
 		$('#loading-wrap').hide();
 	});
 	
+		function deleteEvent(event_id, event_name){
+		swal({
+			title: "Delete Event "+event_name+"?",
+			text: event_name+" will deleted on your event list",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			confirmButtonText: "Delete",
+			closeOnConfirm: false
+		}, function() {
+		  
+		  $.ajax({
+				type: "POST", 
+				url: "<?php echo base_url(); ?>"+"Event/delete",
+				datatype : "json", 
+				data:{id:event_id,delete_sts:1},
+				success: function(data) {
+					if(data=="success"){
+						swal({title:"Event Deleted!", text:"this event has been deleted in your event list", type:"success"},
+						function(){ 
+							   location.reload();
+						   }
+					   );
+					   $('.confirm').addClass('sweet-alert-success');
+					}else{
+						swal({title:"Delete Event!", text:"fail to delete the event", type:"success"});
+					}	
+				}
+			}); 
+		});
+	}
+	
 	function conformAktif(event_id, event_name){
 		swal({
 			title: "Activate Event "+event_name+"?",
@@ -34,7 +66,7 @@
 					   );
 					   $('.confirm').addClass('sweet-alert-success');
 					}else{
-						swal({title:"Event Actived!", text:"fail to activating event", type:"success"});
+						swal({title:"Activating Event!", text:"fail to activating event", type:"success"});
 					}	
 				}
 			}); 
@@ -65,7 +97,7 @@
 					   );
 					   $('.confirm').addClass('sweet-alert-success');
 					}else{
-						swal({title:"Event Deactivated!", text:"fail to disable event", type:"success"});
+						swal({title:"Deactivating Event!", text:"fail to disable event", type:"success"});
 				   }	
 				}
 			}); 

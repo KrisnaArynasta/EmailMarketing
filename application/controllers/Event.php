@@ -384,6 +384,19 @@ class Event extends CI_Controller {
 		echo "success";
 	}
 	
+	public function delete(){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}
+
+		$id = $this->input->post('id'); 
+		$data = array(
+		  "event_status_delete" => $this->input->post('delete_sts')
+		);	 
+		$this->EventModel->delete($id,$data); 
+		echo "success";
+	}
+	
 }
 
 
