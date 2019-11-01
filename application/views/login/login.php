@@ -28,7 +28,14 @@
 
 	<!-- Single-page CSS -->
 	<link href="<?=base_url()?>assets/plugins/single-page/css/main.css" rel="stylesheet" type="text/css">
+	
+	<!-- sweetalert css-->
+	<link href="<?=base_url()?>assets/plugins/sweet-alert/sweetalert.css" rel="stylesheet" />
+	  
+	 <!-- G CAPTCHA --> 
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 
+	  
 </head>
 
 <body class="bg-gradient-primary">
@@ -85,6 +92,10 @@
 	<script src="<?=base_url()?>assets/plugins/jquery/dist/jquery.min.js"></script>
 	<script src="<?=base_url()?>assets/js/popper.js"></script>
 	<script src="<?=base_url()?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+		
+	<!-- sweet alert table js -->
+	<script src="<?=base_url()?>assets/plugins/sweet-alert/sweetalert.min.js"></script>
+	<script src="<?=base_url()?>assets/js/sweet-alert.js"></script>
 	
 	<?php $this->load->view('login/signup_modal');?>
 

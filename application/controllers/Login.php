@@ -70,6 +70,40 @@ public function index(){
 		$this->session->set_userdata('login_status', "");
 		redirect(base_url('Login'));
 	}
+	
+	public function register(){
+		
+		//CAPTCHA
+		$secretKey="6Lf2jMAUAAAAABrNgdHt9tpZjWh0eicT6UOAEexd";
+		$captcha = $this->input->post('g-recaptcha-response');
+		$respond=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captcha");
+		
+		if(isset($captcha)){
+	
+			$cek_capt=json_decode($respond,true);
+
+			//cek apakah jawaban dari captcha benar
+			if($cek_capt["success"]==true){
+			
+				$API = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU1234567890"),0,100);
+				$API = date('hisYmd').$API.date('Ymdhis');
+				$secret = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU1234567890"),0,100);
+				$secret = date('hisYmd').$API.date('Ymdhis');
+				
+				$data = array(
+						  "email" 						=> $this->input->post('email'),
+						  "password" 					=> $this->input->post('password'),
+						  "property_name"				=> $this->input->post('property_name'),
+						  "API_key"						=> $API,
+						  "secret_key"					=> $secret
+						);	
+				
+				$this->UserModel->register($data);
+				echo "success";
+				
+			}else echo "fail"; //fail captcha respone 
+		}else echo "fail"; // captcha kosong
+	}
 
 }
 

@@ -67,7 +67,11 @@ CRUD EVENT
 	
 
 CRUD USER (inget build API key)
-	create emails user
+	Create User	
+		register user ✔
+		captcha 
+		create emails sender user 
+		edit account user 
 
 apa perlu CRUD GUEST ?
  	GUEST data XCL upload

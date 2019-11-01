@@ -27,5 +27,10 @@ class UserModel extends CI_Model {
 		}else{	
 			return 0;
 		}
-	}	
+	}
+
+	public function register($data){
+		$this->db->insert('tbl_user', $data);
+	}
+	
 }

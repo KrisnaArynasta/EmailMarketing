@@ -34,6 +34,12 @@
 					property_website = '';
 				}
 				
+				if(property_address){ 
+					property_address = property_address+'<br>';
+				}else{
+					property_address = '';
+				}
+				
 				if(property_logo){ 
 					property_logo = '<div class="col-md-6"><img width="20%" src="<?=base_url()?>images/property_logo/'+property_logo+'"></div>';
 				}else{
@@ -46,7 +52,7 @@
 												+'<div class="row">'
 												+property_logo
 												+'<div class="col-md-6 text-right" style="top: 0.6rem;"><h4>'+property_name+'<br>'
-												+'<small>'+property_address+'<br>'
+												+'<small>'+property_address
 												+property_website
 												+'</small></h4></div>'
 												+'</div>'

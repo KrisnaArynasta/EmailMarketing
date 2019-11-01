@@ -71,7 +71,6 @@ class EmailSenderEvent extends CI_Controller {
 							// $this->EmailSenderEventModel->insert_to_outbox($data);
 							// echo "fail <br>";
 						}else {
-							p
 							// save to tbl_outbox kalo email berhasil dikirim dengan status sent 1
 							$data = array(
 								  "send_date" => date("Y-m-d"),
