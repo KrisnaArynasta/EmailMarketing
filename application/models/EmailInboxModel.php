@@ -7,6 +7,7 @@ class EmailInboxModel extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_email_sender');
 		$this->db->where('user_id',$user_id);
+		$this->db->where('email_status_active',1);
 		$query = $this->db->get()->result();
 		return $query;
 	}
@@ -86,6 +87,7 @@ class EmailInboxModel extends CI_Model {
 		$this->db->from('tbl_email_sender');
 		foreach ($ignore_sender as $ignore_sender){$this->db->where_not_in('email_sender_id', $ignore_sender->email_sender_id);}
 		$this->db->where('user_id',$user_id);		
+		$this->db->where('email_status_active',1);		
 		$query = $this->db->get()->result();
 		return $query;
 	}

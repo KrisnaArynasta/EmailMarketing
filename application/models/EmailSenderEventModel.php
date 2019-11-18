@@ -6,6 +6,7 @@ class EmailSenderEventModel extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_email_sender');
 		$this->db->where('user_id',$user_id);
+		$this->db->where('email_status_active',1);
 		$query = $this->db->get()->result();
 		return $query;
 	}

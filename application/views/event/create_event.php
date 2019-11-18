@@ -174,7 +174,7 @@
 						<div class="col-md-12 mt-4">  
 							<button class="btn btn-icon btn-outline-primary btn-block mt-1 mb-1" type="button" onclick="save_event()">
 								<span class="btn-inner--icon"><i class="fe fe-save"></i></span>
-								<span class="btn-inner--text">Simpan</span>
+								<span class="btn-inner--text">Save</span>
 							</button>
 						</div>	
 					</div>

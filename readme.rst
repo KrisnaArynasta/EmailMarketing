@@ -2,7 +2,7 @@
 
 GET MESSAGE
      get message parameter last get email di db pas load email simpen tanggalnya. ✔
-	 get detail email dgn ajax 
+	 get detail email dgn ajax ✔
  
      encode base64url (gmail)
 	 encode utf-8 (yahoo)
@@ -12,8 +12,11 @@ GET MESSAGE
      get message spesific from   ✔
      get mesaage SENT label (ambil dari database)  ✔
 	 
+	 kalo host tidak valid jadi gk bisa ngambil emailnya
 	 
 SEND MESSAGE
+	
+	send tamplate event email
 	
 	insert data ke outbox ✔
 	buat controler, model ✔
@@ -46,11 +49,10 @@ SEND MESSAGE
 
 	email di ganti ketika id tamu masih ada yang belum d kirimkan email suatu event
 	
-
 	
 CRUD EVENT
 	Create event
-		datepicker
+		datepicker validation
 		tooltip
 		validation 
 		multi event photos ✔
@@ -63,18 +65,23 @@ CRUD EVENT
 		validation 
 	Non-actived event 
 		activating or deactivating using ajax ✔
-	Delete event 	
+	Delete event ✔	 
 	
 
-CRUD USER (inget build API key)
+ACCOUNT (inget build API key)
 	Create User	
 		register user ✔
-		captcha 
-		create emails sender user 
-		edit account user 
+			captcha 
+		emails sender user 
+			create ✔
+			update
+			de/activate ✔
+		edit account user ✔
+		change password
 
-apa perlu CRUD GUEST ?
+GUEST
  	GUEST data XCL upload
+	view guest
  
 WEBSERVICE
 	create guest  ✔
@@ -84,12 +91,22 @@ WEBSERVICE
 	guest photos create  (single upload) ✔
 		create folder per user ✔
 		rename nama foto ✔
-	guest photo delete ?
+	//guest photo delete ?
 	
 
 BUILD API DOCUMENTASION 
 (aplikasi pengguna ditanamkan cooding untuk mengirimkan data ke servis kita)
 
-uji coba 
-bab 3
-sop
+UNTUK MAJU PROPOSAL
+	uji coba 
+	BAB III
+		SOP
+		PDM
+		gambaran umum sistem
+
+kuisoner
+form create user - value dinamis di setup pengguna
+jawabn tamu 
+rating dan review
+perlu webservice
+		

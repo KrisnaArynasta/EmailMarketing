@@ -90,10 +90,13 @@
 							<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Account</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li>
-									<a href="login.html" class="slide-item">Edit Profile</a>
+									<a href="<?=base_url('Account/edit_profile')?>" class="slide-item">Edit Property Profile</a>
 								</li>
 								<li>
 									<a href="register.html" class="slide-item">Change Password</a>
+								</li>								
+								<li>
+									<a href="<?=base_url('Account/email_account')?>" class="slide-item">Email Account</a>
 								</li>
 							</ul>
 						</li>
@@ -146,7 +149,7 @@
 									<li class="nav-item dropdown">
 										<a aria-expanded="false" aria-haspopup="true" class="nav-link pr-md-0 mr-md-2 pl-1" data-toggle="dropdown" href="#" role="button">
 											<div class="media align-items-center">
-												<span class="avatar avatar-sm rounded-circle"><img alt="Image placeholder" src="assets/img/faces/female/27.jpg"></span>
+												<span class="avatar avatar-sm rounded-circle"><img alt="Image placeholder" src="<?=base_url()?>images/property_logo/<?=$this->session->userdata('property_logo')?>"></span>
 
 											</div>
 										</a>

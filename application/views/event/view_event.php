@@ -66,7 +66,7 @@
 					   );
 					   $('.confirm').addClass('sweet-alert-success');
 					}else{
-						swal({title:"Activating Event!", text:"fail to activating event", type:"success"});
+						swal({title:"Activating Event!", text:"failed to activating event", type:"error"});
 					}	
 				}
 			}); 
@@ -90,14 +90,14 @@
 				data:{id:event_id,aktif_sts:0},
 				success: function(data) {
 					if(data=="success"){
-						swal({title:"Event Dactivated!", text:"this event email will not send to your guests", type:"success"},
+						swal({title:"Event Deactivated!", text:"this event email will not send to your guests", type:"success"},
 						function(){ 
 							   location.reload();
 						   }
 					   );
 					   $('.confirm').addClass('sweet-alert-success');
 					}else{
-						swal({title:"Deactivating Event!", text:"fail to disable event", type:"success"});
+						swal({title:"Deactivating Event!", text:"failed to disable event", type:"error"});
 				   }	
 				}
 			}); 
