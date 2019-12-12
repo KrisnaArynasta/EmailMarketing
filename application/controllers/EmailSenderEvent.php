@@ -73,6 +73,7 @@ class EmailSenderEvent extends CI_Controller {
 						}else {
 							// save to tbl_outbox kalo email berhasil dikirim dengan status sent 1
 							$data = array(
+								  "user_id" => $this->session->userdata('user_id'),
 								  "send_date" => date("Y-m-d"),
 								  "send_time" => date("H:i:s"),
 								  "event_id" => $row_event->event_id,

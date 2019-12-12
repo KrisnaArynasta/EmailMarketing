@@ -116,7 +116,7 @@
 							<td><?=$row_email->limit_email?></td>
 							<td>
 								<!-- EDIT ICON !-->
-								<a href="<?=base_url('Event/')?>edit/<?=$row_email->email_sender_id?>"><span class="btn-inner--icon"><i class="fe fe-edit-3"></i></span></a>
+								<a href="javascript:edit_email_account(<?=$row_email->email_sender_id?>)"><span class="btn-inner--icon"><i class="fe fe-edit-3"></i></span></a>
 								<!-- AKTIVATING ICON !-->
 								<?php if(!$row_email->email_status_active){?>
 									<a class="icon-gray" href="javascript:conformAktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-check-square"></i></a>													

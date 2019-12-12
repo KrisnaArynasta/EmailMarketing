@@ -9,8 +9,6 @@
 		 $('#loading-wrap').hide();
 		
 		$("#propertyLogo").dropify();
-		$("#event_date").datepicker();
-		$("#send_on").datepicker();
 			
 	});
 	
@@ -43,7 +41,7 @@
 					swal({title:"Failed!", text:"Failed to update your account", type:"error"});
 				}
 			}
-		})		
+		});		
 	}	
 </script>
 <!-- Data table css -->
@@ -135,32 +133,3 @@
 <!-- Date Picker-->
 <script src="<?=base_url()?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 
-<!-- pagination -->
-<script>
-
-   $(document).ready(function(){
-   
-        $("#event_date").datepicker({
-		  dateFormat: 'yy-mm-dd',
-	        minDate: 1,
-    
-			onSelect: function(selected) {
-			var minEnd = new Date($("#event_date").datepicker("getDate"));
-			minEnd.setDate(minEnd.getDate() + 1);
-	          $("#send_on").datepicker("option","minDate", minEnd)
-	        }
-
-        });
-        
-		
-		$("#send_on").datepicker({
-		  dateFormat: 'yy-mm-dd',  
-	        onSelect: function(selected) {
-	           $("#event_date").datepicker("option","maxDate", selected)
-			}
-		});
-    
-	
-	});
-
-</script>

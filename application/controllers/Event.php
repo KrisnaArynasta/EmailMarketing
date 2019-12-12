@@ -53,7 +53,7 @@ class Event extends CI_Controller {
 				$config['last_link']        = '<i class="fe fe-chevrons-right"></i>';
 				$config['next_link']        = '<i class="fe fe-chevron-right"></i>';
 				$config['prev_link']        = '<i class="fe fe-chevron-left"></i>';
-				$config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+				$config['full_tag_open']    = '<div class="pagging text-center"><nav style="border-right:0"><ul class="pagination justify-content-center">';
 				$config['full_tag_close']   = '</ul></nav></div>';
 				$config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
 				$config['num_tag_close']    = '</span></li>';
@@ -72,15 +72,7 @@ class Event extends CI_Controller {
 				 
 				// build paging links
 				$params["links"] = $this->pagination->create_links();
-				if($page != 1){
-					$params['sidebar_pemeriksaan'] = "is-expanded";
-					$params['active_menu_pemeriksaan'] = "active";
-					$params['active_tekanan_manometer'] = "active";
-				} else{
-					$params['sidebar_pemeriksaan'] = "is-expanded";
-					$params['active_menu_pemeriksaan'] = "active";
-					$params['active_tekanan_manometer'] = "active";
-				}
+				
 			}
 			 
 			//$hasil['data']=$this->ManometerModel->view_all_manometer();

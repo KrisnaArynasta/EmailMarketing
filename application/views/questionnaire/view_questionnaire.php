@@ -1,5 +1,5 @@
 <?php
-  $title['title']="PEMS - Your Event";
+  $title['title']="PEMS - Your Questionnaire";
   $this->load->view('header',$title);
 ?>
 
@@ -112,10 +112,10 @@
 <!-- Page content -->
 <div class="container-fluid pt-8">
 	<div class="page-header mt-0  p-3">
-		<h3 class="mb-sm-0">Your Event</h3>
+		<h3 class="mb-sm-0">Your Questionnaire</h3>
 		<ol class="breadcrumb mb-0">
 			<li class="breadcrumb-item"><a href="#"><i class="fe fe-home"></i></a></li>
-			<li class="breadcrumb-item active" aria-current="page">Event</li>
+			<li class="breadcrumb-item active" aria-current="page">Questionnaire</li>
 		</ol>
 
 	</div>
@@ -206,12 +206,12 @@
 						// jika data event tidak ada  
 						} else  { ?>
 							<div class="col-md-12">
-								<b><h3 style='opacity:0.4; text-align:center; margin-top:50px'>You Dont Have Any Event Yet!</h3></b> <br>
+								<b><h3 style='opacity:0.4; text-align:center; margin-top:50px'>You Dont Have Any Questionnaire Yet!</h3></b> <br>
 							</div>	
 					<?php } ?>
 							</div>	
 					<!-- Button Tambah Melayang !-->
-					<a href="<?=base_url('Event/create')?>">
+					<a href="<?=base_url('Questionnaire/create')?>">
 						<button class="float btn btn-icon btn-add btn-info mt-1 mb-1" data-tooltip="tooltip" data-placement="left" title="" data-original-title="Create new event">
 							<span class="btn-inner--icon"><i class="fe fe-plus"></i></span>
 						</button>

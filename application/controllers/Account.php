@@ -129,6 +129,56 @@
 			$this->UserModel->email_account_status($id,$data); 
 			echo "success";
 		}
+		
+		public function view_email_account_by_id($id){
+			if($this->session->userdata('login_status')!=="login"){
+				redirect(base_url(),'location');
+			}
+			
+			$edit_email['data_edit']=$this->UserModel->get_email_account_by_id($id);
+			echo json_encode($edit_email);
+		}
+		
+		public function update_email_account(){
+			if($this->session->userdata('login_status')!=="login"){
+				redirect(base_url(),'location');
+			}
+			
+			$id = $this->input->post('edit_account_email_id');
+			
+			$data = array(
+					  "email" 						=> $this->input->post('edit_account_email'),
+					  "password" 					=> $this->input->post('edit_account_password'),
+					  "inbox_host"					=> $this->input->post('edit_imap_host'),
+					  "sender_host"					=> $this->input->post('edit_smtp_host'),
+					  "limit_email"					=> $this->input->post('edit_sending_limit')
+					);	
+			
+			$this->UserModel->update_email_account($id,$data);
+			echo "success";
+		}
+		
+		public function change_password(){
+			if($this->session->userdata('login_status')!=="login"){
+				redirect(base_url(),'location');
+			}
+			
+			$this->load->view('user/change_password');
+		}
+		
+		public function change_password_update(){
+			if($this->session->userdata('login_status')!=="login"){
+				redirect(base_url(),'location');
+			}
+			
+			$id = $this->session->userdata('user_id');
+			$data = array(
+					  "password" 			=> $this->input->post('new_password')
+					);	
+			
+			$this->UserModel->update($data,$id);
+			echo "success";
+		}
 	}
 ?>
 

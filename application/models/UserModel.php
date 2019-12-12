@@ -17,6 +17,7 @@ class UserModel extends CI_Model {
 						'nums_row' => $cek->num_rows(),
 						'user_id' => $query->user_id,
 						'user_email' => $query->email,
+						'user_password' => $query->password,
 						'property_name' =>$query->property_name,
 						'property_logo' =>$query->property_logo,
 						'API_key' =>$query->API_key,
@@ -65,6 +66,19 @@ class UserModel extends CI_Model {
 		$this->db->order_by('email_status_active', 'DESC');
 		$query = $this->db->get()->result();
 		return $query; 
+	}
+	
+	public function get_email_account_by_id($id){
+		$this->db->select('*');
+		$this->db->from('tbl_email_sender');
+		$this->db->where('email_sender_id', $id);
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
+	public function update_email_account($id,$data){
+		$this->db->where('email_sender_id', $id);
+		$this->db->update('tbl_email_sender', $data);
 	}
 	
 }

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class EventModel extends CI_Model {
+class QuestionnaireModel extends CI_Model {
 	
 	// GET DATA EVENT
 	public function view_event($id){
@@ -17,55 +17,70 @@ class EventModel extends CI_Model {
 		return $query;
 	}
 	
-	// GET DATA EVENT BERDASARKAN ID EVENT
-	public function view_event_by_id($id){ 
+	public function view_questionnaire_by_id($id,$user){ 
 		$this->db->select('*');
-		$this->db->from('tbl_event');
-		$this->db->where('event_id', $id);
+		$this->db->from('tbl_questionnaire');
+		$this->db->where('questionnaire_id', $id);
+		$this->db->where('user_id', $user);
 		$query = $this->db->get()->result();
 		return $query; 
 	}
 	
-	// GET DATA FOTO-FOTO EVENT BERDASARKAN ID EVENT
-	public function view_event_photos_by_id($id){ 
+	public function view_question_option($id,$user){ 
 		$this->db->select('*');
-		$this->db->from('tbl_event_photos');
-		$this->db->where('event_id', $id);
+		$this->db->from('tbl_questionnaire qn');
+		$this->db->join('tbl_question q','q.questionnaire_id=qn.questionnaire_id');
+		$this->db->join('tbl_question_option qo','qo.question_id=q.question_id');
+		$this->db->where('qn.questionnaire_id', $id);
+		$this->db->where('qn.user_id', $user);
 		$query = $this->db->get()->result();
 		return $query; 
 	}
 	
-	// GET DATA FOTO-FOTO EVENT BERDASARKAN NAMA FOTO DAN ID EVENT
-	public function view_event_photos_by_name($id,$photo){ 
-		$this->db->select('event_photo');
-		$this->db->from('tbl_event_photos');
-		$this->db->where('event_id', $id);
-		$this->db->where_not_in('event_photo', $photo);
+	public function insert_questionnaire($data){
+		//UNTUK INSERT KE TBL Questionnaire
+		$this->db->insert('tbl_questionnaire', $data);
+		
+		// UNTUK DAPETIN ID YANG BARU DIINSERT TADI
+		$this->db->select('questionnaire_id');
+		$this->db->from('tbl_questionnaire');
+		$this->db->order_by('questionnaire_id', 'DESC');
+		$this->db->limit(1);
 		$query = $this->db->get()->result();
 		
-		return $query;
-	}
-	
-	//INPUT DATA KE TABEL EVENT
-	public function insert($data){
-		if($this->db->insert('tbl_event', $data)){
-		
-			$this->db->select('event_id');
-			$this->db->from('tbl_event');
-			$this->db->where($data);
-			$query = $this->db->get()->result();
-			
+		if($query){
 			foreach ($query as $query){
-				$hasil= $query->event_id;
-				return $hasil;
+				$result= $query->questionnaire_id;
 			}	
-			
+			return $result;
+		}else{	
+			return 0;
 		}
 	}
 	
-	//INPUT DATA FOTO KE TABEL FOTO EVENT
-	public function insert_to_event_photos($data){
-		$this->db->insert('tbl_event_photos', $data);
+	public function insert_question($data){
+		//UNTUK INSERT KE TBL Questionnaire
+		$this->db->insert('tbl_question', $data);
+		
+		// UNTUK DAPETIN ID YANG BARU DIINSERT TADI
+		$this->db->select('question_id');
+		$this->db->from('tbl_question');
+		$this->db->order_by('question_id', 'DESC');
+		$this->db->limit(1);
+		$query = $this->db->get()->result();
+		
+		if($query){
+			foreach ($query as $query){
+				$result= $query->question_id;
+			}	
+			return $result;
+		}else{	
+			return 0;
+		}
+	}
+	
+	public function insert_option($data){
+		$this->db->insert('tbl_question_option', $data);
 	}
 	
 	//UDPDATE DATA EVENT
@@ -76,24 +91,6 @@ class EventModel extends CI_Model {
 		}
 	}
 	
-	//HAPUS FOTO EVENT YANG GK DIPAKE LAGI (PAS UPDATE DATA EVENT)
-	public function delete_old_event_photos($id,$photo){
-	    $this->db->where('event_id', $id);
-		$this->db->where_not_in('event_photo', $photo);
-		$this->db->delete('tbl_event_photos');
-	}
-	
-	
-	//GET DATA EVENT, USER, FOTO-FOTO EVENT UNTUK BUAT TAMPLATE EVENT
-	public function view_event_email($id){ 
-		$this->db->select('*');
-		$this->db->from('tbl_event e');
-		$this->db->join('tbl_user u','e.user_id=u.user_id');
-		$this->db->join('tbl_event_photos ep', 'e.event_id=ep.event_id', 'left');
-		$this->db->where('e.event_id', $id);
-		$query = $this->db->get()->result();
-		return $query; 
-	}
 	
 	//UPDATE DATA EVENT NON AKTIF ATAU AKTIF (1 / 0)
 	public function aktif($id,$data){

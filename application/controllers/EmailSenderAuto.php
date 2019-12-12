@@ -64,6 +64,7 @@ class EmailSenderAuto extends CI_Controller {
 	public function input_to_outbox(){
 		
 		$data = array(
+					  "user_id" => $this->session->userdata('user_id'),
 					  "guest_id" => $this->input->post('guest_id'),
 					  "email_send_to" => $this->input->post('to'),
 					  "email_sender_id" => $this->input->post('sender'),

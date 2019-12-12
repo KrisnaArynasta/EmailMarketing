@@ -4,7 +4,7 @@
 	}
 	
 	//REGISTER
-	function save_event(){
+	function save_user(){
 
 		$('.loading-wrap').show();		
 		$.ajax({
@@ -67,7 +67,7 @@
 							   <div class="g-recaptcha" data-sitekey="6Lf2jMAUAAAAAEjWwTRh9oagZHeiDoLRRFpohkTC"></div>
 							</div>
 							<div class="text-center">
-								<button type="button" class="btn btn-white my-4" style="color: #00000096;" onclick="save_event()" >Register</button>
+								<button type="button" class="btn btn-white my-4" style="color: #00000096;" onclick="save_user()" >Register</button>
 							</div>
 						</form>
 					</div>

@@ -16,7 +16,7 @@ class EmailInbox extends CI_Controller {
 			redirect(base_url(),'location');
 		}	
 		
-		$user_id=1;
+		$user_id=$this->session->userdata('user_id');
 		
 		$data_email_account = $this->EmailInboxModel->email_account($user_id);	
 		foreach($data_email_account as $row_email){

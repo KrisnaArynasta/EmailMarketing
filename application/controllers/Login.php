@@ -34,6 +34,7 @@ public function index(){
 	$cek = $hasil['nums_row'];
 	$user_id = $hasil['user_id'];
 	$user_email = $hasil['user_email'];
+	$user_password = $hasil['user_password'];
 	$property_name = $hasil['property_name'];
 	$property_logo = $hasil['property_logo'];
 	$API_key = $hasil['API_key'];
@@ -44,6 +45,7 @@ public function index(){
 		$data_session = array(
 			'user_id' => $user_id,
 			'user_email' => $user_email,
+			'user_password' => $user_password,
 			'property_name' =>$property_name,
 			'property_logo' =>$property_logo,
 			'API_key' =>$API_key,
@@ -63,6 +65,7 @@ public function index(){
 	
 	}else{
 		echo "<script>alert('Login Failed'); window.history.back();</script>";	
+
 	}
   }
  

@@ -38,7 +38,7 @@ SEND MESSAGE
 	
 	sort email by time receive 
 	
-	read single email
+	read single email ✔
 
 	*pesan dikirm tidak dapat dilakukan dengan gmail API karna 
 	account sender tidak dapat diset secara permanent. 
@@ -48,6 +48,14 @@ SEND MESSAGE
 	makai cronjob php atau build dengan python ? cronjob
 
 	email di ganti ketika id tamu masih ada yang belum d kirimkan email suatu event
+	
+	
+OUTBOX
+	view message ✔
+	seach and pagination ✔
+	view detail email ✔
+	view by event or direct message ✔
+	
 	
 	
 CRUD EVENT
@@ -74,10 +82,10 @@ ACCOUNT (inget build API key)
 			captcha 
 		emails sender user 
 			create ✔
-			update
+			update ✔
 			de/activate ✔
 		edit account user ✔
-		change password
+		change password ✔
 
 GUEST
  	GUEST data XCL upload
@@ -92,6 +100,19 @@ WEBSERVICE
 		create folder per user ✔
 		rename nama foto ✔
 	//guest photo delete ?
+	
+
+QUESTIONNAIRE 
+	view Questionnaire
+		view respond
+	create Questionnaire ✔
+		multi question ✔
+		multi option ✔
+	edit Questionnaire 
+		edit multi question 
+		edit multi option 
+	send Questionnaire
+	delete Questionnaire
 	
 
 BUILD API DOCUMENTASION 
