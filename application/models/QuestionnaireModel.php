@@ -105,32 +105,33 @@ class QuestionnaireModel extends CI_Model {
 		$this->db->update('tbl_event', $data); 
 	}
 	
+	
+	
 	// SEARCH FUCTION
 	public function get_total($user_id){
 		
 		$this->db->where('user_id',$user_id);
-		$this->db->where('event_status_delete',0);
-		$query=$this->db->get("tbl_event");	
+		//$this->db->where('event_status_delete',0);
+		$query=$this->db->get("tbl_questionnaire");	
 		return $query->num_rows();	
 	}
 	
 	public function get_filter($user_id,$search){
 		
 		$this->db->where('user_id',$user_id);
-		$this->db->where('event_status_delete',0);
-		$this->db->like('event_name', $search);
-		$this->db->or_like('event_description', $search);
-		$this->db->or_like('event_message', $search);
-		$query=$this->db->get("tbl_event");
+		//$this->db->where('event_status_delete',0);
+		$this->db->like('questionnaire_name', $search);
+		$this->db->or_like('questionnaire_message', $search);
+		$query=$this->db->get("tbl_questionnaire");
 		return $query->num_rows();
 	} 	
 
 	public function get_current_page_records($user_id, $limit, $start){
 		
 		$this->db->where('user_id',$user_id);
-		$this->db->where('event_status_delete',0);
+		//$this->db->where('event_status_delete',0);
 		$this->db->limit($limit, $start);
-        $query = $this->db->get("tbl_event");
+        $query = $this->db->get("tbl_questionnaire");
  
         if ($query->num_rows() > 0) 
         {
@@ -148,12 +149,11 @@ class QuestionnaireModel extends CI_Model {
 	public function get_current_page_records_filter($user_id, $limit, $start, $search){
 		
 		$this->db->where('user_id',$user_id);
-		$this->db->where('event_status_delete',0);
+		//$this->db->where('event_status_delete',0);
 		$this->db->limit($limit, $start);
-		$this->db->like('event_name', $search);
-		$this->db->or_like('event_description', $search);
-		$this->db->or_like('event_message', $search);
-        $query = $this->db->get("tbl_event");
+		$this->db->like('questionnaire_name', $search);
+		$this->db->or_like('questionnaire_message', $search);
+        $query = $this->db->get("tbl_questionnaire");
  
         if ($query->num_rows() > 0) 
         {

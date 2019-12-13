@@ -16,7 +16,7 @@ GET MESSAGE
 	 
 SEND MESSAGE
 	
-	send tamplate event email
+	send tamplate event email ✔
 	
 	insert data ke outbox ✔
 	buat controler, model ✔
@@ -103,7 +103,7 @@ WEBSERVICE
 	
 
 QUESTIONNAIRE 
-	view Questionnaire
+	view Questionnaire ✔
 		view respond
 	create Questionnaire ✔
 		multi question ✔

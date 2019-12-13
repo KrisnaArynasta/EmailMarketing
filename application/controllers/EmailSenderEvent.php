@@ -7,6 +7,8 @@ class EmailSenderEvent extends CI_Controller {
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('email');
 		$this->load->Model('EmailSenderEventModel');
+		$this->load->Model('EventModel');
+		$this->load->library('session');
 		$this->email->set_newline("\r\n");
     }
 	
@@ -28,28 +30,68 @@ class EmailSenderEvent extends CI_Controller {
 					if ($this->EmailSenderEventModel->get_inbox_count($row_email->email_sender_id) < $row_email->limit_email){
 						// set email sender and server
 						$config = Array(
-									'protocol' => 'smtp',
+									'protocol' 	=> 'smtp',
 									'smtp_host' => $row_email->sender_host,
 									'smtp_port' => 465,
 									'smtp_user' => $row_email->email,
 									'smtp_pass' => $row_email->password,
 									'mailtype'  => 'html', 
-									'charset' => 'utf-8',
-									'wordwrap' => TRUE
+									'charset' 	=> 'utf-8',
+									'wordwrap' 	=> TRUE
 								);
 						$this->email->initialize($config);
 						
-						//set konten email
-						$htmlContent =		'</center>';			
-						$htmlContent .=		'<H1>SPECIAL PROMO FOR '.$row_event->event_name.'</h1>';
-						$htmlContent .=			'Hallo Mr/Ms. <b>'.$row_guest->guest_name.'</b><br>';
-						$htmlContent .=			$row_event->event_message.'</b><br><br><br>';
-						$htmlContent .=		'</center>';
+						$event_data['data_detail']=$this->EventModel->view_event_email($row_event->event_id);
+						
+						foreach($event_data['data_detail'] as $event_row){
+							$property_logo		= $event_row->property_logo;
+							$property_address 	= $event_row->property_address;
+							$property_name 		= $event_row->property_name;
+							$property_website 	= $event_row->property_website;
+							$event_name 		= $event_row->event_name;
+							$event_date 		= $event_row->event_date;
+							$event_main_photo 	= $event_row->event_main_photo;
+							$event_message 		= $event_row->event_message;
+						}
+						
+						if($property_logo){ 
+							$property_logo = '<div class="col-md-6"><img width="20%" src="'.base_url().'images/property_logo/'.$property_logo.'"></div>';
+						}else{
+							$property_logo = '<div class="col-md-6"><h2><b>'.$property_name.'</b></h2></div>';
+						}
+
+						//SET ISI EMAIL
+						$htmlContent	=	'<div class="col-md-12" style="border-bottom:1px solid #0000003b; padding-bottom:10px">';
+						$htmlContent   .=	'<div class="row">';
+						$htmlContent   .=	$property_logo;
+						$htmlContent   .=	'<div class="col-md-6 text-right" style="top: 0.6rem;"><h4>'.$property_name.'<br>';
+						$htmlContent   .=	'<small>'.$property_address;
+						$htmlContent   .=	$property_website;
+						$htmlContent   .=	'</small></h4></div>';
+						$htmlContent   .=	'</div>';
+						$htmlContent   .=	'</div>';
+						$htmlContent   .=	'<strong><h2 class="mb-4 mt-4" align="center">'.$event_name.'<br><small>'.$event_date.'</small></h2></strong>';
+						$htmlContent   .=	'<div class="col-md-12">';
+						$htmlContent   .=	'<img class="col-md-12" src="'.base_url().'images/event_photos/event_main_photos/'.$event_main_photo.'">';
+						$htmlContent   .=	'</div>';
+						$htmlContent   .=	'<p class="mb-0 mt-4">'.$event_message.'</p>';
+						$htmlContent   .=	'<div class="col-md-12">';
+						$htmlContent   .=	'<h4 align="center" style="margin-top:40px; border-top:1px solid #0000003b; padding-top:10px" >Event&apos;s Photo(s)</h4>';
+						$htmlContent   .=	'<div class="row" id="eventPhotos">';
+						//FOTO EVENT
+						if($event_row->event_photo_id){
+							foreach($event_data['data_detail'] as $event_photo){
+								$htmlContent   .=	'<img width="24%" height="280px" style="margin:1px" src="'.base_url().'images/event_photos/events_photos/'.$event_photo->event_photo.'">';	
+							}
+						}
+						$htmlContent   .=	'</div>';
+						$htmlContent   .=	'</div>';
 						
 						$this->email->to($row_guest->guest_email);
-						$this->email->from($row_email->email,'Hotel Name Here');
+						$this->email->from($row_email->email,$property_name);
 						$this->email->subject($row_event->event_name);
 						$this->email->message($htmlContent);
+						echo $htmlContent;
 						if (!$this->email->send()) {
 							
 							show_error($this->email->print_debugger()); 

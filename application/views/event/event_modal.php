@@ -22,7 +22,6 @@
 				var message_send_before = (data.data_detail[0].message_send_before);
 				var event_main_photo	= (data.data_detail[0].event_main_photo);
 				var event_status_active = (data.data_detail[0].event_status_active);
-				var manometer_lng		= (data.data_detail[0].manometer_lng);
 				
 				event_date = new Date(event_date);
 				event_date = event_date.toString();

@@ -128,11 +128,11 @@
 						<!-- Form  -->
 							<?php 
 								$attributes = array('class' => 'form-group', 'id' => 'formCari'); 
-								echo form_open("Event",$attributes); 
+								echo form_open("Questionnaire",$attributes); 
 							?>
 							<div class="form-group mb-0">
 								<div class="input-group">
-									<input type="text" class="form-control" name="search" placeholder="Find event or event description">
+									<input type="text" class="form-control" name="search" placeholder="Find questionnaire or questionnaire message">
                     				<button type="submit" class="input-group-text search-button pointer"><i class="fas fa-search"></i></button>
 								</div>
 							</div>
@@ -142,81 +142,87 @@
 			</div>
 		
 			<div class="card-body">
-				<div class="row">
-					<?php  
-						// cek data event ada atau tidak 	
-						if( !empty($event)){
-							// dapetin event dari tbl_event							
-							foreach($event as $row_event){
-							$send_on = date('Y-m-d', strtotime($row_event->event_date.' - '.$row_event->message_send_before.'days'));
-					?>				
-						<div class="col-lg-4 col-sm-12" style="opacity:<?=($send_on < date('Y-m-d')? 0.4 : 1)?>" title="<?=($send_on < date('Y-m-d')? "Send Date Has Passed" : "")?>">
-							<div class="card shadow">
-								<a data-tooltip="tooltip" data-placement="top" title="" data-original-title="View Email Tamplate" href="javascript:view_email_event(<?=$row_event->event_id?>);">
-									<img class="card-img-top img-fluid" src="<?=base_url()?>images/event_photos/event_main_photos/<?=$row_event->event_main_photo?>" alt="Failed to load image" style="object-fit: cover;height: 250px;">
-								</a>
-								<div class="card-body">
-									<div class="col-md-12" style="margin:0; padding:0">
-												<center>
-												<!-- EDIT ICON !-->
-												<a class="tooltipped" data-position="top" data-tooltip="Edit Event" href="<?=base_url('Event/')?>edit/<?=$row_event->event_id?>"><span class="btn-inner--icon"><i class="fe fe-edit-3"></i></span></a>
-												<!-- AKTIVATING ICON !-->
-												<?php if(!$row_event->event_status_active){?>
-													<span data-tooltip="tooltip" data-placement="top" title="" data-original-title="Activate Event"><a class="icon-gray" href="javascript:conformAktif(<?=$row_event->event_id?>, '<?=$row_event->event_name?>');"><i class="fe fe-check-square"></i></a></span>														
-												<?php } else{ ?>
-													<span data-tooltip="tooltip" data-placement="top" title="" data-original-title="Non-activate Event"><a class="icon-warning" href="javascript:conformDiaktif(<?=$row_event->event_id?>, '<?=$row_event->event_name?>');"><i class="fe fe-x-square"></i></a></span>														
-												<?php } ?>
-												<!-- DELETE ICON !-->
-												<?php if(!$row_event->event_status_delete){?>
-													<span data-tooltip="tooltip" data-placement="top" title="" data-original-title="Delete Event"><a class="icon-gray" href="javascript:deleteEvent(<?=$row_event->event_id?>, '<?=$row_event->event_name?>');"><i class="fe fe-trash-2"></i></a></span>														
-												<?php } ?>
-												<h3 class="card-title"><?=$row_event->event_name?></h3>
-												</center>
-										
-									</div>	
-									<a data-tooltip="tooltip" data-placement="top" title="" data-original-title="View Email Tamplate" href="javascript:view_email_event(<?=$row_event->event_id?>);" style="color:#000000c9">
-										<p class="card-text">
-											<?php if(strlen($row_event->event_description)<80) echo $row_event->event_description."<br><br>"; 
-													else echo substr($row_event->event_description, 0, 80)."...";?>
-										</p>
-										<div class="col-md-12" style="opacity:0.6">
-											<div class="row">
-												<div class="col-md-6"><small>
-													Event Date<br><b><?=$row_event->event_date?></b>
-												</small></div>
-												<div class="col-md-6 float-right text-right"><small>
-													Send On<br><b><?=$send_on?></b>
-												</small></div>
-											
+				<div id="generic_price_table">
+					<div class="row">
+						<?php  
+							// cek data questionnair ada atau tidak 	
+							if( !empty($questionnaire)){
+								// dapetin questionnair dari tbl_questionnair							
+								foreach($questionnaire as $row_questionnaire){
+						?>				
+							<div class="col-lg-4">
+								<!--PRICE CONTENT START-->
+								<div class="generic_content clearfix card shadow">
+
+									<!--HEAD PRICE DETAIL START-->
+									<div class="generic_head_price clearfix">
+
+										<!--HEAD CONTENT START-->
+										<div class="generic_head_content clearfix" style="margin: 0 0 20px 0;">
+											<!--HEAD START-->
+											<div class="head_bg"></div>
+											<div class="head">
+												<span><b><?=$row_questionnaire->questionnaire_name?></b></span>
 											</div>
+											<!--//HEAD END-->
 										</div>
-									</a>	
+										<!--//HEAD CONTENT END-->
+
+										<!--PRICE START-->
+										<div class="generic_price_tag clearfix" style="padding:0">
+											<span class="price">
+												<small>Send On :</small>
+												<br>
+												<?=$row_questionnaire->questionnaire_send_on?>
+											</span>
+										</div>
+										<!--//PRICE END-->
+									</div>
+									<!--//HEAD PRICE DETAIL END-->
+
+									<!--FEATURE LIST START-->
+									<div class="generic_feature_list">
+										<!--<a href="" title="view email tamplate"><span><i class="fe fe-eye"></i></span></a>-->
+										<p>
+											<?php if(strlen($row_questionnaire->questionnaire_message)<80) echo $row_questionnaire->questionnaire_message."<br><br>"; 
+												else echo substr($row_questionnaire->questionnaire_message, 0, 120)."...";?>
+										</p>
+									</div>
+									<!--//FEATURE LIST END-->
+
+									<!--BUTTON START-->
+									<div class="generic_price_btn clearfix">
+										<a class="btn btn-reguler" href="#">View Email</a>
+										<a class="btn btn-reguler" href="<?=base_url("Questionnaire/create_question/".$row_questionnaire->questionnaire_id)?>">Edit </a>
+									</div>
+									<!--//BUTTON END-->
 								</div>
+								<!--//PRICE CONTENT END-->
 							</div>
-						</div>
-					<?php 
-						} 
-					?>
-							<div class="col-md-12">
-					<?php 
-						// link paging
-						if (isset($links)) {
-								echo "<div class='col-md-12'>".$links."</div>";
-							}
-						// jika data event tidak ada  
-						} else  { ?>
-							<div class="col-md-12">
-								<b><h3 style='opacity:0.4; text-align:center; margin-top:50px'>You Dont Have Any Questionnaire Yet!</h3></b> <br>
-							</div>	
-					<?php } ?>
-							</div>	
-					<!-- Button Tambah Melayang !-->
-					<a href="<?=base_url('Questionnaire/create')?>">
-						<button class="float btn btn-icon btn-add btn-info mt-1 mb-1" data-tooltip="tooltip" data-placement="left" title="" data-original-title="Create new event">
-							<span class="btn-inner--icon"><i class="fe fe-plus"></i></span>
-						</button>
-					</a>
-				</div>
+						<?php 
+							} 
+						?>
+								<div class="col-md-12">
+						<?php 
+							// link paging
+							if (isset($links)) {
+									echo "<div class='col-md-12'>".$links."</div>";
+								}
+							// jika data event tidak ada  
+							} else  { ?>
+								<div class="col-md-12">
+									<b><h3 style='opacity:0.4; text-align:center; margin-top:50px'>You Dont Have Any Questionnaire Yet!</h3></b> <br>
+								</div>	
+						<?php } ?>
+								</div>	
+						<!-- Button Tambah Melayang !-->
+						<a href="<?=base_url('Questionnaire/create')?>">
+							<button class="float btn btn-icon btn-add btn-info mt-1 mb-1" data-tooltip="tooltip" data-placement="left" title="" data-original-title="Create new event">
+								<span class="btn-inner--icon"><i class="fe fe-plus"></i></span>
+							</button>
+						</a>
+					</div>
+				</div>			
 			</div>			
 		</div>
 	</div>

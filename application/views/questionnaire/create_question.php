@@ -109,63 +109,77 @@
 	</div>	
 	<div class="email-app card shadow">
 		<div class="inbox p-0">		
-			<div class="card-body">
-			
-			<!-- QUESTIONNAIRE INFO !-->
-				<div class="row">
-					<div class="col-md-12">     
-						<div class="form-group form-alert" id="lat-valid">
-							<label class="form-label" >Questionnaire Name</label>
-							<input type="text" style="margin-right:5px;" class="form-control" readonly value="<?=$questionnaire_name?>">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-alert" id="lng-evalid">
-							<label class="form-label" >Questionnaire Create On</label>
-							<input type="text" class="form-control" readonly value="<?=$questionnaire_date_create?>">
-						</div>
-					</div>					
-					<div class="col-md-6">
-						<div class="form-group form-alert" id="lng-evalid">
-							<label class="form-label" >Questionnaire Send On</label>
-							<input type="text" class="form-control" readonly value="<?=$questionnaire_send_on?>">
-						</div>
-					</div>
+			<div class="card-body" style="padding:20px 50px 20px 50px">
+				<div class="row">	
+					<!-- BUTTON EDIT QUESTIONNAIRE !-->	
 					<div class="col-md-12">
-						<div class="form-group form-alert">
-							<label class="form-label">Message in email to send</label>
-							<textarea class="form-control" readonly id="question_email_preview" name="question_email_preview"><?=$questionnaire_message?></textarea>
+						<button class="btn btn-icon btn-outline-primary mt-1 mb-1 float-right" type="button" onclick="">
+							<span class="btn-inner--icon"><i class="fe fe-edit"></i></span>
+							<span class="btn-inner--text">Edit Questionnaire</span>
+						</button>
+					</div>
+				
+					<!-- QUESTIONNAIRE INFO !-->
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-12">     
+								<div class="form-group form-alert" id="lat-valid">
+									<label class="form-label" >Questionnaire Name</label>
+									<input type="text" style="margin-right:5px;" class="form-control" readonly value="<?=$questionnaire_name?>">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group form-alert" id="lng-evalid">
+									<label class="form-label" >Questionnaire Create On</label>
+									<input type="text" class="form-control" readonly value="<?=$questionnaire_date_create?>">
+								</div>
+							</div>					
+							<div class="col-md-6">
+								<div class="form-group form-alert" id="lng-evalid">
+									<label class="form-label" >Questionnaire Send On</label>
+									<input type="text" class="form-control" readonly value="<?=$questionnaire_send_on?>">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group form-alert">
+									<label class="form-label">Message in email to send</label>
+									<textarea class="form-control" readonly id="question_email_preview" name="question_email_preview"><?=$questionnaire_message?></textarea>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			
-				<!-- BUTTON CREATE QUESTION !-->
-				<button class="btn btn-icon btn-outline-primary mt-1 mb-1" type="button" onclick="add_question()">
-					<span class="btn-inner--icon"><i class="fe fe-plus"></i></span>
-					<span class="btn-inner--text">Add Question</span>
-				</button>
 				
-				<!-- QUESTION AND OPTION DISPLAY !-->
-				<div class="col-md-12">	
-					<?php 
-						$last_question_id = 0;
-						foreach($data_questionnaire as $question_row){
-							$now_question_id=$question_row->question_id;
-							if($now_question_id != $last_question_id){
-								$last_question_id = $now_question_id;
-					?>		
-							<div style="margin-top:20px; border-top:1px #000 solid">
-								<p><?=$question_row->question?></p>
-								<li style="margin-left:50px;"><?=$question_row->question_option_value?></li>
+					<!-- BUTTON CREATE QUESTION !-->
+					<div class="col-md-12" style="margin-top:50px">	
+						<button class="btn btn-icon btn-outline-primary mt-1 mb-1" type="button" onclick="add_question()">
+							<span class="btn-inner--icon"><i class="fe fe-plus"></i></span>
+							<span class="btn-inner--text">Add Question</span>
+						</button>
+					</div>	
+					
+					<!-- QUESTION AND OPTION DISPLAY !-->
+					<div class="col-md-12">	
+						<?php 
+							$last_question_id = 0;
+							foreach($data_questionnaire as $question_row){
+								$now_question_id=$question_row->question_id;
+								if($now_question_id != $last_question_id){
+									$last_question_id = $now_question_id;
+						?>		
+								<div style="margin-top:20px; border-top:1px #000 solid">
+									<p><?=$question_row->question?> <a href="" title="view email tamplate"><span><i class="fe fe-edit"></i></span></a></p>
+									<li style="margin-left:50px;"><?=$question_row->question_option_value?></li>
+									
+						<?php	}else{ ?>
+									<li style="margin-left:50px;"><?=$question_row->question_option_value?></li>
+						<?php
+								}
 								
-					<?php	}else{ ?>
-								<li style="margin-left:50px;"><?=$question_row->question_option_value?></li>
-					<?php
 							}
-							
-						}
-					?>
-				</div>	
+						?>
+								</div>	
+					</div>	
+				</div>			
 			</div>			
 		</div>
 	</div>

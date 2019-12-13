@@ -15,68 +15,68 @@ class Questionnaire extends CI_Controller {
 			redirect(base_url(),'location');
 		}
 		
-		$this->load->view('questionnaire/view_questionnaire');
+		//$this->load->view('questionnaire/view_questionnaire');
 		
-		// $user_id = $this->session->userdata('user_id');	
+		$user_id = $this->session->userdata('user_id');	
 		
-		// $search = $this->input->post('search');
-		// if($search){
-			// $total_records = $this->EventModel->get_filter($user_id,$search);
-		// }else {
-			// $total_records = $this->EventModel->get_total($user_id);
-		// }
+		$search = $this->input->post('search');
+		if($search){
+			$total_records = $this->QuestionnaireModel->get_filter($user_id,$search);
+		}else {
+			$total_records = $this->QuestionnaireModel->get_total($user_id);
+		}
 			
 			
-			// // init params
-			// $params = array();
-			// $limit_per_page = 6;
-			// $start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-			// $page = $start_index / $limit_per_page + 1;
+			// init params
+			$params = array();
+			$limit_per_page = 6;
+			$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+			$page = $start_index / $limit_per_page + 1;
    
 	 
-			// if ($total_records > 0) {
-				// // get current page records
-				// if($search){
-					// $params['event']=$this->EventModel->get_current_page_records_filter($user_id, $limit_per_page, $start_index, $search);
-				// }else{
-					// $params['event']=$this->EventModel->get_current_page_records($user_id, $limit_per_page, $start_index);
-				// }
+			if ($total_records > 0) {
+				// get current page records
+				if($search){
+					$params['questionnaire']=$this->QuestionnaireModel->get_current_page_records_filter($user_id, $limit_per_page, $start_index, $search);
+				}else{
+					$params['questionnaire']=$this->QuestionnaireModel->get_current_page_records($user_id, $limit_per_page, $start_index);
+				}
 
 				
-				// $config['base_url'] = base_url().'Event/index';
-				// $config['total_rows'] = $total_records;
-				// $config['per_page'] = $limit_per_page;
-				// $config["uri_segment"] = 3;
+				$config['base_url'] = base_url().'Questionnaire/index';
+				$config['total_rows'] = $total_records;
+				$config['per_page'] = $limit_per_page;
+				$config["uri_segment"] = 3;
 
-				// //bootstrap class
-				// $config['first_link']       = '<i class="fe fe-chevrons-left"></i>';
-				// $config['last_link']        = '<i class="fe fe-chevrons-right"></i>';
-				// $config['next_link']        = '<i class="fe fe-chevron-right"></i>';
-				// $config['prev_link']        = '<i class="fe fe-chevron-left"></i>';
-				// $config['full_tag_open']    = '<div class="pagging text-center"><nav style="border-right:0"><ul class="pagination justify-content-center">';
-				// $config['full_tag_close']   = '</ul></nav></div>';
-				// $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-				// $config['num_tag_close']    = '</span></li>';
-				// $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-				// $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-				// $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-				// $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-				// $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-				// $config['prev_tagl_close']  = '</span>Next</li>';
-				// $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-				// $config['first_tagl_close'] = '</span></li>';
-				// $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-				// $config['last_tagl_close']  = '</span></li>';
+				//bootstrap class
+				$config['first_link']       = '<i class="fe fe-chevrons-left"></i>';
+				$config['last_link']        = '<i class="fe fe-chevrons-right"></i>';
+				$config['next_link']        = '<i class="fe fe-chevron-right"></i>';
+				$config['prev_link']        = '<i class="fe fe-chevron-left"></i>';
+				$config['full_tag_open']    = '<div class="pagging text-center"><nav style="border-right:0"><ul class="pagination justify-content-center">';
+				$config['full_tag_close']   = '</ul></nav></div>';
+				$config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+				$config['num_tag_close']    = '</span></li>';
+				$config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+				$config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+				$config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+				$config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+				$config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+				$config['prev_tagl_close']  = '</span>Next</li>';
+				$config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+				$config['first_tagl_close'] = '</span></li>';
+				$config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+				$config['last_tagl_close']  = '</span></li>';
 				 
-				// $this->pagination->initialize($config);
+				$this->pagination->initialize($config);
 				 
-				// // build paging links
-				// $params["links"] = $this->pagination->create_links();
+				// build paging links
+				$params["links"] = $this->pagination->create_links();
 				
-			// }
+			}
 			 
-			// //$hasil['data']=$this->ManometerModel->view_all_manometer();
-			// $this->load->view('event/view_event',$params);
+			//$hasil['data']=$this->ManometerModel->view_all_manometer();
+			$this->load->view('Questionnaire/view_questionnaire',$params);
 			
 	}
 
