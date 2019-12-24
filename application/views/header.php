@@ -69,37 +69,39 @@
 					<a class="navbar-brand" href="index.html"><img alt="..." class="navbar-brand-img main-logo" src="assets/img/brand/logo-dark.png"> <img alt="..." class="navbar-brand-img logo" src="assets/img/brand/logo.png"></a>
 					<ul class="side-menu">
 						<li class="slide">
-							<a class="side-menu__item" href="#"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
+							<a class="side-menu__item" href="<?=base_url('Dashboard')?>"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
 						</li>
-						
+						<li class="slide">
+							<a class="side-menu__item" href="<?=base_url('Guest')?>"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Guests Data</span></a>
+						</li>
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fe fe-mail"></i><span class="side-menu__label">Email</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li>
-									<a href="<?=base_url('EmailInbox')?>" class="slide-item"><i class="fas fe fe-inbox"></i>&nbsp Email Inbox</a>
+									<a href="<?=base_url('EmailInbox')?>" class="slide-item"><i class="side-menu__icon fe fe-inbox"></i>&nbsp Email Inbox</a>
 								</li>
 								<li>
-									<a href="<?=base_url('EmailOutbox')?>" class="slide-item"><i class="angel fe fe-send"></i>&nbsp Email Outbox</a>
+									<a href="<?=base_url('EmailOutbox')?>" class="slide-item"><i class="side-menu__icon fe fe-send"></i>&nbsp Email Outbox</a>
 								</li>
 							</ul>
 						</li>
 						<li class="slide">
-							<a class="side-menu__item" href="<?=base_url('Event')?>"><i class="side-menu__icon fas fa-calendar-alt"></i><span class="side-menu__label">Event</span></a>
+							<a class="side-menu__item" href="<?=base_url('Event')?>"><i class="side-menu__icon fab fa-wpforms"></i><span class="side-menu__label">Event</span></a>
 						</li>
 						<li class="slide">
-							<a class="side-menu__item" href="<?=base_url('Questionnaire')?>"><i class="side-menu__icon fab fa-wpforms"></i><span class="side-menu__label">Questionnaire</span></a>
+							<a class="side-menu__item" href="<?=base_url('Questionnaire')?>"><i class="side-menu__icon fe fe-list"></i><span class="side-menu__label">Questionnaire</span></a>
 						</li>
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Account</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li>
-									<a href="<?=base_url('Account/edit_profile')?>" class="slide-item">Edit Property Profile</a>
+									<a href="<?=base_url('Account/edit_profile')?>" class="slide-item"><i class="side-menu__icon fe fe-edit"></i>Edit Property Profile</a>
 								</li>
 								<li>
-									<a href="<?=base_url('Account/change_password')?>" class="slide-item">Change Password</a>
+									<a href="<?=base_url('Account/change_password')?>" class="slide-item"><i class="side-menu__icon fe fe-lock"></i>Change Password</a>
 								</li>								
 								<li>
-									<a href="<?=base_url('Account/email_account')?>" class="slide-item">Email Account</a>
+									<a href="<?=base_url('Account/email_account')?>" class="slide-item"><i class="side-menu__icon fe fe-at-sign"></i>Email Account</a>
 								</li>
 							</ul>
 						</li>

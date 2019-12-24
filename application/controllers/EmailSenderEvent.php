@@ -81,7 +81,7 @@ class EmailSenderEvent extends CI_Controller {
 						//FOTO EVENT
 						if($event_row->event_photo_id){
 							foreach($event_data['data_detail'] as $event_photo){
-								$htmlContent   .=	'<img width="24%" height="280px" style="margin:1px" src="'.base_url().'images/event_photos/events_photos/'.$event_photo->event_photo.'">';	
+								$htmlContent   .=	'<img width="24%" style="margin:1px" src="'.base_url().'images/event_photos/events_photos/'.$event_photo->event_photo.'">';	
 							}
 						}
 						$htmlContent   .=	'</div>';
@@ -122,9 +122,9 @@ class EmailSenderEvent extends CI_Controller {
 								  "guest_id" => $row_guest->guest_id,
 								  "email_send_to" => $row_guest->guest_email,
 								  "email_sender_id" => $row_email->email_sender_id,
-								  "outbox_from" => $row_email->email." ,'Hotel Name Here",
+								  "outbox_from" => $row_email->email." ,".$property_name,
 								  "outbox_subject" => $row_event->event_name,
-								  "message_send" => $row_event->event_message,
+								  "message_send" => $htmlContent,
 								  "sent_status" => 1
 								);
 							$this->EmailSenderEventModel->insert_to_outbox($data);

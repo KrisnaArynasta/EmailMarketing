@@ -40,10 +40,10 @@
 <!-- Page content -->
 <div class="container-fluid pt-8">
 	<div class="page-header mt-0  p-3">
-		<h3 class="mb-sm-0">Email Inbox</h3>
+		<h3 class="mb-sm-0">Email Outbox</h3>
 		<ol class="breadcrumb mb-0">
 			<li class="breadcrumb-item"><a href="#"><i class="fe fe-home"></i></a></li>
-			<li class="breadcrumb-item active" aria-current="page">Email Inbox</li>
+			<li class="breadcrumb-item active" aria-current="page">Email Outbox</li>
 		</ol>
 
 	</div>

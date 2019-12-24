@@ -1,4 +1,13 @@
 	udh bisa login, udh bisa nampilin sesson ✔
+	Logo aplikasi
+	
+DASHBOARD 
+	hitung event yg dikirim hari ini ✔
+	hitung total event yang belum dikirim ✔
+	total data tamu ✔
+	total respond quisoner
+	preview respond tamu 5
+	preview 5 inbox tamu ✔
 
 GET MESSAGE
      get message parameter last get email di db pas load email simpen tanggalnya. ✔
@@ -23,8 +32,8 @@ SEND MESSAGE
 	buat controler email sender flag 0 ✔
 	
 	pas ngirim email auto :
-	update status sent
-	update tgl & waktu kirim 
+	update status sent ✔
+	update tgl & waktu kirim  ✔
 
 	kirim email ke spesific user secara masal ✔
 	
@@ -43,7 +52,7 @@ SEND MESSAGE
 	*pesan dikirm tidak dapat dilakukan dengan gmail API karna 
 	account sender tidak dapat diset secara permanent. 
 	
-	Balas pesan manual
+	Balas pesan manual ✔
 	
 	makai cronjob php atau build dengan python ? cronjob
 
@@ -89,7 +98,7 @@ ACCOUNT (inget build API key)
 
 GUEST
  	GUEST data XCL upload
-	view guest
+	view guest ✔
  
 WEBSERVICE
 	create guest  ✔
@@ -124,6 +133,11 @@ UNTUK MAJU PROPOSAL
 		SOP
 		PDM
 		gambaran umum sistem
+
+WEBSERVICE
+	insert guest data ✔
+	update guest data ✔
+	delete guest data ✔
 
 kuisoner
 form create user - value dinamis di setup pengguna

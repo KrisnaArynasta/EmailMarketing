@@ -91,7 +91,7 @@
 	</div>
 	<div class="card shadow">
 		<div class="card-header">
-			<h2 class="mb-0">Data Eamil Account</h2>
+			<h2 class="mb-0">Data Email Account</h2>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -136,6 +136,22 @@
 <button class="float btn btn-icon btn-add btn-info mt-1 mb-1" data-tooltip="tooltip" data-placement="left" title="" data-original-title="Create new email account" data-toggle="modal" data-target="#createEmailAccount">
 	<span class="btn-inner--icon"><i class="fe fe-plus"></i></span>
 </button>
+
+
+<!-- Page content -->
+
+<!-- file uploads js -->
+<script src="<?=base_url()?>assets/plugins/fileuploads/js/dropify.min.js"></script>
+<!-- Data table js -->
+<script src="<?=base_url()?>assets/plugins/datatable/dataTables.responsive.min.js"></script>
+<script src="<?=base_url()?>assets/plugins/datatable/responsive.bootstrap4.min.js"></script>
+<script src="<?=base_url()?>assets/js/datatable.js"></script>
+
+<!-- sweet alert table js -->
+<script src="<?=base_url()?>assets/plugins/sweet-alert/sweetalert.min.js"></script>
+<script src="<?=base_url()?>assets/js/sweet-alert.js"></script>
+<script src="<?=base_url()?>assets/js/custom.js"></script>
+
 <?php
 	$this->load->view('user/email_account_modal');
 	$this->load->view('modal');
@@ -143,14 +159,5 @@
 ?>
 
 
-<!-- Page content -->
-
-<!-- file uploads js -->
-<script src="<?=base_url()?>assets/plugins/fileuploads/js/dropify.min.js"></script>
-
-<!-- sweet alert table js -->
-<script src="<?=base_url()?>assets/plugins/sweet-alert/sweetalert.min.js"></script>
-<script src="<?=base_url()?>assets/js/sweet-alert.js"></script>
-<script src="<?=base_url()?>assets/js/custom.js"></script>
 
 

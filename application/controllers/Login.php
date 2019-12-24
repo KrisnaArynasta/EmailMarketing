@@ -15,9 +15,7 @@ public function index(){
   		if($this->session->userdata('login_status') != "login"){
 			$this->load->view('login/login');
 		}else{
-			echo 'loged';
-			//$hasil['data']=$this->AdminModel->view_content();
-			//$this->load->view('Admin/dashboard',$hasil);
+			redirect(base_url('Dashboard'),'location');
 		}
   }
  
@@ -54,13 +52,7 @@ public function index(){
 			);
  
 		$this->session->set_userdata($data_session);
-		echo $this->session->userdata('login_status');
-		echo $this->session->userdata('user_id');
-		echo $this->session->userdata('user_email');
-		echo $this->session->userdata('property_name');
-		echo $this->session->userdata('property_logo');
-		echo $this->session->userdata('API_key');
-		echo $this->session->userdata('secret_key');
+		redirect(base_url('Dashboard'));
 		
 	
 	}else{

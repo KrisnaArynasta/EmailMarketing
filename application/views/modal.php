@@ -1,7 +1,8 @@
+ <!--
 <div id="loading-wrap">
 	<img src="<?=base_url()?>images/icon/loading-flat.gif" id="wait" alt="Loading" />
 </div>	
-
+-->
 
 	  <!-- Modal Sukses -->
 <div class="modal fade" id="myModalSuccess" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">>

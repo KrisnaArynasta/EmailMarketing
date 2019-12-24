@@ -23,7 +23,6 @@
 	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
 
 	<!-- Adon Scripts -->
-	
 	<!-- Core -->
 	<script src="<?=base_url()?>assets/plugins/jquery/dist/jquery.min.js"></script>
 	<script src="<?=base_url()?>assets/js/popper.js"></script>
@@ -62,8 +61,6 @@
 	<script src="<?=base_url()?>assets/plugins/sweet-alert/sweetalert.min.js"></script>
 	<script src="<?=base_url()?>assets/js/sweet-alert.js"></script>
 	
-
 </body>
 
-<!-- Mirrored from spruko.com/demo/adon/email-inbox.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Jan 2019 08:59:08 GMT -->
 </html>

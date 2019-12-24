@@ -2,20 +2,20 @@
 
 class EventModel extends CI_Model {
 	
-	// GET DATA EVENT
-	public function view_event($id){
-		$this->db->select('*');
-		$this->db->from('tbl_event');
-		$this->db->where('user_id',$id);
-		// dimana tgl event - tgl harus kirim lebih besar dari tgl sekarang
-		$this->db->where('(event_date - message_send_before) > CURDATE()');
-		// order by status aktif event = aktif
-		$this->db->order_by('event_status_active', "DESC");
-		// order by tgl harus kirim dari yang paling dekat dekat tgl skrng
-		$this->db->order_by("(event_date - message_send_before)", "ASC");
-		$query = $this->db->get()->result();
-		return $query;
-	}
+	// GET DATA EVENT => SEKARANG DI SET DI BAWAH (BAGIAN SEARCH)
+	// public function view_event($id){
+		// $this->db->select('*');
+		// $this->db->from('tbl_event');
+		// $this->db->where('user_id',$id);
+		// // dimana tgl event - tgl harus kirim lebih besar dari tgl sekarang
+		// $this->db->where('(event_date - message_send_before) > CURDATE()');
+		// // order by status aktif event = aktif
+		// $this->db->order_by('event_status_active', "DESC");
+		// // order by tgl harus kirim dari yang paling dekat dekat tgl skrng
+		// $this->db->order_by("(event_date - message_send_before) > CURDATE()", "DESC");
+		// $query = $this->db->get()->result();
+		// return $query;
+	// }
 	
 	// GET DATA EVENT BERDASARKAN ID EVENT
 	public function view_event_by_id($id){ 
@@ -124,6 +124,9 @@ class EventModel extends CI_Model {
 		$this->db->like('event_name', $search);
 		$this->db->or_like('event_description', $search);
 		$this->db->or_like('event_message', $search);
+		$this->db->order_by('event_status_active', "DESC");
+		// order by tgl harus kirim dari yang paling dekat dekat tgl skrng
+		$this->db->order_by("(event_date - message_send_before) > CURDATE()", "DESC");
 		$query=$this->db->get("tbl_event");
 		return $query->num_rows();
 	} 	
@@ -133,6 +136,9 @@ class EventModel extends CI_Model {
 		$this->db->where('user_id',$user_id);
 		$this->db->where('event_status_delete',0);
 		$this->db->limit($limit, $start);
+		$this->db->order_by('event_status_active', "DESC");
+		// order by tgl harus kirim dari yang paling dekat dekat tgl skrng
+		$this->db->order_by("(event_date - message_send_before) > CURDATE()", "DESC");
         $query = $this->db->get("tbl_event");
  
         if ($query->num_rows() > 0) 
@@ -156,6 +162,9 @@ class EventModel extends CI_Model {
 		$this->db->like('event_name', $search);
 		$this->db->or_like('event_description', $search);
 		$this->db->or_like('event_message', $search);
+		$this->db->order_by('event_status_active', "DESC");
+		// order by tgl harus kirim dari yang paling dekat dekat tgl skrng
+		$this->db->order_by("(event_date - message_send_before) > CURDATE()", "DESC");
         $query = $this->db->get("tbl_event");
  
         if ($query->num_rows() > 0) 
