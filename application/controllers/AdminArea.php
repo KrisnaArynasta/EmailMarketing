@@ -11,7 +11,7 @@ class AdminArea extends CI_Controller {
 	
 	public function index(){
 		if($this->session->userdata('admin_login_status')!=="login"){
-			redirect(base_url(),'location');
+			redirect(base_url('AdminArea'),'location');
 		}
 		
 		$data['data_proved_user'] = $this->AdminModel->check_proved_user();

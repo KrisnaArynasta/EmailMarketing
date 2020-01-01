@@ -81,4 +81,13 @@ class UserModel extends CI_Model {
 		$this->db->update('tbl_email_sender', $data);
 	}
 	
+	//DAPETIN API KEY DAN SECRET KEY USER
+	public function get_key($id){
+		$this->db->select('API_key, secret_key');
+		$this->db->from('tbl_user');
+		$this->db->where('user_id', $id);
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
 }

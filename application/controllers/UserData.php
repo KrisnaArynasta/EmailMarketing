@@ -11,7 +11,7 @@ class UserData extends CI_Controller {
 	
 	public function index(){
 		if($this->session->userdata('admin_login_status')!=="login"){
-			redirect(base_url(),'location');
+			redirect(base_url('AdminArea'),'location');
 		}
 		
 		$data['data_user'] = $this->AdminModel->get_user_all();
@@ -21,7 +21,7 @@ class UserData extends CI_Controller {
 	
 	public function view_detail_user($id){
 		if($this->session->userdata('admin_login_status')!=="login"){
-			redirect(base_url(),'location');
+			redirect(base_url('AdminArea'),'location');
 		}
 		
 		$data['data_user'] = $this->AdminModel->get_user_detail($id);
@@ -31,7 +31,7 @@ class UserData extends CI_Controller {
 	
 	public function user_status(){
 		if($this->session->userdata('login_status')!=="login"){
-			redirect(base_url(),'location');
+			redirect(base_url('AdminArea'),'location');
 		}
 
 		$id = $this->input->post('id'); 

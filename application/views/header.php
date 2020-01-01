@@ -106,7 +106,7 @@
 							</ul>
 						</li>
 						<li>
-							<a class="side-menu__item" href=""><i class="side-menu__icon fas fa-book"></i><span class="side-menu__label">Integration API</span></a>
+							<a class="side-menu__item" href="<?=base_url('API')?>"><i class="side-menu__icon fas fa-book"></i><span class="side-menu__label">Integration API</span></a>
 						</li>
 					</ul>
 				</div>

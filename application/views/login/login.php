@@ -48,7 +48,7 @@
 					echo form_open("Login/login",$attributes); 
 				?>
 					<div class="logo-img text-center pb-3">
-						<img src="<?=base_url()?>assets/img/brand/logo-dark1.png" alt="logo-img">
+						<img width="100%" src="<?=base_url()?>assets/img/brand/logo-dark1.png" alt="logo-img">
 					</div>
 					<span class="login100-form-title">
 						User Login
