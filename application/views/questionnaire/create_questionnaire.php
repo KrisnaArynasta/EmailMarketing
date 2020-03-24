@@ -39,13 +39,13 @@
 						<div class="col-md-12">     
 							<div class="form-group form-alert" id="lat-valid">
 								<label class="form-label" >Questionnaire Name</label>
-								<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="question_name" name="question_name" placeholder="e.g Questionnaire About Your Stay" onchange="" onfocusout="">
+								<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="question_name" name="question_name" placeholder="e.g Questionnaire About Your Stay" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group form-alert" id="lng-evalid">
 								<label class="form-label" >Questionnaire Send On</label>
-								<input type="text" class="form-control empty-validator" id="send_on" name="send_on" placeholder="e.g 2020-01-01" onchange="" onfocusout="">
+								<input type="text" class="form-control empty-validator" id="send_on" name="send_on" placeholder="e.g 2020-01-01" required>
 							</div>
 						</div>
 						<div class="col-md-12">

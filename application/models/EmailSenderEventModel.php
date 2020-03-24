@@ -60,6 +60,14 @@ class EmailSenderEventModel extends CI_Model {
 		return $query;
 	} 
 	
+	public function get_all_user(){
+		
+		$this->db->select('*');
+		$this->db->from('tbl_user');
+		$query = $this->db->get()->result();
+		return $query;
+	} 
+	
 	public function insert_to_outbox($data){
 		$this->db->insert('tbl_outbox', $data); 
 	}

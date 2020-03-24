@@ -1,7 +1,6 @@
 <?php
-  $title['title']="PEMS - Users Data";
+  $title['title']="PEMS - Property Guest Data";
   $this->load->view('admin_area/admin_header',$title);
-  $this->load->view('admin_area/user_data_modal');
 ?>
 
 <script>
@@ -15,17 +14,17 @@
 <!-- Page content -->
 <div class="container-fluid pt-8">
 	<div class="page-header mt-0  p-3">
-		<h3 class="mb-sm-0">Users Data</h3>
+		<h3 class="mb-sm-0">Guest Data</h3>
 		<ol class="breadcrumb mb-0">
 			<li class="breadcrumb-item"><a href="#"><i class="fe fe-home"></i></a></li>
-			<li class="breadcrumb-item active" aria-current="page">Users Data</li>
+			<li class="breadcrumb-item active" aria-current="page">Guest Data</li>
 		</ol>	
 	</div>
 	<div class="card shadow">
 		<div class="card-header">
 			<div class="row">
 				<div class="col-md-6">
-					<h2 class="mb-0">Users Data</h2>
+					<h2 class="mb-0">Guest Data</h2>
 				</div>
 			</div>
 		</div>
@@ -34,17 +33,27 @@
 				<table id="example" class="table table-striped table-bordered w-100 text-nowrap" style="text-align:center;">
 					<thead>
 						<tr>
-							<th class="wd-15p">User Email</th>
-							<th class="wd-15p">Property Name</th>
-							<th class="wd-15p">Action</th>
+							<th class="wd-15p">Property Origin</th>
+							<th class="wd-15p">Guest Name</th>
+							<th class="wd-15p">Guest Email</th>
+							<th class="wd-15p">Guest Country</th>
+							<th class="wd-15p">Subscribe Status</th>
+							<th class="wd-15p">Active Status</th>
+							<th class="wd-15p">Inserted On</th>
+							<th class="wd-15p">Last Modify</th>
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach($data_user as $row_user){?>
-						<?=($row_user->user_status_active==0)?"<tr style='color:#e80606' title='Not Active User'>":"<tr>"?>
-							<td><?=(!$row_user->admin_id_approver ? "<span class='badge bg-success text-white'>New</span>" : "")?> <?=$row_user->email?></td>
-							<td><?=$row_user->property_name?></td>
-							<td><a href="javascript:view_detail_user(<?=$row_user->user_id?>);"><i class="fe fe-eye"></i></a></td>
+						<?php foreach($data_guest as $row_guest){?>
+						<tr>
+							<td><?=$row_guest->property_name?></td>
+							<td><?=$row_guest->guest_name?></td>
+							<td><?=$row_guest->guest_email?></td>
+							<td><?=$row_guest->guest_country?></td>
+							<td><?=($row_guest->guest_subscribe_status==0)?"No Longer Subscribed":"Subscribe"?></td>
+							<td><?=($row_guest->guest_active_status==0)?"Not Active":"Active"?></td>
+							<td><?=$row_guest->guest_insert_date?></td>
+							<td><?=$row_guest->guest_last_update?></td>
 						</tr>
 						<?php } ?>
 					</tbody>
@@ -65,6 +74,7 @@
 <script src="<?=base_url()?>assets/js/custom.js"></script>
 
 <?php
+	$this->load->view('event/event_modal');
 	$this->load->view('modal');
 	$this->load->view('admin_area/admin_footer');
 ?>

@@ -28,7 +28,7 @@ class EmailOutbox extends CI_Controller {
 			
 			// init params
 			$params = array();
-			$limit_per_page = 10;
+			$limit_per_page = 6;
 			$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 			$page = $start_index / $limit_per_page + 1;
    
@@ -74,7 +74,6 @@ class EmailOutbox extends CI_Controller {
 				
 			}
 			 
-			//$hasil['data']=$this->ManometerModel->view_all_manometer();
 			$this->load->view('email/email-outbox',$params);
 	}
 	

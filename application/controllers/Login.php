@@ -90,7 +90,8 @@ public function index(){
 						  "password" 					=> $this->input->post('password'),
 						  "property_name"				=> $this->input->post('property_name'),
 						  "API_key"						=> $API,
-						  "secret_key"					=> $secret
+						  "secret_key"					=> $secret,
+						  "user_status_active"			=> 0
 						);	
 				
 				$this->UserModel->register($data);

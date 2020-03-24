@@ -57,18 +57,6 @@
 	<!-- form Uploads -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/plugins/fileuploads/css/dropify.css">
 	
-	
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155369864-1"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-155369864-1');
-	</script>
-	
-	
 </head>
 <body class="app sidebar-mini rtl" >
 	<div id="global-loader" ></div>
@@ -78,7 +66,7 @@
 			<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 			<aside class="app-sidebar ">
 				<div class="sidebar-img">
-					<a class="navbar-brand" href="<?=base_url()?>"><img alt="..." class="navbar-brand-img main-logo" src="<?=base_url()?>assets/img/brand/logo-dark.png"> <img alt="..." class="navbar-brand-img logo" src="<?=base_url()?>assets/img/brand/logo.png"></a>
+					<a class="navbar-brand" href="index.html"><img alt="..." class="navbar-brand-img main-logo" src="assets/img/brand/logo-dark.png"> <img alt="..." class="navbar-brand-img logo" src="assets/img/brand/logo.png"></a>
 					<ul class="side-menu">
 						<li class="slide">
 							<a class="side-menu__item" href="<?=base_url('Dashboard')?>"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
@@ -174,8 +162,8 @@
 											<div class=" dropdown-header noti-title text-center border-bottom pb-3">
 												<h3 class="text-capitalize text-dark mb-1"> <?=$this->session->userdata('property_name');?></h3>
 											</div>
-											<a class="dropdown-item" href="<?=base_url('Account/email_account')?>"><i class="ni ni-single-02"></i> <span>My profile</span></a>
-											<a class="dropdown-item" href="<?=base_url('Account/change_password')?>"><i class="ni ni-settings-gear-65"></i> <span>Settings</span></a>
+											<a class="dropdown-item" href="<?=base_url('Account/edit_profile')?>"><i class="ni ni-single-02"></i> <span>My profile</span></a>
+											<a class="dropdown-item" href="<?=base_url('Account/change_password')?>"><i class="ni ni-settings-gear-65"></i> <span>Change Password</span></a>
 											<div class="dropdown-divider"></div><a class="dropdown-item" href="<?=base_url('Login/logout')?>"><i class="ni ni-user-run"></i> <span>Logout</span></a>
 										</div>
 									</li>

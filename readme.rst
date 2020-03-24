@@ -1,12 +1,24 @@
+CRON JOB
+	wget https://krisnaarynasta.com/EmailSenderAuto ✔
+	wget https://krisnaarynasta.com/EmailSenderEvent ✔
+
+
 	udh bisa login, udh bisa nampilin sesson ✔
-	Logo aplikasi
+	Logo aplikasi ✔
+	
+REVISI
+	skenario sidang
+	CRUD data tamu
+	unsubscribe
+	registrasi google
+	
 	
 DASHBOARD 
 	hitung event yg dikirim hari ini ✔
 	hitung total event yang belum dikirim ✔
 	total data tamu ✔
 	total respond quisoner
-	preview respond tamu 5
+	preview respond tamu 5 ✔
 	preview 5 inbox tamu ✔
 
 GET MESSAGE
@@ -125,14 +137,7 @@ QUESTIONNAIRE
 	
 
 BUILD API DOCUMENTASION 
-(aplikasi pengguna ditanamkan cooding untuk mengirimkan data ke servis kita)
-
-UNTUK MAJU PROPOSAL
-	uji coba 
-	BAB III
-		SOP
-		PDM
-		gambaran umum sistem
+(aplikasi pengguna ditanamkan cooding untuk mengirimkan data ke servis kita) ✔
 
 WEBSERVICE
 	insert guest data ✔
@@ -140,8 +145,15 @@ WEBSERVICE
 	delete guest data ✔
 
 kuisoner
-form create user - value dinamis di setup pengguna
+form create user - value dinamis di setup pengguna ✔
 jawabn tamu 
 rating dan review
 perlu webservice
+
+
+    Login to your gmail account, enable imap.
+
+    Let the access here first: https://www.google.com/settings/security/lesssecureapps
+
+    Go to: https://accounts.google.com/b/0/DisplayUnlockCaptcha and enable access.
 		

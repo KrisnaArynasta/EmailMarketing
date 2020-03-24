@@ -73,19 +73,26 @@ class EmailInboxModel extends CI_Model {
 	}
 	
 	public function email_sender($user_id){
-		//get email yang sudah limit hari ini
-		$this->db->select('o.email_sender_id');  
-		$this->db->from('tbl_outbox o');
-		$this->db->join('tbl_email_sender es','o.email_sender_id=es.email_sender_id');
-		$this->db->where('send_date',date("Y-m-d"));
-		$this->db->having('COUNT(outbox_id) >','limit_email');
-		$this->db->group_by('o.email_sender_id');
-		$ignore_sender = $this->db->get()->result();
+		// //get email yang sudah limit hari ini
+		// $this->db->select('o.email_sender_id');  
+		// $this->db->from('tbl_outbox o');
+		// $this->db->join('tbl_email_sender es','o.email_sender_id=es.email_sender_id');
+		// $this->db->where('send_date',date("Y-m-d"));
+		// $this->db->having('COUNT(outbox_id) >','limit_email');
+		// $this->db->group_by('o.email_sender_id');
+		// $ignore_sender = $this->db->get()->result();
 		
-		//get email yg tidak limit hari ini berdasarkan query di atas
+		// //get email yg tidak limit hari ini berdasarkan query di atas
+		// $this->db->select('*');
+		// $this->db->from('tbl_email_sender');
+		// foreach ($ignore_sender as $ignore_sender){$this->db->where_not_in('email_sender_id', $ignore_sender->email_sender_id);}
+		// $this->db->where('user_id',$user_id);		
+		// $this->db->where('email_status_active',1);		
+		// $query = $this->db->get()->result();
+		// return $query;
+		
 		$this->db->select('*');
 		$this->db->from('tbl_email_sender');
-		foreach ($ignore_sender as $ignore_sender){$this->db->where_not_in('email_sender_id', $ignore_sender->email_sender_id);}
 		$this->db->where('user_id',$user_id);		
 		$this->db->where('email_status_active',1);		
 		$query = $this->db->get()->result();

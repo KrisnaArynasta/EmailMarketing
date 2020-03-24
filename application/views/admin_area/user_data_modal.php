@@ -114,7 +114,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2 class="modal-title header_event_email" id="largeModalLabel" style="opacity:0.6">Edit Email Account</h2>
+				<h2 class="modal-title header_event_email" id="largeModalLabel" style="opacity:0.6">User Data Detail</h2>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>

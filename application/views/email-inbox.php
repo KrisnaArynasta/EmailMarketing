@@ -75,14 +75,13 @@
 				data: $("#formSendEmail").serialize(), 
 				success: function(data) {
 					if(data=="success"){
-						$('#wait').hide();
-						$('#loading-wrap').hide();	
-						$("#myModalSuccess").modal();
-				   
+						swal({title:"Success", text:"Email sent!", type:"success"},
+						function(){ 
+							location.reload(); 
+						});
+						$('.confirm').addClass('sweet-alert-success');
 					}else{
-						$("#myModalFail").modal();
-						$('#wait').hide();
-						$('#loading-wrap').hide();
+						swal({title:"Failed!", text:"Failed to send email", type:"error"});
 					}
 				}
 			}); 

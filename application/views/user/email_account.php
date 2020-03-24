@@ -110,7 +110,10 @@
 						<?php foreach($data as $row_email){?>
 						<?=(!$row_email->email_status_active)?"<tr style='background-color:#a8a8a81f;'>":"<tr>"?>
 							<td><?=$row_email->email?></td>
-							<td><?=substr($row_email->password,0,strlen(($row_email->password)-1))?><?php for($c=1;$c<strlen($row_email->password);$c++){echo "&#8226";}?></td>
+							<td>
+								<?=substr($row_email->password,0,strlen(($row_email->password)-1))?>
+								<?php for($c=1;$c<strlen($row_email->password);$c++){echo "&#8226";}?>
+							</td>
 							<td><?=$row_email->inbox_host?></td>
 							<td><?=$row_email->sender_host?></td>
 							<td><?=$row_email->limit_email?></td>

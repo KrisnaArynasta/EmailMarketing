@@ -25,14 +25,12 @@ class Questionnaire extends CI_Controller {
 		}else {
 			$total_records = $this->QuestionnaireModel->get_total($user_id);
 		}
-			
-			
+					
 			// init params
 			$params = array();
 			$limit_per_page = 6;
 			$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 			$page = $start_index / $limit_per_page + 1;
-   
 	 
 			if ($total_records > 0) {
 				// get current page records
@@ -41,8 +39,7 @@ class Questionnaire extends CI_Controller {
 				}else{
 					$params['questionnaire']=$this->QuestionnaireModel->get_current_page_records($user_id, $limit_per_page, $start_index);
 				}
-
-				
+		
 				$config['base_url'] = base_url().'Questionnaire/index';
 				$config['total_rows'] = $total_records;
 				$config['per_page'] = $limit_per_page;
@@ -75,8 +72,7 @@ class Questionnaire extends CI_Controller {
 				
 			}
 			 
-			//$hasil['data']=$this->ManometerModel->view_all_manometer();
-			$this->load->view('Questionnaire/view_questionnaire',$params);
+			$this->load->view('questionnaire/view_questionnaire',$params);
 			
 	}
 

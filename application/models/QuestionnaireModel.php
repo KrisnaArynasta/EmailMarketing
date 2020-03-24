@@ -27,10 +27,10 @@ class QuestionnaireModel extends CI_Model {
 	}
 	
 	public function view_question_option($id,$user){ 
-		$this->db->select('*');
+		$this->db->select('*, qn.questionnaire_id as "id_qnr"');
 		$this->db->from('tbl_questionnaire qn');
-		$this->db->join('tbl_question q','q.questionnaire_id=qn.questionnaire_id');
-		$this->db->join('tbl_question_option qo','qo.question_id=q.question_id');
+		$this->db->join('tbl_question q','qn.questionnaire_id=q.questionnaire_id','left');
+		$this->db->join('tbl_question_option qo','qo.question_id=q.question_id','left');
 		$this->db->where('qn.questionnaire_id', $id);
 		$this->db->where('qn.user_id', $user);
 		$query = $this->db->get()->result();

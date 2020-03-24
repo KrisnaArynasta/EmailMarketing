@@ -71,16 +71,8 @@
 
 		<ul class="mail_list list-group list-unstyled">
 			<?php 
-			if( empty($email_outbox)){
-			// link paging
-				if (!isset($links)) { ?>
-					<div class="col-md-12">
-						<b><h3 style='opacity:0.4; text-align:center; margin-top:50px'>You Dont Have Any Outbox Yet!</h3></b> <br>
-					</div>
-				<?php	}
-				// jika data outbox tidak ada  
-				} else  { 
-					echo "<div class='col-md-12'>".$links."</div>"; 				
+			if(!empty($email_outbox)){
+			// link paging				
 					foreach($email_outbox as $row_email){
 				?>					
 					<a href="javascript:get_email_body('<?=$row_email->outbox_id?>');"> 
@@ -100,16 +92,27 @@
 											<i class="zmdi zmdi-attachment-alt ml-2"></i> 
 										</small>
 									</div>
-									<p class="msg">
-										<?php if(strlen($row_email->message_send)<80) echo $row_email->message_send."<br><br>"; 
-										else echo substr($row_email->message_send, 0, 80)."...";?>
+									<!--
+									<p class="msg" >
+										<?php //if(strlen($row_email->message_send)<80) echo $row_email->message_send."<br><br>"; 
+										//else echo substr($row_email->message_send, 0, 80)."...";?>
 									</p>
+									!-->
 								</div>
 							</div>
 						</li>
 					</a>					
 			<?php 
 					} 
+					if (!isset($links)) { ?>
+						<div class="col-md-12">
+							<b><h3 style='opacity:0.4; text-align:center; margin-top:50px'>You Dont Have Any Outbox Yet!</h3></b> <br>
+						</div>
+					<?php
+					// jika data outbox tidak ada  
+					} else  { 
+						echo "<div class='col-md-12'>".$links."</div>";
+					}		
 				}
 			?>				
 			</ul>

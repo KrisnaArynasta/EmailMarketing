@@ -39,6 +39,24 @@ class AdminModel extends CI_Model {
 		return $query; 
 	}
 	
+	//GET SEMUA DATA GUEST
+	public function get_guest_all(){
+		$this->db->select('*');
+		$this->db->from('tbl_guest g');
+		$this->db->join('tbl_user u','g.user_id=u.user_id');
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
+	//GET SEMUA DATA EVENT
+	public function get_event_all(){
+		$this->db->select('*');
+		$this->db->from('tbl_event e');
+		$this->db->join('tbl_user u','e.user_id=u.user_id');
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
 	//GETS DETAIL DATA USER
 	public function get_user_detail($id){
 		$this->db->select('*');

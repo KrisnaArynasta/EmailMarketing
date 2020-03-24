@@ -78,13 +78,13 @@
 									<a href="<?=base_url('UserData')?>" class="slide-item"><i class="side-menu__icon fe fe-user"></i>User Data</a>
 								</li>
 								<li>
-									<a href="<?=base_url('EmailOutbox')?>" class="slide-item"><i class="side-menu__icon fe fe-users"></i>Property`s Guest Data</a>
+									<a href="<?=base_url('GuestData')?>" class="slide-item"><i class="side-menu__icon fe fe-users"></i>Property Guest Data</a>
 								</li>
 								<li>
-									<a href="<?=base_url('EmailOutbox')?>" class="slide-item"><i class="side-menu__icon fab fa-wpforms"></i>Event Data</a>
+									<a href="<?=base_url('EventData')?>" class="slide-item"><i class="side-menu__icon fab fa-wpforms"></i>Event Data</a>
 								</li>
 								<li>
-									<a href="<?=base_url('EmailOutbox')?>" class="slide-item"><i class="side-menu__icon fe fe-send"></i>Questionnaire Data</a>
+									<a href="<?=base_url('QuestionnaireData')?>" class="slide-item"><i class="side-menu__icon fe fe-send"></i>Questionnaire Data</a>
 								</li>
 							</ul>
 						</li>

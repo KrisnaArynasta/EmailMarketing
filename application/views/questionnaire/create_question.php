@@ -90,7 +90,7 @@
 
 <?php 
 	foreach($data_questionnaire as $questionaire){
-		$questionnaire_id = $questionaire->questionnaire_id;
+		$questionnaire_id = $questionaire->id_qnr;
 		$questionnaire_name = $questionaire->questionnaire_name;
 		$questionnaire_send_on = $questionaire->questionnaire_send_on;
 		$questionnaire_date_create = $questionaire->questionnaire_date_create;

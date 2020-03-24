@@ -8,6 +8,7 @@ class EmailSenderAuto extends CI_Controller {
 		$this->load->library('email');
 		$this->load->Model('EmailSenderAutoModel');
 		$this->email->set_newline("\r\n");
+		$this->load->library('session');
     }
 	
 	public function index(){
@@ -34,7 +35,7 @@ class EmailSenderAuto extends CI_Controller {
 				$htmlContent = $row_email_to_send->message_send;
 				
 				$this->email->to($row_email_to_send->email_send_to);
-				$this->email->from($row_email_to_send->outbox_from);
+				$this->email->from($row_email_to_send->email,$row_email_to_send->outbox_from);
 				$this->email->subject($row_email_to_send->outbox_subject);
 				$this->email->message($htmlContent);
 				if (!$this->email->send()) {
@@ -68,7 +69,7 @@ class EmailSenderAuto extends CI_Controller {
 					  "guest_id" => $this->input->post('guest_id'),
 					  "email_send_to" => $this->input->post('to'),
 					  "email_sender_id" => $this->input->post('sender'),
-					  "outbox_from" => 'Hotel Name Here',
+					  "outbox_from" => $this->session->userdata('property_name'),
 					  "outbox_subject" =>  $this->input->post('subject'),
 					  "message_send" => $this->input->post('email_builder'),
 					  "sent_status" => 0
@@ -80,3 +81,4 @@ class EmailSenderAuto extends CI_Controller {
 }
 
 
+?>
