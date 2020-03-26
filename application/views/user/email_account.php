@@ -118,14 +118,16 @@
 							<td><?=$row_email->sender_host?></td>
 							<td><?=$row_email->limit_email?></td>
 							<td>
+								<center>
 								<!-- EDIT ICON !-->
-								<a href="javascript:edit_email_account(<?=$row_email->email_sender_id?>)"><span class="btn-inner--icon"><i class="fe fe-edit-3"></i></span></a>
-								<!-- AKTIVATING ICON !-->
-								<?php if(!$row_email->email_status_active){?>
-									<a class="icon-gray" href="javascript:conformAktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-check-square"></i></a>													
-								<?php } else{ ?>
-									<a class="icon-warning" href="javascript:conformDiaktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-x-square"></i></a>												
-								<?php } ?>
+									<a href="javascript:edit_email_account(<?=$row_email->email_sender_id?>)"><i class="fe fe-edit"></i></a>
+									<!-- AKTIVATING ICON !-->
+									<?php if(!$row_email->email_status_active){?>
+										<a class="icon-gray" href="javascript:conformAktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-check-square"></i></a>													
+									<?php } else{ ?>
+										<a class="icon-warning" href="javascript:conformDiaktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-x-square"></i></a>												
+									<?php } ?>
+								</center>
 							</td>
 						</tr>
 						<?php } ?>

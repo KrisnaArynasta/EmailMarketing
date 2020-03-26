@@ -26,7 +26,9 @@ class EmailSenderEvent extends CI_Controller {
     
     				// get guest yang akan di kirimkan email dengan parameter row_event->user_id dan event_id (buat cek apa guestnya itu sudah di kirimkan email dengan event ini blm)
     				foreach ($this->EmailSenderEventModel->get_user_guest($user_id,$row_event->event_id) as $row_guest){
-    
+						//enkripsi guest_id pake md5 biar urlnya gk terdeteksi
+						$link_unsubscribe = md5($row_guest->guest_id);
+						
     					// jika email sender yg sedang di looping saat ini telah mengirim lebih dari limit email maka sender akan di ganti
     					if ($this->EmailSenderEventModel->get_inbox_count($row_email->email_sender_id) < $row_email->limit_email){
     						// set email sender and server
@@ -87,12 +89,11 @@ class EmailSenderEvent extends CI_Controller {
     						}
     						$htmlContent   .=	'</div>';
     						$htmlContent   .=	'</div>';
-    						
+							$htmlContent   .=	'<p style="margin-top:40px">if you don&apos;t want to obtain this kind of email anymore, <a href="'.base_url().'Unsubscribe/Unsubscribe/'.$link_unsubscribe.'">klik here</a></p>';
     						$this->email->to($row_guest->guest_email);
     						$this->email->from($row_email->email,$property_name);
     						$this->email->subject($row_event->event_name);
     						$this->email->message($htmlContent);
-    						echo $htmlContent;
     						if (!$this->email->send()) {
     							
     							show_error($this->email->print_debugger()); 

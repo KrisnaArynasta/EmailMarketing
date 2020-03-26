@@ -15,7 +15,7 @@
 <!-- Page content -->
 <div class="container-fluid pt-8">
 	<div class="page-header mt-0  p-3">
-		<h3 class="mb-sm-0">Preview Your Activity</h3>
+		<h3 class="mb-sm-0">Dashboard</h3>
 		<ol class="breadcrumb mb-0">
 			<li class="breadcrumb-item"><a href="#"><i class="fe fe-home"></i></a></li>
 			<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
@@ -26,6 +26,30 @@
 		<div class="inbox p-0">
 			<div class="card-body">
 				<div class="row">
+					<div class="col-md-12">
+						<div class="card card-profile  overflow-hidden">
+							<div class="card-body text-center cover-image" data-image-src="<?=base_url()?>assets/img/20.jpg">
+								<div class=" card-profile">
+									<div class="row justify-content-center">
+										<div class="">
+											<div class="">
+												<a href="#">
+													<img src="<?=base_url()?>images/property_logo/<?=$this->session->userdata('property_logo')?>" width="200px" height="200px" class="rounded-circle" alt="Property Logo">
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+									<h2 class="mt-3 text-white"><?=$this->session->userdata('property_name');?></h2>
+									<p class="mb-4 text-white">
+										<i class="fe fe-map-pin"></i> <?=$this->session->userdata('property_address');?>
+										<br>
+										<i class="fe fe-globe"></i> <?=$this->session->userdata('property_website');?>
+									</p>
+								<a href="<?=base_url('Account/edit_profile')?>" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt" aria-hidden="true"></i> Edit profile</a>
+							</div>
+						</div>
+					</div>
 					<div class="col-sm-6 col-lg-6 col-xl-3 ">
 						<div class="card shadow text-center">
 							<div class="card-body">

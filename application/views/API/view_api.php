@@ -171,7 +171,7 @@
 							<a class="nav-link" id="crest-tab2" data-toggle="tab" href="#crest" role="tab" aria-selected="false">C# (RestSharp)</a>
 						</li>	
 						<li class="nav-item">
-							<a class="nav-link" id="python-tab2" data-toggle="tab" href="#python" role="tab" aria-selected="false">Python (http.client)</a>
+							<a class="nav-link" id="python-tab2" data-toggle="tab" href="#python" role="tab" aria-selected="false">Python 3 (http.client)</a>
 						</li>			
 						<li class="nav-item">
 							<a class="nav-link" id="rubby-tab2" data-toggle="tab" href="#rubby" role="tab" aria-selected="false">Rubby (NET::Http)</a>

@@ -174,8 +174,8 @@
 											<div class=" dropdown-header noti-title text-center border-bottom pb-3">
 												<h3 class="text-capitalize text-dark mb-1"> <?=$this->session->userdata('property_name');?></h3>
 											</div>
-											<a class="dropdown-item" href="<?=base_url('Account/email_account')?>"><i class="ni ni-single-02"></i> <span>My profile</span></a>
-											<a class="dropdown-item" href="<?=base_url('Account/change_password')?>"><i class="ni ni-settings-gear-65"></i> <span>Settings</span></a>
+											<a class="dropdown-item" href="<?=base_url('Account/edit_profile')?>"><i class="ni ni-single-02"></i> <span>My profile</span></a>
+											<a class="dropdown-item" href="<?=base_url('Account/change_password')?>"><i class="ni ni-settings-gear-65"></i> <span>Change Password</span></a>
 											<div class="dropdown-divider"></div><a class="dropdown-item" href="<?=base_url('Login/logout')?>"><i class="ni ni-user-run"></i> <span>Logout</span></a>
 										</div>
 									</li>

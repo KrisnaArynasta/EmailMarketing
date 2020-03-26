@@ -20,6 +20,8 @@ class UserModel extends CI_Model {
 						'user_password' => $query->password,
 						'property_name' =>$query->property_name,
 						'property_logo' =>$query->property_logo,
+						'property_address' =>$query->property_address,
+						'property_website' =>$query->property_website,
 						'API_key' =>$query->API_key,
 						'secret_key' =>$query->secret_key		
 					);

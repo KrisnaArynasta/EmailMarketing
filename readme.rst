@@ -7,11 +7,11 @@ CRON JOB
 	Logo aplikasi ✔
 	
 REVISI
-	skenario sidang
-	CRUD data tamu
-	unsubscribe
+	skenario sidang ✔
+	CRUD data tamu ✔
+	unsubscribe ✔
 	registrasi google
-	
+	profile user d dashboard ✔
 	
 DASHBOARD 
 	hitung event yg dikirim hari ini ✔

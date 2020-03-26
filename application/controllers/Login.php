@@ -34,6 +34,8 @@ public function index(){
 	$user_email = $hasil['user_email'];
 	$user_password = $hasil['user_password'];
 	$property_name = $hasil['property_name'];
+	$property_address = $hasil['property_address'];
+	$property_website = $hasil['property_website'];
 	$property_logo = $hasil['property_logo'];
 	$API_key = $hasil['API_key'];
 	$secret_key = $hasil['secret_key'];
@@ -45,6 +47,8 @@ public function index(){
 			'user_email' => $user_email,
 			'user_password' => $user_password,
 			'property_name' =>$property_name,
+			'property_address' =>$property_address,
+			'property_website' =>$property_website,
 			'property_logo' =>$property_logo,
 			'API_key' =>$API_key,
 			'secret_key' =>$secret_key,

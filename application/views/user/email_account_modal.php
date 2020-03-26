@@ -115,8 +115,8 @@
 				
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-outline-primary" type="button" onclick="save_email_account()">Save</button>
 				<button class="btn btn-outline-danger" type="button" data-dismiss="modal">Discard</button>
+				<button class="btn btn-outline-primary" type="button" onclick="save_email_account()">Save</button>
 			</div>
 			</form>
 		</div>
@@ -172,8 +172,8 @@
 				
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-outline-primary" type="button" onclick="update_email_account()">Save</button>
 				<button class="btn btn-outline-danger" type="button" data-dismiss="modal">Discard</button>
+				<button class="btn btn-outline-primary" type="button" onclick="update_email_account()">Save</button>
 			</div>
 			</form>
 		</div>

@@ -32,7 +32,7 @@
 			$this->load->view('user/edit_account',$user);
 		}
 		
-		//UPADATE PROPERY PROFILE
+		//UPADATE PROPERTY PROFILE
 		public function update(){
 
 			$config['upload_path']          = './images/property_logo/';
@@ -78,7 +78,7 @@
 			$data = array(
 					  "property_name" 						=> $this->input->post('property_name'),
 					  "property_address" 					=> $this->input->post('property_address'),
-					  "property_website"					=> $this->input->post('property_name'),
+					  "property_website"					=> $this->input->post('property_web'),
 					  "property_logo"						=> $file_name
 					);	
 			

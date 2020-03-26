@@ -24,7 +24,12 @@ class EmailSenderEventModel extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_guest');
 		foreach ($ignore as $ignore){$this->db->where_not_in('guest_id', $ignore->guest_id);}
-		$this->db->where('user_id',$user_id);		
+		$where_user = array(
+				'user_id' => $user_id,
+				'guest_active_status' => 1,
+				'guest_subscribe_status' => 1
+				);
+		$this->db->where($where_user);		
 		$query = $this->db->get()->result();
 		return $query;
 	}
