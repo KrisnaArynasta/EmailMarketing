@@ -4,6 +4,12 @@
 ?>
 
 <script>
+
+	// VARIABEL GLOBAL BUAT DAPETIN DATA INPUT QUESTIONNAIRE, INI DI PAKE KALO BATAL NGEDIT QUESTIONNAIRE JADI VALUE SEBELUMNYA BISA DI DAPETIN
+	var q_nm;
+	var q_sd;
+	var q_ep;
+	
 	$(document).ready(function(){
 		 $('#wait').hide();
 		 $('#loading-wrap').hide();	
@@ -11,73 +17,102 @@
 		CKEDITOR.replace('question_email_preview');		 
 	});
 	
-	// SAVE question
-	function save_question(id){
+	// ENABLE FORM EDIT QUESTIONNAIRE PAS KLIK BUTTON EDIT
+	function enable_edit(){
+		// BUAT NYIMPEN VALUE AWAL DARI INPUT KE VARIABEL GLOBAL
+		q_nm = $("#questionnaire_name").val();
+		q_sd = $("#questionnaire_send_date").val();
+		q_ep = CKEDITOR.instances['question_email_preview'].getData();
+		
+		// BUAT ENABLE SEMUA INPUT
+		$("#questionnaire_name").prop('readonly', false);
+		$("#questionnaire_send_date").datepicker();		
+		CKEDITOR.instances['question_email_preview'].setReadOnly(false);
+		
+		// BUAT NAMPILIN DAN NYEMBUNYIIN TOMBOL
+		$("#edit_questionnaire_button").hide();
+		$("#save_questionnaire_button").show();
+		$("#discard_questionnaire_button").show();
+	}
+	
+	// DISABLE FORM EDIT QUESTIONNAIRE PAS KLIK BUTTON DISCARD
+	function disable_edit(){
+		// BUAT SET VALUE LAMA KE INPUT KLO GK JADI NGEDIT
+		$("#questionnaire_name").val(q_nm);
+		$("#questionnaire_send_date").val(q_sd);
+		CKEDITOR.instances['question_email_preview'].setData(q_ep);
+		
+		// BUAT DISABLE SEMUA INPUT
+		$("#questionnaire_name").prop('readonly', true);
+		$("#questionnaire_send_date").prop('readonly', true);
+		$( "#questionnaire_send_date" ).datepicker( "option", "disabled", true );
+		CKEDITOR.instances['question_email_preview'].setReadOnly(true);
+		
+		// BUAT NAMPILIN DAN NYEMBUNYIIN TOMBOL
+		$("#edit_questionnaire_button").show();
+		$("#save_questionnaire_button").hide();
+		$("#discard_questionnaire_button").hide();
+	}
+	
+	// UPDATE QUESTIONNAIRE
+	function save_questionnaire(){
+		
+		CKEDITOR.instances['question_email_preview'].updateElement();
+		$("#inputQuestionnaire").serialize();
 		
 		$('.loading-wrap').show();		
 		$.ajax({
 			type: "POST", 
-			url: "<?php echo base_url(); ?>"+"Questionnaire/insert_question",
+			url: "<?php echo base_url(); ?>"+"Questionnaire/update_questionnaire",
 			datatype : "json", 
-			data: $("#inputQuestion").serialize(), 
+			data: $("#inputQuestionnaire").serialize(), 
 			success: function(data) {
 				$('.loading-wrap').hide();
 				if(data=="success"){
-					swal({title:"Succsess", text:"Successfully create your account, please login to access your dashboard", type:"success"},
+					swal({title:"Succsess", text:"Successfully update questionnaire data", type:"success"},
 					function(){ 
-						window.location.href = "<?php echo base_url(); ?>"+"Questionnaire/create_question/"+id;
+						location.reload();
 					});
 					$('.confirm').addClass('sweet-alert-success');
 				}else{
-					swal({title:"Failed", text:"Failed to create account, please try again latter", type:"error"});
+					swal({title:"Failed", text:"Failed tto update questionnaire data", type:"error"});
 				}
 			}
 		});		
 	}
 	
-	function add_question(){
-		$("#question_cons").html(`<div class="col-md-12">
-									<div class="col-md-12">
-									<div class="form-group form-alert">
-										<label class="form-label">Question</label>
-										<textarea class="form-control empty-validator" onfocusout="" id="question" name="question" rows="3" placeholder="e.g Christmas is an annual festival commemorating the birth of Jesus Christ observed on December 25...."></textarea>
-									</div>
-								</div>	
-								<div class="col-md-12">
-									<label class="form-label">Option</label>
-									<div id="option_cons">
-										<div class="form-group form-alert">
-											<div class="row" style="margin-left:30px">
-												<input type="radio" checked>
-												<div class="col-md-9"><input class="form-control empty-validator" onfocusout="" id="option_text" name="option_text" rows="3" placeholder="e.g Perfect...."></div>
-												<div class="col-md-1"><button class="btn btn-icon btn-outline-primary btn-block" type="button" onclick="add_option()"><span class="btn-inner--icon"><i class="fe fe-plus" style="margin-left: -7px;"></i></span></button></div>		
-											</div>
-										</div>
-									</div>		
-								</div>		
-							</div>`);	
-		
-			$('#question').modal('show');	
+	//	DELETE QUESTION
+	function delete_question(question_id){
+		swal({
+			title: "Delete Question ?",
+			text: "Are you sure want to delete this question ?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			confirmButtonText: "Delete",
+			closeOnConfirm: false
+		}, function() {
+		  
+		  $.ajax({
+				type: "POST", 
+				url: "<?php echo base_url(); ?>"+"Questionnaire/delete_question",
+				datatype : "json", 
+				data:{id:question_id,delete_sts:1},
+				success: function(data) {
+					if(data=="success"){
+						swal({title:"Question Deleted!", text:"this question has been deleted in your questionnaire", type:"success"},
+						function(){ 
+							   location.reload();
+						   }
+					   );
+					   $('.confirm').addClass('sweet-alert-success');
+					}else{
+						swal({title:"Delete Question!", text:"fail to delete the question", type:"success"});
+					}	
+				}
+			}); 
+		});
 	}
-	
-	//ADD OPTION 
-	function add_option(){
-			var option_value = $("#option_text").val();
-			$("#option_text").val("");
-			var element = 	'<div class="form-group form-alert">'
-								+'<div class="row" style="margin-left:30px" id="input_option">'
-									+'<input type="radio" checked>'
-									+'<div class="col-md-9"><input class="form-control empty-validator" onfocusout="" id="option" name="option[]" rows="3" placeholder="e.g Perfect...." value="'+option_value+'"></div>'
-									+'<div class="col-md-1" style="display:"><button class="btn btn-icon btn-outline-danger btn-block" type="button" onclick="remove_option(this)"><span class="btn-inner--icon"><i class="fe fe-minus" style="margin-left: -7px;"></i></span></button></div>'
-								+'</div>'
-							+'</div>';
-			$("#option_cons").append($(element));
-	}
-	
-	function remove_option(v){
-			$(v).parent().parent().parent().remove();
-	}
-	
 
 	
 </script>
@@ -100,7 +135,7 @@
 
 <div class="container-fluid pt-8">
 	<div class="page-header mt-0  p-3">
-		<h3 class="mb-sm-0"><small>Questions of Questionnaire</small> <b><?=$questionnaire_name?></b> </h3>
+		<h3 class="mb-sm-0"><small style="display:none">Questions of Questionnaire</small> <b><?=$questionnaire_name?></b> </h3>
 		<ol class="breadcrumb mb-0">
 			<li class="breadcrumb-item"><a href="#"><i class="fe fe-home"></i></a></li>
 			<li class="breadcrumb-item active" aria-current="page">Questionnaire / Question</li>
@@ -111,21 +146,30 @@
 		<div class="inbox p-0">		
 			<div class="card-body" style="padding:20px 50px 20px 50px">
 				<div class="row">	
-					<!-- BUTTON EDIT QUESTIONNAIRE !-->	
+					<!-- BUTTON EDIT/SAVE QUESTIONNAIRE !-->	
 					<div class="col-md-12">
-						<button class="btn btn-icon btn-outline-primary mt-1 mb-1 float-right" type="button" onclick="">
+						<button class="btn btn-icon btn-outline-primary mt-1 mb-1 float-right" type="button" id="edit_questionnaire_button" onclick="enable_edit()">
 							<span class="btn-inner--icon"><i class="fe fe-edit"></i></span>
 							<span class="btn-inner--text">Edit Questionnaire</span>
+						</button>
+						<button class="btn btn-icon btn-outline-danger mt-1 mb-1 ml-2 float-right" type="button" id="discard_questionnaire_button" onclick="disable_edit()" style="display:none;">
+							<span class="btn-inner--text">Discard</span>
+						</button>
+						<button class="btn btn-icon btn-outline-primary mt-1 mb-1 float-right" type="button" id="save_questionnaire_button" onclick="save_questionnaire()" style="display:none">
+							<span class="btn-inner--icon"><i class="fe fe-edit"></i></span>
+							<span class="btn-inner--text">Save Questionnaire</span>
 						</button>
 					</div>
 				
 					<!-- QUESTIONNAIRE INFO !-->
 					<div class="col-md-12">
+					<form id="inputQuestionnaire" action="" method="POST">
 						<div class="row">
+							<input type="hidden" name="questionnaire_id" id="questionnaire_id" value="<?=$questionnaire_id?>">
 							<div class="col-md-12">     
 								<div class="form-group form-alert" id="lat-valid">
 									<label class="form-label" >Questionnaire Name</label>
-									<input type="text" style="margin-right:5px;" class="form-control" readonly value="<?=$questionnaire_name?>">
+									<input type="text" name="questionnaire_name" id="questionnaire_name" style="margin-right:5px;" class="form-control" readonly value="<?=$questionnaire_name?>">
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -137,16 +181,17 @@
 							<div class="col-md-6">
 								<div class="form-group form-alert" id="lng-evalid">
 									<label class="form-label" >Questionnaire Send On</label>
-									<input type="text" class="form-control" readonly value="<?=$questionnaire_send_on?>">
+									<input type="text" name="questionnaire_send_date" id="questionnaire_send_date" class="form-control" readonly value="<?=$questionnaire_send_on?>">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group form-alert">
 									<label class="form-label">Message in email to send</label>
-									<textarea class="form-control" readonly id="question_email_preview" name="question_email_preview"><?=$questionnaire_message?></textarea>
+									<textarea class="form-control" name="question_email_preview" id="question_email_preview" readonly><?=$questionnaire_message?></textarea>
 								</div>
 							</div>
 						</div>
+					</form>	
 					</div>
 				
 					<!-- BUTTON CREATE QUESTION !-->
@@ -167,7 +212,14 @@
 									$last_question_id = $now_question_id;
 						?>		
 								<div style="margin-top:20px; border-top:1px #000 solid">
-									<p><?=$question_row->question?> <a href="" title="view email tamplate"><span><i class="fe fe-edit"></i></span></a></p>
+									<button class="btn-sm btn-outline-danger mt-1 mb-1" type="button" id="" onclick="delete_question(<?=$question_row->question_id?>)" title="Delete Question">
+										<span class="btn-inner--icon"><i class="fe fe-delete"></i></span>
+									</button>
+									<button class="btn-sm btn-outline-primary mt-1 mb-1" type="button" id="" onclick="edit_question(<?=$question_row->question_id?>)" title="Edit Question">
+										<span class="btn-inner--icon"><i class="fe fe-edit"></i></span>
+									</button>
+									
+									<p><?=$question_row->question?></p>
 									<li style="margin-left:50px;"><?=$question_row->question_option_value?></li>
 									
 						<?php	}else{ ?>
@@ -186,33 +238,10 @@
 	
 </div>
 
-<div class="modal fade" id="question" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h2 class="modal-title header_event_email" id="largeModalLabel" style="opacity:0.6">Create Question </h2>
-				<button type="button" class="btn-small btn-danger ml-auto" data-dismiss="modal">x</button>
-				</button>
-			</div>
-			<div class="modal-body" id="modalBodyEvent">
-				<form id="inputQuestion" action="" method="POST">
-					<input type="hidden" name="questionnaire_id" id="questionnaire_id" value="<?=$questionnaire_id?>">
-					<div class="row" id="question_cons">
-						<!-- SET ON JAVASCRIPT FUNCTION!-->
-					</div>					
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-icon btn-outline-primary mt-1 mb-1" type="button" onclick="save_question(<?=$questionnaire_id?>)">
-					<span class="btn-inner--icon"><i class="fe fe-save"></i></span>
-					<span class="btn-inner--text">Save</span>
-				</button>
-			</div>
-			</form>	
-		</div>
-	</div>
-</div>
 
 <?php
+	$questionnaire_id_modal['questionnaire_id']=$questionnaire_id;
+	$this->load->view('questionnaire/question_modal',$questionnaire_id_modal);
 	$this->load->view('modal');
 	$this->load->view('footer');
 ?>
@@ -230,33 +259,3 @@
 
 <!-- Date Picker-->
 <script src="<?=base_url()?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-
-<!-- pagination -->
-<script>
-
-   $(document).ready(function(){
-   
-        $("#event_date").datepicker({
-		  dateFormat: 'yy-mm-dd',
-	        minDate: 1,
-    
-			onSelect: function(selected) {
-			var minEnd = new Date($("#event_date").datepicker("getDate"));
-			minEnd.setDate(minEnd.getDate() + 1);
-	          $("#send_on").datepicker("option","minDate", minEnd)
-	        }
-
-        });
-        
-		
-		$("#send_on").datepicker({
-		  dateFormat: 'yy-mm-dd',  
-	        onSelect: function(selected) {
-	           $("#event_date").datepicker("option","maxDate", selected)
-			}
-		});
-    
-	
-	});
-
-</script>

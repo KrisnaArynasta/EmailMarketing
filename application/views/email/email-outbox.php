@@ -83,7 +83,14 @@
 										<div class="mr-2" style=" font-weight: bold;">
 											<p class="msg">To : <?=$row_email->email_send_to?></p>
 											<?=$row_email->outbox_subject?>
-											<?=($row_email->event_id ? "<span class='badge bg-success text-white'>".$row_email->event_name."</span>" : "<span class='badge bg-primary text-white'>Direct Message</span>")?>
+											<?php if($row_email->event_id){
+														echo "<span class='badge bg-success text-white'>".$row_email->event_name."</span>" ;
+													}elseif($row_email->questionnaire_id){
+														echo "<span class='badge bg-secondary text-white'>".$row_email->questionnaire_name."</span>" ;
+													}else{
+														echo "<span class='badge bg-primary text-white'>Direct Message</span>";
+													}
+											?>
 										</div>
 										<small class="float-right text-muted">
 											<time class="hidden-sm-down" datetime="2017">

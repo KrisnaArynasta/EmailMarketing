@@ -2,21 +2,6 @@
 
 class QuestionnaireModel extends CI_Model {
 	
-	// GET DATA EVENT
-	public function view_event($id){
-		$this->db->select('*');
-		$this->db->from('tbl_event');
-		$this->db->where('user_id',$id);
-		// dimana tgl event - tgl harus kirim lebih besar dari tgl sekarang
-		$this->db->where('(event_date - message_send_before) > CURDATE()');
-		// order by status aktif event = aktif
-		$this->db->order_by('event_status_active', "DESC");
-		// order by tgl harus kirim dari yang paling dekat dekat tgl skrng
-		$this->db->order_by("(event_date - message_send_before)", "ASC");
-		$query = $this->db->get()->result();
-		return $query;
-	}
-	
 	public function view_questionnaire_by_id($id,$user){ 
 		$this->db->select('*');
 		$this->db->from('tbl_questionnaire');
@@ -26,13 +11,44 @@ class QuestionnaireModel extends CI_Model {
 		return $query; 
 	}
 	
+	public function view_questionnaire_email($id,$user){ 
+		$this->db->select('*');
+		$this->db->from('tbl_questionnaire qn');
+		$this->db->join('tbl_user u','qn.user_id=u.user_id');
+		$this->db->where('questionnaire_id', $id);
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
+	public function view_questionnaire_to_fill($id){ 
+		$this->db->select('*, qn.questionnaire_id as "id_qnr", q.question_id as "question_id", qn.questionnaire_name as "questionnaire_name"');
+		$this->db->from('tbl_send_questionnaire sq');
+		$this->db->join('tbl_questionnaire qn','sq.questionnaire_id=qn.questionnaire_id','left');
+		$this->db->join('tbl_user u','qn.user_id=u.user_id','left');
+		$this->db->join('tbl_question q','qn.questionnaire_id=q.questionnaire_id','left');
+		$this->db->join('tbl_question_option qo','qo.question_id=q.question_id','left');
+		$this->db->where('md5(sq.send_questionnaire_id)', $id);
+		$query = $this->db->get()->result();
+		return $query; 
+	}	
+
 	public function view_question_option($id,$user){ 
-		$this->db->select('*, qn.questionnaire_id as "id_qnr"');
+		$this->db->select('*, qn.questionnaire_id as "id_qnr", q.question_id as "question_id"');
 		$this->db->from('tbl_questionnaire qn');
 		$this->db->join('tbl_question q','qn.questionnaire_id=q.questionnaire_id','left');
 		$this->db->join('tbl_question_option qo','qo.question_id=q.question_id','left');
+		$this->db->where('q.question_status_delete', 0);
 		$this->db->where('qn.questionnaire_id', $id);
 		$this->db->where('qn.user_id', $user);
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
+	public function view_question_by_id($id){ 
+		$this->db->select('*');
+		$this->db->from('tbl_question q');
+		$this->db->join('tbl_question_option qo','qo.question_id=q.question_id','left');
+		$this->db->where('q.question_id', $id);
 		$query = $this->db->get()->result();
 		return $query; 
 	}
@@ -79,16 +95,30 @@ class QuestionnaireModel extends CI_Model {
 		}
 	}
 	
+	public function update_question($data,$id){
+		$this->db->where('question_id', $id);
+		$this->db->update('tbl_question', $data);
+	}
+	
 	public function insert_option($data){
 		$this->db->insert('tbl_question_option', $data);
 	}
 	
-	//UDPDATE DATA EVENT
-	public function update($id,$data){
-		$this->db->where('event_id', $id);
-		if($this->db->update('tbl_event', $data)){ 
-			return 1;
-		}
+	public function delete_option($id_question){
+		$this->db->where('question_id', $id_question);
+		$this->db->delete('tbl_question_option');
+	}
+	
+	//UPDATE DATA QUESTIONNAIRE
+	public function update_questionnaire($data,$id){
+		$this->db->where('questionnaire_id', $id);
+		$this->db->update('tbl_questionnaire', $data);
+	}
+	
+	//DELETE QUESTION
+	public function delete_question($data,$id){
+		$this->db->where('question_id', $id);
+		$this->db->update('tbl_question', $data);
 	}
 	
 	
@@ -121,7 +151,7 @@ class QuestionnaireModel extends CI_Model {
 		$this->db->where('user_id',$user_id);
 		//$this->db->where('event_status_delete',0);
 		$this->db->like('questionnaire_name', $search);
-		$this->db->or_like('questionnaire_message', $search);
+		//$this->db->or_like('questionnaire_message', $search.')');
 		$query=$this->db->get("tbl_questionnaire");
 		return $query->num_rows();
 	} 	

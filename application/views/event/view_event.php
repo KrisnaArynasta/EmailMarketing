@@ -9,7 +9,7 @@
 		$('#loading-wrap').hide();
 	});
 	
-		function deleteEvent(event_id, event_name){
+	function deleteEvent(event_id, event_name){
 		swal({
 			title: "Delete Event "+event_name+"?",
 			text: event_name+" will deleted on your event list",

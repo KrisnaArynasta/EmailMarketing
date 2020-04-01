@@ -126,7 +126,7 @@ class EventModel extends CI_Model {
 		$this->db->or_like('event_message', $search);
 		$this->db->order_by('event_status_active', "DESC");
 		// order by tgl harus kirim dari yang paling dekat dekat tgl skrng
-		$this->db->order_by("(event_date - message_send_before) > CURDATE()", "DESC");
+		$this->db->order_by("(event_date - message_send_before)", "DESC");
 		$query=$this->db->get("tbl_event");
 		return $query->num_rows();
 	} 	
@@ -138,7 +138,7 @@ class EventModel extends CI_Model {
 		$this->db->limit($limit, $start);
 		$this->db->order_by('event_status_active', "DESC");
 		// order by tgl harus kirim dari yang paling dekat dekat tgl skrng
-		$this->db->order_by("(event_date - message_send_before) > CURDATE()", "DESC");
+		$this->db->order_by("(event_date - message_send_before)", "DESC");
         $query = $this->db->get("tbl_event");
  
         if ($query->num_rows() > 0) 
@@ -164,7 +164,7 @@ class EventModel extends CI_Model {
 		$this->db->or_like('event_message', $search);
 		$this->db->order_by('event_status_active', "DESC");
 		// order by tgl harus kirim dari yang paling dekat dekat tgl skrng
-		$this->db->order_by("(event_date - message_send_before) > CURDATE()", "DESC");
+		$this->db->order_by("(event_date - message_send_before)", "DESC");
         $query = $this->db->get("tbl_event");
  
         if ($query->num_rows() > 0) 

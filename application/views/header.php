@@ -58,7 +58,7 @@
 	<link rel="stylesheet" href="<?=base_url()?>assets/plugins/fileuploads/css/dropify.css">
 	
 	
-	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics 
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155369864-1"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
@@ -67,7 +67,7 @@
 
 	  gtag('config', 'UA-155369864-1');
 	</script>
-	
+	-->
 	
 </head>
 <body class="app sidebar-mini rtl" >

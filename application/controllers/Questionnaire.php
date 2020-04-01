@@ -113,6 +113,23 @@ class Questionnaire extends CI_Controller {
 		$this->load->view('Event/edit_event',$result);
 	}
 	
+		public function update_questionnaire(){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}
+		
+		$id=$this->input->post('questionnaire_id');
+		
+		$data = array(
+			  "questionnaire_name" 				=> $this->input->post('questionnaire_name'),
+			  "questionnaire_send_on"			=> $this->input->post('questionnaire_send_date'),
+			  "questionnaire_message"			=> $this->input->post('question_email_preview')
+			);	
+		$this->QuestionnaireModel->update_questionnaire($data,$id);
+		echo "success";
+	}
+	
+	
 	public function create_question($id){
 		if($this->session->userdata('login_status')!=="login"){
 			redirect(base_url(),'location');
@@ -151,6 +168,28 @@ class Questionnaire extends CI_Controller {
 		echo "success";
 	}
 	
+	public function delete_question(){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}
+
+		$id = $this->input->post('id'); 
+		$data = array(
+		  "question_status_delete" => $this->input->post('delete_sts')
+		);	 
+		$this->QuestionnaireModel->delete_question($data,$id); 
+		echo "success";
+	}
+	
+	public function view_question_by_id($id){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}		
+		
+		$data['data_edit']=$this->QuestionnaireModel->view_question_by_id($id);
+		echo json_encode($data);
+	}
+	
 	public function view_event_email($event_id){
 		if($this->session->userdata('login_status')!=="login"){
 			redirect(base_url(),'location');
@@ -158,6 +197,38 @@ class Questionnaire extends CI_Controller {
 		
 		$data['data_detail']=$this->EventModel->view_event_email($event_id);
 		echo json_encode($data);
+	}
+	
+	public function update_question(){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}
+		
+		$id_question =  $this->input->post('edit_question_id');
+		$data_question = array(
+			  "question" => $this->input->post('edit_question_text')
+		);	
+		
+		$this->QuestionnaireModel->update_question($data_question,$id_question);	
+		
+		//HAPUS SEMUA OPTION DENGAN ID QUESTION 
+		$this->QuestionnaireModel->delete_option($id_question);
+		
+		//PERULANGAN INPUT BARU OPTION DENGAN ID QUESTION KE TABEL QUESTION OPTION 
+		if($this->input->post('option')){
+			foreach ($this->input->post('option') as $key => $option) {
+				
+				$data_option = array(
+				  "question_id" 				=> $id_question,
+				  "question_option_value"		=> $option
+				);
+				
+				$this->QuestionnaireModel->insert_option($data_option);
+				
+			}
+		}	
+		
+		echo "success";
 	}
 	
 	public function aktif(){
@@ -186,6 +257,28 @@ class Questionnaire extends CI_Controller {
 		echo "success";
 	}
 	
+	public function view_questionnaire_email($questionnaire_id){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}		
+		
+		$user_id = $this->session->userdata('user_id');	
+		$data['data_detail']=$this->QuestionnaireModel->view_questionnaire_email($questionnaire_id,$user_id);
+		
+		echo json_encode($data);
+	}
+	
+	public function fill($id){
+		//$user_id = 46;
+		//NDY%3D
+		
+		//$b64_uid = urlencode(base64_encode($id));
+		//$questionnaire_id_code = base64_decode(urldecode($id));
+		
+		$result['data_questionnaire'] = $this->QuestionnaireModel->view_questionnaire_to_fill($id);
+		$this->load->view('questionnaire/fill_questionnaire',$result);
+	}
+
 }
 
-
+?>

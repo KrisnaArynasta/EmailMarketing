@@ -21,10 +21,10 @@ class EmailSenderEvent extends CI_Controller {
     		// get semua event tanpa parameter event 
     		foreach ($this->EmailSenderEventModel->get_event_current_date($user_id) as $row_event){ 
     			
-    			// get email sender	dengan parameter row_event->user_id		
+    			// get email sender	dengan parameter user_id		
     			foreach ($this->EmailSenderEventModel->get_user_email($user_id) as $row_email){
     
-    				// get guest yang akan di kirimkan email dengan parameter row_event->user_id dan event_id (buat cek apa guestnya itu sudah di kirimkan email dengan event ini blm)
+    				// get guest yang akan di kirimkan email dengan parameter user_id dan event_id (buat cek apa guestnya itu sudah di kirimkan email dengan event ini blm)
     				foreach ($this->EmailSenderEventModel->get_user_guest($user_id,$row_event->event_id) as $row_guest){
 						//enkripsi guest_id pake md5 biar urlnya gk terdeteksi
 						$link_unsubscribe = md5($row_guest->guest_id);

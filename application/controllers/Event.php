@@ -75,7 +75,6 @@ class Event extends CI_Controller {
 				
 			}
 			 
-			//$hasil['data']=$this->ManometerModel->view_all_manometer();
 			$this->load->view('event/view_event',$params);
 			
 	}

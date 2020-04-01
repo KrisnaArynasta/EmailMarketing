@@ -132,7 +132,7 @@
 							?>
 							<div class="form-group mb-0">
 								<div class="input-group">
-									<input type="text" class="form-control" name="search" placeholder="Find questionnaire or questionnaire message">
+									<input type="text" class="form-control" name="search" placeholder="Find by questionnaire name">
                     				<button type="submit" class="input-group-text search-button pointer"><i class="fas fa-search"></i></button>
 								</div>
 							</div>
@@ -168,32 +168,33 @@
 										</div>
 										<!--//HEAD CONTENT END-->
 
-										<!--PRICE START-->
+										<!--SEND ON START-->
 										<div class="generic_price_tag clearfix" style="padding:0">
 											<span class="price">
+												<br>
 												<small>Send On :</small>
 												<br>
 												<?=$row_questionnaire->questionnaire_send_on?>
 											</span>
 										</div>
-										<!--//PRICE END-->
+										<!--//SEND ON END-->
 									</div>
-									<!--//HEAD PRICE DETAIL END-->
+									<!--//HEAD SEND ON DETAIL END-->
 
 									<!--FEATURE LIST START-->
 									<div class="generic_feature_list">
 										<!--<a href="" title="view email tamplate"><span><i class="fe fe-eye"></i></span></a>-->
 										<p>
 											<?php if(strlen($row_questionnaire->questionnaire_message)<80) echo $row_questionnaire->questionnaire_message."<br><br>"; 
-												else echo substr($row_questionnaire->questionnaire_message, 0, 120)."...";?>
+												else echo substr($row_questionnaire->questionnaire_message, 0, 100)."...";?>
 										</p>
 									</div>
 									<!--//FEATURE LIST END-->
 
 									<!--BUTTON START-->
-									<div class="generic_price_btn clearfix">
-										<a class="btn btn-reguler" href="#">View Email</a>
-										<a class="btn btn-reguler" href="<?=base_url("Questionnaire/create_question/".$row_questionnaire->questionnaire_id)?>">Edit </a>
+									<div class="mb-4">
+										<a href="javascript:view_email_questionnaire(<?=$row_questionnaire->questionnaire_id?>);"><button class="btn btn-default mt-1 mb-1">View Email</button></a>
+										<a href="<?=base_url("Questionnaire/create_question/".$row_questionnaire->questionnaire_id)?>"><button class="btn btn-primary mt-1 mb-1">Edit</button> </a>
 									</div>
 									<!--//BUTTON END-->
 								</div>
@@ -229,8 +230,7 @@
 </div>
 
 <?php
-	$this->load->view('event/event_modal');
-	$this->load->view('modal');
+	$this->load->view('questionnaire/questionnaire_modal');
 	$this->load->view('footer');
 ?>
 
