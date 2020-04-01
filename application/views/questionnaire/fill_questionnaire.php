@@ -1,5 +1,6 @@
 <?php 
 	foreach($data_questionnaire as $questionaire){
+		$send_questionnaire_id = $questionaire->send_questionnaire_id;
 		$questionnaire_id = $questionaire->id_qnr;
 		$questionnaire_name = $questionaire->questionnaire_name;
 		$questionnaire_send_on = $questionaire->questionnaire_send_on;
@@ -93,38 +94,61 @@
 					</ol>
 
 				</div>
+				
 				<!-- QUESTION AND OPTION DISPLAY !-->
 				<div class="col-md-12">	
 					<?php 
-						$last_question_id = 0;
-						foreach($data_questionnaire as $question_row){
-							$now_question_id=$question_row->question_id;
-							if($now_question_id != $last_question_id){
-								$last_question_id = $now_question_id;
-					?>		
-							<div style="margin-top:20px; border-top:1px #000 solid">
-								
-								<p><?=$question_row->question?></p>
-								<ul style="list-style-type:none;">
-									<li>
-										<input type="radio" value="<?=$question_row->question_option_id?>" name="option<?=$question_row->question_id?>">									
-										<?=$question_row->question_option_value?>
-									</li>
-								</ul>
-								
-					<?php	}else{ ?>
-								<ul style="list-style-type:none;">
-									<li>
-										<input type="radio" value="<?=$question_row->question_option_id?>" name="option<?=$question_row->question_id?>">
-										<?=$question_row->question_option_value?>
-									</li>
-								</ul>
-					<?php
-							}
-							
-						}
+						$attributes = array('class' => 'login100-form validate-form', 'id' => 'inputQuestionnaireResult'); 
+						echo form_open("Questionnaire/insert_questionnaire_result",$attributes); 
 					?>
-							</div>	
+						<input type="hidden" id="send_questionnaire_id" name="send_questionnaire_id" value="<?=$send_questionnaire_id?>">
+						<input type="hidden" id="questionnaire_id" name="questionnaire_id" value="<?=$questionnaire_id?>">
+						<input type="hidden" id="questionnaire_name" name="questionnaire_name" value="<?=$questionnaire_name?>">
+					
+						<?php 
+							//buat nyimpen id question baru dari looping option
+							$last_question_id = 0;
+							//buat pembeda antar radio dari masing-masing question
+							$option_id = 0;
+							
+							foreach($data_questionnaire as $question_row){
+								$now_question_id=$question_row->question_id;
+								
+								if($now_question_id != $last_question_id){
+									$last_question_id = $now_question_id;
+									$option_id++;
+						?>		
+									<div style="margin-top:20px; border-top:1px #000 solid">
+									
+									<p><?=$question_row->question?></p>
+									<ul style="list-style-type:none;">
+										<li>
+											<input type="radio" value="<?=$question_row->question_option_id?>" name="option<?=$option_id?>" required>									
+											<?=$question_row->question_option_value?>
+										</li>
+									</ul>
+									
+						<?php	}else{ ?>
+										<ul style="list-style-type:none;">
+											<li>
+												<input type="radio" value="<?=$question_row->question_option_id?>" name="option<?=$option_id?>" required>
+												<?=$question_row->question_option_value?>
+											</li>
+										</ul>
+						<?php
+								}
+							}	
+						?>
+										</div>	
+										
+						<input type="hidden" id="option_count" name="option_count" value="<?=$option_id?>">	
+						
+						<div class="container-login100-form-btn">
+							<button class="btn btn-default mt-4 mb-4 ml-4">
+								Submit
+							</button>
+						</div>	
+					</div>
 				</div>			
 			</div>			
 		</div>

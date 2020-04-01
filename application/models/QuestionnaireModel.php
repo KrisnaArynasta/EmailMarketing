@@ -198,5 +198,14 @@ class QuestionnaireModel extends CI_Model {
         return false;
     }
 	
-
+	public function insert_questionnaire_result($data,$send_questionnaire_id,$fill_status){
+		//insert ke tabel tbl_option_result
+		$this->db->insert('tbl_option_result', $data);
+		
+		//update tbl_send_questionnaire jadi statusnya udh di isi
+		$this->db->where('send_questionnaire_id', $send_questionnaire_id);
+		$this->db->update('tbl_send_questionnaire', $fill_status); 
+		
+	}
+	
 }

@@ -9,7 +9,7 @@
 	<meta content="Spruko" name="author">
 
 	<!-- Title -->
-	<title>Page Not Found</title>
+	<title><?=$questionnaire_name?></title>
 
 	<!-- Favicon -->
 	<link href="<?=base_url()?>assets/img/brand/favicon.png" rel="icon" type="image/png">
@@ -37,10 +37,9 @@
 	<div class="page bg-gradient-primary">
 		<div class="page-main">
 			<div id="notfound">
-				<div class="notfound">
-					<h1><span class=""><i class="far fa-frown"></i></span>ops!</h1>
-					<h2 class="mb-0">Error 404 : Page Not Found</h2>
-					<a href="index.html" class="btn btn-primary btn-pill mt-4">Go back</a>
+				<div class="notfound"style="padding:20px">
+					<h1><span class=""><i class="fas fa-thumbs-up" style="font-size:150px"></i></span><br>Thank You</h1>
+					<h2>Thank you very much for filling out our questionnaire <br><b>"<?=$questionnaire_name?>"</b></h2>
 
 				</div>
 			</div>
@@ -49,27 +48,27 @@
 	<!-- Adon Scripts -->
 
 	<!-- Core -->
-	<script src="assets/plugins/jquery/dist/jquery.min.js"></script>
-	<script src="assets/js/popper.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?=base_url()?>assets/plugins/jquery/dist/jquery.min.js"></script>
+	<script src="<?=base_url()?>assets/js/popper.js"></script>
+	<script src="<?=base_url()?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Optional JS -->
-	<script src="assets/plugins/chart.js/dist/Chart.min.js"></script>
-	<script src="assets/plugins/chart.js/dist/Chart.extension.js"></script>
+	<script src="<?=base_url()?>assets/plugins/chart.js/dist/Chart.min.js"></script>
+	<script src="<?=base_url()?>assets/plugins/chart.js/dist/Chart.extension.js"></script>
 
 	<!-- Data tables -->
-	<script src="assets/plugins/datatable/jquery.dataTables.min.js"></script>
-	<script src="assets/plugins/datatable/dataTables.bootstrap4.min.js"></script>
+	<script src="<?=base_url()?>assets/plugins/datatable/jquery.dataTables.min.js"></script>
+	<script src="<?=base_url()?>assets/plugins/datatable/dataTables.bootstrap4.min.js"></script>
 
 	<!-- Fullside-menu Js-->
-	<script src="assets/plugins/toggle-sidebar/js/sidemenu.js"></script>
+	<script src="<?=base_url()?>assets/plugins/toggle-sidebar/js/sidemenu.js"></script>
 
 	<!-- Custom scroll bar Js-->
-	<script src="assets/plugins/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="<?=base_url()?>assets/plugins/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
 
 	<!-- Adon JS -->
-	<script src="assets/js/custom.js"></script>
+	<script src="<?=base_url()?>assets/js/custom.js"></script>
 </body>
 
-<!-- Mirrored from spruko.com/demo/adon/404.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Jan 2019 08:59:10 GMT -->
+<!-- Mirrored from spruko.com/demo/adon/400.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Jan 2019 08:59:10 GMT -->
 </html>

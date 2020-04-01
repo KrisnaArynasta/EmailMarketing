@@ -276,7 +276,42 @@ class Questionnaire extends CI_Controller {
 		//$questionnaire_id_code = base64_decode(urldecode($id));
 		
 		$result['data_questionnaire'] = $this->QuestionnaireModel->view_questionnaire_to_fill($id);
-		$this->load->view('questionnaire/fill_questionnaire',$result);
+		foreach($result['data_questionnaire'] as $questionaire){
+			$questionnaire_fill_status = $questionaire->questionnaire_fill_status;
+			$questionnaire_name = $questionaire->questionnaire_name;
+		}
+		
+		if($questionnaire_fill_status==0){
+			$this->load->view('questionnaire/fill_questionnaire',$result);
+		}else{
+			$questionnaire_name_data['questionnaire_name']=$questionnaire_name;
+			$this->load->view('questionnaire/fill_questionnaire_success',$questionnaire_name_data);
+		}
+		
+		
+	}
+	
+	public function insert_questionnaire_result(){
+				
+		$send_questionnaire_id = $this->input->post('send_questionnaire_id');	
+		$questionnaire_name = $this->input->post('questionnaire_name');	
+		$fill_status = array(
+		  "questionnaire_fill_status" => 1
+		);
+
+		$option_count = $this->input->post('option_count');
+		for($i=1;$i<=$option_count;$i++) {
+			
+			$data_option = array(
+			  "question_option_id" 				=> $this->input->post('option'.$i.''),
+			  "question_option_date_filled"		=> date("Y-m-d")
+			);
+			
+			$this->QuestionnaireModel->insert_questionnaire_result($data_option,$send_questionnaire_id,$fill_status);			
+		}
+		
+		$questionnaire_name_data['questionnaire_name']=$questionnaire_name;
+		$this->load->view('questionnaire/fill_questionnaire_success',$questionnaire_name_data);
 	}
 
 }

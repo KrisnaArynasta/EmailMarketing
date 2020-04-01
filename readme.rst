@@ -130,10 +130,12 @@ QUESTIONNAIRE
 		multi question ✔
 		multi option ✔
 	edit Questionnaire 
-		edit multi question 
-		edit multi option 
-	send Questionnaire
+		edit multi question ✔
+		edit multi option ✔
+	send Questionnaire ✔
 	delete Questionnaire
+	fill Questionnaire ✔
+	Questionnaire result
 	
 
 BUILD API DOCUMENTASION 
