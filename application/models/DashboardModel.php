@@ -21,15 +21,15 @@ class DashboardModel extends CI_Model {
 		return $query;
 	}
 	
-	// public function get_questionnaire($id){
-		// $this->db->select('*');
-		// $this->db->from('tbl_guest');
-		// $this->db->where('user_id', $id);
-		// $this->db->order_by('guest_active_status', 'DESC');
-		// $this->db->order_by('guest_last_update', 'DESC');
-		// $query = $this->db->get()->result();
-		// return $query; 
-	// }
+	public function get_questionnaire($id){
+		$this->db->select('count(*) as result');
+		$this->db->from('tbl_send_questionnaire sn');
+		$this->db->join('tbl_questionnaire qn','sn.questionnaire_id=qn.questionnaire_id');
+		$this->db->where('questionnaire_fill_status', 1);
+		$this->db->where('user_id', $id);
+		$query = $this->db->get()->result();
+		return $query; 
+	}
 	
 	public function get_guest($id){
 		$this->db->select('count(*) as result');

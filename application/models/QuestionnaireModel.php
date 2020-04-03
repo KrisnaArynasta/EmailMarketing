@@ -44,6 +44,33 @@ class QuestionnaireModel extends CI_Model {
 		return $query; 
 	}
 	
+	//DAPETIN HASIL SURVEY SUATU QUESTIONNAIRE
+	public function view_questionnaire_result($id,$user){ 
+		$this->db->select('*, 
+						qn.questionnaire_id as "id_qnr", 
+						q.question_id as "question_id", 
+						qo.question_option_id as "option_id", 
+						COUNT(os.question_option_id) AS "result", 
+						result_total.result_total AS "result_total"');
+		$this->db->from('tbl_questionnaire qn');
+		$this->db->join('tbl_question q','qn.questionnaire_id=q.questionnaire_id','left');
+		$this->db->join('tbl_question_option qo','q.question_id=qo.question_id','left');
+		$this->db->join('tbl_option_result os','qo.question_option_id=os.question_option_id','left');
+		//BUAT NGEDAPETIN TOTAL SCORE DARI MASING-MASING QUESTION BUKAN OPTION (NILAI BRP KALI QUESTION ITU DIISI)
+		$this->db->join('(SELECT qo2.question_id, COUNT(qo2.question_id) AS "result_total" 
+						FROM tbl_option_result os2 
+						LEFT JOIN tbl_question_option qo2 ON os2.question_option_id = qo2.question_option_id
+						LEFT JOIN tbl_question q2 ON qo2.question_id = q2.question_id
+						WHERE q2.questionnaire_id= '.$id.'
+						GROUP BY (qo2.question_option_id)
+						) `result_total`','qo.question_id = result_total.question_id','left');
+		$this->db->where('qn.questionnaire_id', $id);
+		$this->db->where('qn.user_id', $user);
+		$this->db->group_by('qo.question_option_id');
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
 	public function view_question_by_id($id){ 
 		$this->db->select('*');
 		$this->db->from('tbl_question q');
@@ -121,27 +148,11 @@ class QuestionnaireModel extends CI_Model {
 		$this->db->update('tbl_question', $data);
 	}
 	
-	
-	//UPDATE DATA EVENT NON AKTIF ATAU AKTIF (1 / 0)
-	public function aktif($id,$data){
-		$this->db->where('event_id', $id);
-		$this->db->update('tbl_event', $data); 
-	}	
-	
-	
-	//UPDATE DATA EVENT JADI DELETED (1)
-	public function delete($id,$data){
-		$this->db->where('event_id', $id);
-		$this->db->update('tbl_event', $data); 
-	}
-	
-	
-	
 	// SEARCH FUCTION
 	public function get_total($user_id){
 		
 		$this->db->where('user_id',$user_id);
-		//$this->db->where('event_status_delete',0);
+		$this->db->where('questionnaire_status_delete',0);
 		$query=$this->db->get("tbl_questionnaire");	
 		return $query->num_rows();	
 	}
@@ -149,7 +160,7 @@ class QuestionnaireModel extends CI_Model {
 	public function get_filter($user_id,$search){
 		
 		$this->db->where('user_id',$user_id);
-		//$this->db->where('event_status_delete',0);
+		$this->db->where('questionnaire_status_delete',0);
 		$this->db->like('questionnaire_name', $search);
 		//$this->db->or_like('questionnaire_message', $search.')');
 		$query=$this->db->get("tbl_questionnaire");
@@ -157,11 +168,14 @@ class QuestionnaireModel extends CI_Model {
 	} 	
 
 	public function get_current_page_records($user_id, $limit, $start){
-		
+		$this->db->select('*,SUM(sq.questionnaire_fill_status) as count_responnd');
+		$this->db->from('tbl_questionnaire qn');
+		$this->db->join('tbl_send_questionnaire sq','qn.questionnaire_id=sq.questionnaire_id','left');
 		$this->db->where('user_id',$user_id);
-		//$this->db->where('event_status_delete',0);
+		$this->db->where('questionnaire_status_delete',0);
+		$this->db->group_by('qn.questionnaire_id');
 		$this->db->limit($limit, $start);
-        $query = $this->db->get("tbl_questionnaire");
+        $query = $this->db->get();
  
         if ($query->num_rows() > 0) 
         {
@@ -178,12 +192,16 @@ class QuestionnaireModel extends CI_Model {
 	
 	public function get_current_page_records_filter($user_id, $limit, $start, $search){
 		
+		$this->db->select('*,SUM(sq.questionnaire_fill_status) as count_responnd');
+		$this->db->from('tbl_questionnaire qn');
+		$this->db->join('tbl_send_questionnaire sq','qn.questionnaire_id=sq.questionnaire_id','left');
 		$this->db->where('user_id',$user_id);
-		//$this->db->where('event_status_delete',0);
+		$this->db->where('questionnaire_status_delete',0);
 		$this->db->limit($limit, $start);
 		$this->db->like('questionnaire_name', $search);
-		$this->db->or_like('questionnaire_message', $search);
-        $query = $this->db->get("tbl_questionnaire");
+		//$this->db->or_like('questionnaire_message', $search);
+		$this->db->group_by('qn.questionnaire_id');
+        $query = $this->db->get();
  
         if ($query->num_rows() > 0) 
         {
@@ -206,6 +224,12 @@ class QuestionnaireModel extends CI_Model {
 		$this->db->where('send_questionnaire_id', $send_questionnaire_id);
 		$this->db->update('tbl_send_questionnaire', $fill_status); 
 		
+	}
+	
+	//UPDATE DATA QUESTIONNAIRE JADI DELETED (1)
+	public function delete_questionnaire($id,$data){
+		$this->db->where('questionnaire_id', $id);
+		$this->db->update('tbl_questionnaire', $data); 
 	}
 	
 }

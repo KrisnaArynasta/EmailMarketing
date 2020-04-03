@@ -66,9 +66,9 @@ SEND MESSAGE
 	
 	Balas pesan manual ✔
 	
-	makai cronjob php atau build dengan python ? cronjob
+	makai cronjob php atau build dengan python ? cronjob ✔
 
-	email di ganti ketika id tamu masih ada yang belum d kirimkan email suatu event
+	email di ganti ketika id tamu masih ada yang belum d kirimkan email suatu event ✔
 	
 	
 OUTBOX
@@ -133,9 +133,9 @@ QUESTIONNAIRE
 		edit multi question ✔
 		edit multi option ✔
 	send Questionnaire ✔
-	delete Questionnaire
+	delete Questionnaire ✔
 	fill Questionnaire ✔
-	Questionnaire result
+	Questionnaire result ✔
 	
 
 BUILD API DOCUMENTASION 

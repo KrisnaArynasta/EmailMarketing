@@ -93,11 +93,13 @@
 									<i class="fas fa-list-alt icon text-success"></i>
 								</div>
 								<div class="text mt-2">
-									<h1 class="mb-0">3</h1>
-									<label class="text-muted">Questionnaire  <br>Respond</label>
+									<?php foreach ($data_questionnaire as $data_questionnaire) {?>
+									<h1 class="mb-0"><?=$data_questionnaire->result?></h1>
+									<label class="text-muted">Questionnaire  <br>Responder</label>
+									<?php } ?>
 								</div>
 								<div class="options mt-3">
-									<a href="javascript:;" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-search"></i> View Details</a>
+									<a href="<?=base_url('Questionnaire')?>" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-search"></i> View Details</a>
 								</div>
 							</div>
 						</div>

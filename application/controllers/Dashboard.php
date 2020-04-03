@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller {
 		
 		$data['data_outbox'] = $this->DashboardModel->get_email_sent($user_id);
 		$data['data_event'] = $this->DashboardModel->get_event_waiting($user_id);
-		//$data['guest_data'] = $this->DashboardModel->get_guest($user_id);
+		$data['data_questionnaire'] = $this->DashboardModel->get_questionnaire($user_id);
 		$data['data_guest'] = $this->DashboardModel->get_guest($user_id);
 		$data['data_inbox'] = $this->DashboardModel->get_inbox($user_id);
 		$this->load->view('dashboard/dashboard',$data);

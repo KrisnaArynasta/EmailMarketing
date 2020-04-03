@@ -313,6 +313,30 @@ class Questionnaire extends CI_Controller {
 		$questionnaire_name_data['questionnaire_name']=$questionnaire_name;
 		$this->load->view('questionnaire/fill_questionnaire_success',$questionnaire_name_data);
 	}
+	
+	public function questionnair_result($questionnaire_id){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}		
+		
+		$user_id = $this->session->userdata('user_id');	
+		$data['data_questionnaire']=$this->QuestionnaireModel->view_questionnaire_result($questionnaire_id,$user_id);
+		
+		$this->load->view('questionnaire/view_questionnaire_result',$data);
+	}
+	
+	public function delete_questionnaire(){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}
+
+		$id = $this->input->post('id'); 
+		$data = array(
+		  "questionnaire_status_delete" => $this->input->post('delete_sts')
+		);	 
+		$this->QuestionnaireModel->delete_questionnaire($id,$data); 
+		echo "success";
+	}
 
 }
 

@@ -9,10 +9,10 @@
 		$('#loading-wrap').hide();
 	});
 	
-		function deleteEvent(event_id, event_name){
+		function delete_questionnaire(questionnaire_id, questionnaire_name){
 		swal({
-			title: "Delete Event "+event_name+"?",
-			text: event_name+" will deleted on your event list",
+			title: "Delete Questionnaire "+questionnaire_name+"?",
+			text: questionnaire_name+" will deleted on your questionnaire list",
 			type: "warning",
 			showCancelButton: true,
 			confirmButtonClass: "btn-danger",
@@ -22,87 +22,25 @@
 		  
 		  $.ajax({
 				type: "POST", 
-				url: "<?php echo base_url(); ?>"+"Event/delete",
+				url: "<?php echo base_url(); ?>"+"Questionnaire/delete_questionnaire",
 				datatype : "json", 
-				data:{id:event_id,delete_sts:1},
+				data:{id:questionnaire_id,delete_sts:1},
 				success: function(data) {
 					if(data=="success"){
-						swal({title:"Event Deleted!", text:"this event has been deleted in your event list", type:"success"},
+						swal({title:"Questionnaire Deleted!", text:"this questionnaire has been deleted in your list", type:"success"},
 						function(){ 
 							   location.reload();
 						   }
 					   );
 					   $('.confirm').addClass('sweet-alert-success');
 					}else{
-						swal({title:"Delete Event!", text:"fail to delete the event", type:"success"});
+						swal({title:"Failled!", text:"fail to delete the questionnaire", type:"success"});
 					}	
 				}
 			}); 
 		});
 	}
-	
-	function conformAktif(event_id, event_name){
-		swal({
-			title: "Activate Event "+event_name+"?",
-			text: event_name+" event emails will send to your guests on the send date",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonClass: "btn-danger",
-			confirmButtonText: "Activate",
-			closeOnConfirm: false
-		}, function() {
-		  
-		  $.ajax({
-				type: "POST", 
-				url: "<?php echo base_url(); ?>"+"Event/aktif",
-				datatype : "json", 
-				data:{id:event_id,aktif_sts:1},
-				success: function(data) {
-					if(data=="success"){
-						swal({title:"Event Actived!", text:"this event email will send to your guests on the send date", type:"success"},
-						function(){ 
-							   location.reload();
-						   }
-					   );
-					   $('.confirm').addClass('sweet-alert-success');
-					}else{
-						swal({title:"Activating Event!", text:"failed to activating event", type:"error"});
-					}	
-				}
-			}); 
-		});
-	}
-	
-	function conformDiaktif(event_id, event_name){
-		swal({
-			title: "Disable Event "+event_name+"?",
-			text: event_name+" event emails will not send to your guests",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonClass: "btn-danger",
-			confirmButtonText: "Disable",
-			closeOnConfirm: false
-		}, function() {
-			$.ajax({
-				type: "POST", 
-				url: "<?php echo base_url(); ?>"+"Event/aktif",
-				datatype : "json", 
-				data:{id:event_id,aktif_sts:0},
-				success: function(data) {
-					if(data=="success"){
-						swal({title:"Event Deactivated!", text:"this event email will not send to your guests", type:"success"},
-						function(){ 
-							   location.reload();
-						   }
-					   );
-					   $('.confirm').addClass('sweet-alert-success');
-					}else{
-						swal({title:"Deactivating Event!", text:"failed to disable event", type:"error"});
-				   }	
-				}
-			}); 
-		});
-	}
+
 </script>
 <!-- Data table css -->
 <link href="assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -183,7 +121,9 @@
 
 									<!--FEATURE LIST START-->
 									<div class="generic_feature_list">
-										<!--<a href="" title="view email tamplate"><span><i class="fe fe-eye"></i></span></a>-->
+										<a title="Edit Questionnaire" href="<?=base_url("Questionnaire/create_question/".$row_questionnaire->questionnaire_id)?>"><i class="fe fe-edit-3"></i></a>
+										<a title="Delete Questionnaire" href="javascript:delete_questionnaire(<?=$row_questionnaire->questionnaire_id?>,'<?=$row_questionnaire->questionnaire_name?>');"><i class="fe fe-trash-2"></i></a>
+										<br>
 										<p>
 											<?php if(strlen($row_questionnaire->questionnaire_message)<80) echo $row_questionnaire->questionnaire_message."<br><br>"; 
 												else echo substr($row_questionnaire->questionnaire_message, 0, 100)."...";?>
@@ -194,7 +134,7 @@
 									<!--BUTTON START-->
 									<div class="mb-4">
 										<a href="javascript:view_email_questionnaire(<?=$row_questionnaire->questionnaire_id?>);"><button class="btn btn-default mt-1 mb-1">View Email</button></a>
-										<a href="<?=base_url("Questionnaire/create_question/".$row_questionnaire->questionnaire_id)?>"><button class="btn btn-primary mt-1 mb-1">Edit</button> </a>
+										<a href="<?=base_url("Questionnaire/questionnair_result/".$row_questionnaire->questionnaire_id)?>"><button class="btn btn-primary mt-1 mb-1">View Result (<?=($row_questionnaire->count_responnd)?$row_questionnaire->count_responnd:0;?>)</button> </a>
 									</div>
 									<!--//BUTTON END-->
 								</div>
@@ -209,7 +149,7 @@
 							if (isset($links)) {
 									echo "<div class='col-md-12'>".$links."</div>";
 								}
-							// jika data event tidak ada  
+							// jika data questionnair tidak ada  
 							} else  { ?>
 								<div class="col-md-12">
 									<b><h3 style='opacity:0.4; text-align:center; margin-top:50px'>You Dont Have Any Questionnaire Yet!</h3></b> <br>
@@ -218,7 +158,7 @@
 								</div>	
 						<!-- Button Tambah Melayang !-->
 						<a href="<?=base_url('Questionnaire/create')?>">
-							<button class="float btn btn-icon btn-add btn-info mt-1 mb-1" data-tooltip="tooltip" data-placement="left" title="" data-original-title="Create new event">
+							<button class="float btn btn-icon btn-add btn-info mt-1 mb-1" data-tooltip="tooltip" data-placement="left" title="" data-original-title="Create new questionnair">
 								<span class="btn-inner--icon"><i class="fe fe-plus"></i></span>
 							</button>
 						</a>

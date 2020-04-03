@@ -12,25 +12,25 @@
 	<title>Page Not Found</title>
 
 	<!-- Favicon -->
-	<link href="<?=base_url()?>assets/img/brand/favicon.png" rel="icon" type="image/png">
+	<link href=" assets/img/brand/favicon.png" rel="icon" type="image/png">
 
 	<!-- Fonts -->
-	<link href="<?=base_url()?>https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
+	<link href=" https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
 
 	<!-- Icons -->
-	<link href="<?=base_url()?>assets/css/icons.css" rel="stylesheet">
+	<link href=" assets/css/icons.css" rel="stylesheet">
 
 	<!--Bootstrap.min css-->
-	<link rel="stylesheet" href="<?=base_url()?>assets/plugins/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href=" assets/plugins/bootstrap/css/bootstrap.min.css">
 
 	<!-- Adon CSS -->
-	<link href="<?=base_url()?>assets/css/dashboard.css" rel="stylesheet" type="text/css">
+	<link href=" assets/css/dashboard.css" rel="stylesheet" type="text/css">
 
 	<!-- Custom scroll bar css-->
-	<link href="<?=base_url()?>assets/plugins/customscroll/jquery.mCustomScrollbar.css" rel="stylesheet" />
+	<link href=" assets/plugins/customscroll/jquery.mCustomScrollbar.css" rel="stylesheet" />
 
 	<!-- Sidemenu Css -->
-	<link href="<?=base_url()?>assets/plugins/toggle-sidebar/css/sidemenu.css" rel="stylesheet">
+	<link href=" assets/plugins/toggle-sidebar/css/sidemenu.css" rel="stylesheet">
 
 </head>
 <body>
@@ -40,7 +40,7 @@
 				<div class="notfound">
 					<h1><span class=""><i class="far fa-frown"></i></span>ops!</h1>
 					<h2 class="mb-0">Error 404 : Page Not Found</h2>
-					<a href="index.html" class="btn btn-primary btn-pill mt-4">Go back</a>
+					<a href="<?=config_item("base_url");?>" class="btn btn-primary btn-pill mt-4">Go back</a>
 
 				</div>
 			</div>
