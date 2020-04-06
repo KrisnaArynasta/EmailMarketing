@@ -10,8 +10,9 @@ REVISI
 	skenario sidang ✔
 	CRUD data tamu ✔
 	unsubscribe ✔
-	registrasi google
+	registrasi google ✔
 	profile user d dashboard ✔
+	create email server
 	
 DASHBOARD 
 	hitung event yg dikirim hari ini ✔

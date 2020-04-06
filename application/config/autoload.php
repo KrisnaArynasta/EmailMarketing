@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | These are the things you can load automatically:
 |
 | 1. Packages
-| 2. Libraries
+| 2. libraries
 | 3. Drivers
 | 4. Helper files
 | 5. Custom config files
@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database');
+$autoload['libraries'] = array('database','session');
 
 /*
 | -------------------------------------------------------------------

@@ -32,6 +32,74 @@ class UserModel extends CI_Model {
 		}
 	}
 
+	//CEK EMAIL UDAH TERDAFTAR APA BELUM
+	public function check_email_register($email){
+		$this->db->select('*');
+		$this->db->from('tbl_user');
+		$this->db->where('email', $email);
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+	
+	public function login_with_google($email){
+		$this->db->select('*');
+		$this->db->from('tbl_user');
+		$this->db->where('email', $email);
+		$query = $this->db->get();
+		$check = $query->num_rows();
+		
+		// CEK KLO EMAILNYA UDH ADA BLM, KLO UDH:
+		if($check>0){
+			//BUAT SELECT DATA YANG LOGIN
+			$this->db->select('*');
+			$this->db->from('tbl_user');
+			$this->db->where('email', $email);
+			$query = $this->db->get()->result();
+			foreach ($query as $query){
+				$hasil= array(
+						'user_id' => $query->user_id,
+						'user_email' => $query->email,
+						'user_password' => $query->password,
+						'property_name' =>$query->property_name,
+						'property_logo' =>$query->property_logo,
+						'property_address' =>$query->property_address,
+						'property_website' =>$query->property_website,
+						'API_key' =>$query->API_key,
+						'secret_key' =>$query->secret_key,	
+						//KALO PENGGUNA LAMA AKAN DI ARAHKAN LANGSUNG KE HALAMAN DASHBOARD					
+						'redirect_url' =>'Dashboard'		
+					);
+			}
+		// CEK KLO EMAILNYA UDH ADA BLM, KLO BLM:			
+		}else{	
+			$data = array('email' => $email);
+			
+			if($this->db->insert('tbl_user', $data)){
+				//BUAT SELECT YG TADI DI INSERT
+				$this->db->select('*');
+				$this->db->from('tbl_user');
+				$this->db->where('email', $email);
+				$query = $this->db->get()->result();
+				foreach ($query as $query){
+					$hasil= array(
+							'user_id' => $query->user_id,
+							'user_email' => $query->email,
+							'user_password' => $query->password,
+							'property_name' =>$query->property_name,
+							'property_logo' =>$query->property_logo,
+							'property_address' =>$query->property_address,
+							'property_website' =>$query->property_website,
+							'API_key' =>$query->API_key,
+							'secret_key' =>$query->secret_key,
+							//KALO PENGGUNA BARU AKAN DI ARAHKAN KE HALAMAN EDIT PROFILE USER
+							'redirect_url' =>'Account/edit_profile'	
+						);
+				}
+			}
+		}
+		return $hasil;
+	}
+
 	public function register($data){
 		$this->db->insert('tbl_user', $data);
 	}

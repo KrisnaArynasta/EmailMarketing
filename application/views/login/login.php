@@ -75,6 +75,13 @@
 							Login
 						</button>
 					</div>
+					<div class="container-login100-form-btn" style="padding-top:5px;">
+						<a href="<?=base_url('Login/login_with_google')?>" style="width:100%">
+							<button type="button" class="login100-form-btn btn-warning" style="font-size:11px">
+								<i class="fab fa-google" aria-hidden="true"></i>&nbsp;&nbsp;Login With Google
+							</button>
+						</a>
+					</div>
 
 					<div class="text-center pt-1">
 						<a class="txt2" href="javascript:openForm();">

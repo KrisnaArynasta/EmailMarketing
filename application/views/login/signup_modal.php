@@ -5,26 +5,40 @@
 	
 	//REGISTER
 	function save_user(){
+		if($('#email').val()==""){
+			swal({title:"Failed", text:"Email is empty", type:"error"});
+		}else if($('#password').val()==""){
+			swal({title:"Failed", text:"Re-Password Does not match", type:"error"});
+		}else if($('#re_password').val()==""){
+			swal({title:"Failed", text:"Re-Password Does not match", type:"error"});
+		}else if($('#property_name').val()==""){
+		swal({title:"Failed", text:"Property name is empty", type:"error"});
+		}else if($('#password').val()!=$('#re_password').val()){
+			swal({title:"Failed", text:"Re-Password Does not match", type:"error"});
+		}else{
 
-		$('.loading-wrap').show();		
-		$.ajax({
-			type: "POST", 
-			url: "<?php echo base_url(); ?>"+"Login/register",
-			datatype : "json", 
-			data: $("#register").serialize(), 
-			success: function(data) {
-				$('.loading-wrap').hide();
-				if(data=="success"){
-					swal({title:"Succsess", text:"Successfully create your account, please login to access your dashboard", type:"success"},
-					function(){ 
-						window.location.href = "<?php echo base_url(); ?>"+"Event";
-					});
-					$('.confirm').addClass('sweet-alert-success');
-				}else{
-					swal({title:"Failed", text:"Failed to create account, please try again latter", type:"error"});
+			$('.loading-wrap').show();		
+			$.ajax({
+				type: "POST", 
+				url: "<?php echo base_url(); ?>"+"Login/register",
+				datatype : "json", 
+				data: $("#register").serialize(), 
+				success: function(data) {
+					$('.loading-wrap').hide();
+					if(data=="success"){
+						swal({title:"Succsess", text:"Successfully create your account, please login to access your dashboard", type:"success"},
+						function(){ 
+							window.location.href = "<?php echo base_url(); ?>"+"Event";
+						});
+						$('.confirm').addClass('sweet-alert-success');
+					}else if(data=="email_registered"){
+						swal({title:"Failed", text:"This email already registered", type:"error"});
+					}else{
+						swal({title:"Failed", text:"Failed to create account, please try again latter", type:"error"});
+					}
 				}
-			}
-		});		
+			});	
+		}		
 	}	
 </script>
 	
@@ -42,30 +56,32 @@
 							<div class="form-group mb-3">
 								<div class="form-group">
 									<label class="form-label text-white">Email</label>
-									<input type="text" class="form-control" name="email" placeholder="Login Email" required>
+									<input type="text" class="form-control" name="email" placeholder="Login Email" id="email" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="form-group text-white">
 									<label class="form-label">Password</label>
-									<input type="password" class="form-control" name="password" placeholder="Login Password" required>
+									<input type="password" class="form-control" name="password" id="password" placeholder="Login Password" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="form-group text-white">
 									<label class="form-label">Re-Password</label>
-									<input type="password" class="form-control" name="repassword" placeholder="Re-Type Login Password" required>
+									<input type="password" class="form-control" name="repassword" id="re_password" placeholder="Re-Type Login Password" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="form-group text-white">
 									<label class="form-label">Property Name</label>
-									<input type="text" class="form-control" name="property_name" placeholder="Property Name" required> 
+									<input type="text" class="form-control" name="property_name" placeholder="Property Name" id="property_name" required> 
 								</div>
 							</div>
+							<!--
 							<div class="form-group">
 							   <div class="g-recaptcha" data-sitekey="6Lf2jMAUAAAAAEjWwTRh9oagZHeiDoLRRFpohkTC"></div>
 							</div>
+							!-->	
 							<div class="text-center">
 								<button type="button" class="btn btn-white my-4" style="color: #00000096;" onclick="save_user()" >Register</button>
 							</div>

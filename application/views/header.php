@@ -166,7 +166,7 @@
 									<li class="nav-item dropdown">
 										<a aria-expanded="false" aria-haspopup="true" class="nav-link pr-md-0 mr-md-2 pl-1" data-toggle="dropdown" href="#" role="button">
 											<div class="media align-items-center">
-												<span class="avatar avatar-sm rounded-circle"><img alt="Image placeholder" src="<?=base_url()?>images/property_logo/<?=$this->session->userdata('property_logo')?>"></span>
+												<span class="avatar avatar-sm rounded-circle"><img style="color:#ad59ff;" alt="Property Logo" src="<?=base_url()?>images/property_logo/<?=$this->session->userdata('property_logo')?>"></span>
 
 											</div>
 										</a>
