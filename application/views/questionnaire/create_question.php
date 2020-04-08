@@ -26,6 +26,7 @@
 		
 		// BUAT ENABLE SEMUA INPUT
 		$("#questionnaire_name").prop('readonly', false);
+		$("#questionnaire_send_date").prop('readonly', false);
 		$("#questionnaire_send_date").datepicker();		
 		CKEDITOR.instances['question_email_preview'].setReadOnly(false);
 		

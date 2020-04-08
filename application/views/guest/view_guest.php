@@ -88,7 +88,7 @@ function conformAktif(id, name){
 					<h2 class="mb-0">Guests Data</h2>
 				</div>
 				<div class="col-md-6">
-					<button class="btn btn-primary float-right" type="file">Insert Bulk Data</button>
+					<!--<button class="btn btn-primary float-right" type="file">Insert Bulk Data</button>!-->
 					<button class="btn btn-primary float-right" style="margin-right:10px" data-toggle="modal" data-target="#addGuest"><i class="fe fe-plus"></i> New Guest</button>
 				</div>
 			</div>

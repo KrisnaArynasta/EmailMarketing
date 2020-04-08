@@ -51,10 +51,10 @@ class QuestionnaireModel extends CI_Model {
 						q.question_id as "question_id", 
 						qo.question_option_id as "option_id", 
 						COUNT(os.question_option_id) AS "result", 
-						result_total.result_total AS "result_total"');
-		$this->db->from('tbl_questionnaire qn');
-		$this->db->join('tbl_question q','qn.questionnaire_id=q.questionnaire_id','left');
-		$this->db->join('tbl_question_option qo','q.question_id=qo.question_id','left');
+						tbl_result_total.result_total AS "result_total"');
+		$this->db->from('tbl_question_option qo');
+		$this->db->join('tbl_question q','qo.question_id=q.question_id');
+		$this->db->join('tbl_questionnaire qn','q.questionnaire_id=qn.questionnaire_id');
 		$this->db->join('tbl_option_result os','qo.question_option_id=os.question_option_id','left');
 		//BUAT NGEDAPETIN TOTAL SCORE DARI MASING-MASING QUESTION BUKAN OPTION (NILAI BRP KALI QUESTION ITU DIISI)
 		$this->db->join('(SELECT qo2.question_id, COUNT(qo2.question_id) AS "result_total" 
@@ -62,8 +62,8 @@ class QuestionnaireModel extends CI_Model {
 						LEFT JOIN tbl_question_option qo2 ON os2.question_option_id = qo2.question_option_id
 						LEFT JOIN tbl_question q2 ON qo2.question_id = q2.question_id
 						WHERE q2.questionnaire_id= '.$id.'
-						GROUP BY (qo2.question_option_id)
-						) `result_total`','qo.question_id = result_total.question_id','left');
+						GROUP BY (qo2.question_id)
+						) `tbl_result_total`','qo.question_id = tbl_result_total.question_id','left');
 		$this->db->where('qn.questionnaire_id', $id);
 		$this->db->where('qn.user_id', $user);
 		$this->db->group_by('qo.question_option_id');
@@ -168,7 +168,7 @@ class QuestionnaireModel extends CI_Model {
 	} 	
 
 	public function get_current_page_records($user_id, $limit, $start){
-		$this->db->select('*,SUM(sq.questionnaire_fill_status) as count_responnd');
+		$this->db->select('*,SUM(sq.questionnaire_fill_status) as count_responnd, qn.questionnaire_id as questionnaire_id');
 		$this->db->from('tbl_questionnaire qn');
 		$this->db->join('tbl_send_questionnaire sq','qn.questionnaire_id=sq.questionnaire_id','left');
 		$this->db->where('user_id',$user_id);

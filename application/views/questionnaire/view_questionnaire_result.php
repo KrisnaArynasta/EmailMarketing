@@ -14,107 +14,9 @@
 		 $('#wait').hide();
 		 $('#loading-wrap').hide();	
 
-		//CKEDITOR.replace('question_email_preview');		 
+		CKEDITOR.replace('question_email_preview',{toolbarStartupExpanded : false} );	
 	});
-	
-	// ENABLE FORM EDIT QUESTIONNAIRE PAS KLIK BUTTON EDIT
-	function enable_edit(){
-		// BUAT NYIMPEN VALUE AWAL DARI INPUT KE VARIABEL GLOBAL
-		q_nm = $("#questionnaire_name").val();
-		q_sd = $("#questionnaire_send_date").val();
-		q_ep = CKEDITOR.instances['question_email_preview'].getData();
 		
-		// BUAT ENABLE SEMUA INPUT
-		$("#questionnaire_name").prop('readonly', false);
-		$("#questionnaire_send_date").datepicker();		
-		CKEDITOR.instances['question_email_preview'].setReadOnly(false);
-		
-		// BUAT NAMPILIN DAN NYEMBUNYIIN TOMBOL
-		$("#edit_questionnaire_button").hide();
-		$("#save_questionnaire_button").show();
-		$("#discard_questionnaire_button").show();
-	}
-	
-	// DISABLE FORM EDIT QUESTIONNAIRE PAS KLIK BUTTON DISCARD
-	function disable_edit(){
-		// BUAT SET VALUE LAMA KE INPUT KLO GK JADI NGEDIT
-		$("#questionnaire_name").val(q_nm);
-		$("#questionnaire_send_date").val(q_sd);
-		CKEDITOR.instances['question_email_preview'].setData(q_ep);
-		
-		// BUAT DISABLE SEMUA INPUT
-		$("#questionnaire_name").prop('readonly', true);
-		$("#questionnaire_send_date").prop('readonly', true);
-		$( "#questionnaire_send_date" ).datepicker( "option", "disabled", true );
-		CKEDITOR.instances['question_email_preview'].setReadOnly(true);
-		
-		// BUAT NAMPILIN DAN NYEMBUNYIIN TOMBOL
-		$("#edit_questionnaire_button").show();
-		$("#save_questionnaire_button").hide();
-		$("#discard_questionnaire_button").hide();
-	}
-	
-	// UPDATE QUESTIONNAIRE
-	function save_questionnaire(){
-		
-		CKEDITOR.instances['question_email_preview'].updateElement();
-		$("#inputQuestionnaire").serialize();
-		
-		$('.loading-wrap').show();		
-		$.ajax({
-			type: "POST", 
-			url: "<?php echo base_url(); ?>"+"Questionnaire/update_questionnaire",
-			datatype : "json", 
-			data: $("#inputQuestionnaire").serialize(), 
-			success: function(data) {
-				$('.loading-wrap').hide();
-				if(data=="success"){
-					swal({title:"Succsess", text:"Successfully update questionnaire data", type:"success"},
-					function(){ 
-						location.reload();
-					});
-					$('.confirm').addClass('sweet-alert-success');
-				}else{
-					swal({title:"Failed", text:"Failed tto update questionnaire data", type:"error"});
-				}
-			}
-		});		
-	}
-	
-	//	DELETE QUESTION
-	function delete_question(question_id){
-		swal({
-			title: "Delete Question ?",
-			text: "Are you sure want to delete this question ?",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonClass: "btn-danger",
-			confirmButtonText: "Delete",
-			closeOnConfirm: false
-		}, function() {
-		  
-		  $.ajax({
-				type: "POST", 
-				url: "<?php echo base_url(); ?>"+"Questionnaire/delete_question",
-				datatype : "json", 
-				data:{id:question_id,delete_sts:1},
-				success: function(data) {
-					if(data=="success"){
-						swal({title:"Question Deleted!", text:"this question has been deleted in your questionnaire", type:"success"},
-						function(){ 
-							   location.reload();
-						   }
-					   );
-					   $('.confirm').addClass('sweet-alert-success');
-					}else{
-						swal({title:"Delete Question!", text:"fail to delete the question", type:"success"});
-					}	
-				}
-			}); 
-		});
-	}
-
-	
 </script>
 <!-- Data table css -->
 <link href="assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -207,7 +109,7 @@
 										</div>	
 										<!-- OPTION SCORE BAR!-->
 										<div class="col-md-10" >
-											<div style="<?=($bar_score>0)?'width:'.$bar_score.'%;background-color:#ad59ff;':'background-color:#fff;'?>color:#000;border-bottom:2px solid #7537ae;border-right:2px solid #7537ae;border-top:2px solid #7537ae;">
+											<div style="<?=($bar_score>0)?'width:'.$bar_score.'%;background-color:#ad59ff;border-bottom:2px solid #7537ae;border-right:2px solid #7537ae;border-top:2px solid #7537ae;':'background-color:#fff;'?>color:#000;">
 												(<?=$question_row->result?>/<?=$question_row->result_total?>)
 											</div>
 										</div>
@@ -221,7 +123,7 @@
 										</div>	
 										<!-- OPTION SCORE BAR!-->
 										<div class="col-md-10" >
-											<div style="<?=($bar_score>0)?'width:'.$bar_score.'%;background-color:#ad59ff;':'background-color:#fff;'?>color:#000;border-bottom:2px solid #7537ae;border-right:2px solid #7537ae;border-top:2px solid #7537ae;">
+											<div style="<?=($bar_score>0)?'width:'.$bar_score.'%;background-color:#ad59ff;border-bottom:2px solid #7537ae;border-right:2px solid #7537ae;border-top:2px solid #7537ae;':'background-color:#fff;'?>color:#000;">
 												(<?=$question_row->result?>/<?=$question_row->result_total?>)
 											</div>
 										</div>
