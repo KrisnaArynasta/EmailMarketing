@@ -9,10 +9,11 @@ CRON JOB
 REVISI
 	skenario sidang ✔
 	CRUD data tamu ✔
+	insert bulk data tamu ✔
 	unsubscribe ✔
 	registrasi google ✔
 	profile user d dashboard ✔
-	create email server
+	create email server ✔
 	
 DASHBOARD 
 	hitung event yg dikirim hari ini ✔

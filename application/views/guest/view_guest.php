@@ -88,7 +88,7 @@ function conformAktif(id, name){
 					<h2 class="mb-0">Guests Data</h2>
 				</div>
 				<div class="col-md-6">
-					<!--<button class="btn btn-primary float-right" type="file">Insert Bulk Data</button>!-->
+					<button class="btn btn-info float-right" data-toggle="modal" data-target="#addBulk">Insert Bulk Data</button>
 					<button class="btn btn-primary float-right" style="margin-right:10px" data-toggle="modal" data-target="#addGuest"><i class="fe fe-plus"></i> New Guest</button>
 				</div>
 			</div>
@@ -137,6 +137,9 @@ function conformAktif(id, name){
 	</div>
 </div>
 
+<!-- file uploads js -->
+<script src="<?=base_url()?>assets/plugins/fileuploads/js/dropify.min.js"></script>
+
 <!-- Data table js -->
 <script src="<?=base_url()?>assets/plugins/datatable/dataTables.responsive.min.js"></script>
 <script src="<?=base_url()?>assets/plugins/datatable/responsive.bootstrap4.min.js"></script>
@@ -149,7 +152,7 @@ function conformAktif(id, name){
 
 <?php
 	$this->load->view('modal');
-	$this->load->view('Guest/guest_modal');
+	$this->load->view('guest/guest_modal');
 	$this->load->view('footer');
 ?>
 

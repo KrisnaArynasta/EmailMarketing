@@ -95,6 +95,7 @@ public function index(){
 			$photo 						= !empty($profil['picture'])?$profil['picture']:'';
 			
 			// Insert atau load data pengguna di database
+			// jika user baru , pembuatan API key dan Secret Key ada di model
 			$hasil = $this->UserModel->login_with_google($user_email);
 		
 			$user_id = $hasil['user_id'];
@@ -150,10 +151,9 @@ public function index(){
 				//cek apakah jawaban dari captcha benar
 				//if($cek_capt["success"]==true){
 				
-					$API = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU1234567890"),0,100);
-					$API = date('hisYmd').$API.date('Ymdhis');
-					$secret = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU1234567890"),0,100);
-					$secret = date('hisYmd').$API.date('Ymdhis');
+					$API = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU1234567890"),0,15);
+					$API = date('hisYmd').$API;
+					$secret = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU1234567890!@#$%^&*)("),0,50);
 					
 					$data = array(
 							  "email" 						=> $this->input->post('email'),

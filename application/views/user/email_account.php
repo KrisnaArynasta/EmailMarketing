@@ -91,7 +91,13 @@
 	</div>
 	<div class="card shadow">
 		<div class="card-header">
-			<h2 class="mb-0">Data Email Account</h2>
+			<div class="row">
+				<h2 class="col-md-6">Data Email Account</h2>
+				<div class="col-md-6">
+					<button class="btn btn-outline-primary float-right" data-toggle="modal" data-target="#createEmailAccount">Register Your Email</button>
+					<button class="btn btn-outline-primary float-right mr-2" data-toggle="modal" data-target="#createLocalEmail">Create Local Email</button>
+				</div>
+			</div>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -99,7 +105,7 @@
 					<thead>
 						<tr>
 							<th class="wd-15p">E-mail<br>Account</th>
-							<th class="wd-15p">E-mail<br>Password</th>
+							<th class="wd-15p" style="display:none">E-mail<br>Password</th>
 							<th class="wd-20p">IMAP<br>Host</th>
 							<th class="wd-15p">SMTP<br>Host</th>
 							<th class="wd-15p">Sending<br>Limit</th>
@@ -107,10 +113,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach($data as $row_email){?>
+						<?php foreach($data as $row_email){
+							$str_email = $row_email->email;
+							$domain = (explode("@",$str_email));
+							($domain[1]=="krisnaarynasta.com")?$domain=0:$domain=1;
+						?>
 						<?=(!$row_email->email_status_active)?"<tr style='background-color:#a8a8a81f;'>":"<tr>"?>
 							<td><?=$row_email->email?></td>
-							<td>
+							<td style="display:none">
 								<?=substr($row_email->password,0,strlen(($row_email->password)-1))?>
 								<?php for($c=1;$c<strlen($row_email->password);$c++){echo "&#8226";}?>
 							</td>
@@ -120,12 +130,14 @@
 							<td>
 								<center>
 								<!-- EDIT ICON !-->
-									<a href="javascript:edit_email_account(<?=$row_email->email_sender_id?>)"><i class="fe fe-edit"></i></a>
-									<!-- AKTIVATING ICON !-->
+									<?php if($domain==1){?>
+										<a title="Edit Email Account" href="javascript:edit_email_account(<?=$row_email->email_sender_id?>)"><i class="fe fe-edit"></i></a>
+									<?php } ?>
+								<!-- AKTIVATING ICON !-->	
 									<?php if(!$row_email->email_status_active){?>
-										<a class="icon-gray" href="javascript:conformAktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-check-square"></i></a>													
+										<a title="Activating Email" class="icon-gray" href="javascript:conformAktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-check-square"></i></a>													
 									<?php } else{ ?>
-										<a class="icon-warning" href="javascript:conformDiaktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-x-square"></i></a>												
+										<a title="Non-activate Email" class="icon-warning" href="javascript:conformDiaktif(<?=$row_email->email_sender_id?>, '<?=$row_email->email?>');"><i class="fe fe-x-square"></i></a>												
 									<?php } ?>
 								</center>
 							</td>
@@ -137,11 +149,11 @@
 		</div>
 	</div>
 </div>
-<!-- Button Tambah Melayang !-->
+<!-- Button Tambah Melayang 
 <button class="float btn btn-icon btn-add btn-info mt-1 mb-1" data-tooltip="tooltip" data-placement="left" title="" data-original-title="Create new email account" data-toggle="modal" data-target="#createEmailAccount">
 	<span class="btn-inner--icon"><i class="fe fe-plus"></i></span>
 </button>
-
+!-->
 
 <!-- Page content -->
 

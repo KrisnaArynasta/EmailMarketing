@@ -1,4 +1,41 @@
 <script>	
+	$(document).ready(function(){
+		//$("#file_bulk").dropify();
+	});
+
+	function add_bulk(){
+		//$('#wait').show();
+		//$('#loading-wrap').show();
+	  
+	  var form = new FormData(document.getElementById("addBulkDataForm"));
+	  
+		$('.loading-wrap').show();		
+		$.ajax({
+			type: "POST", 
+			url: "<?php echo base_url(); ?>"+"Guest/add_bulk/",
+			mimeType: "multipart/form-data",
+			datatype : "json", 
+			data: form, 
+			contentType: false,       // The content type used when sending data to the server.
+			cache: false,             // To unable request pages to be cached
+			processData:false, 			// To send DOMDocument or non processed data file it is set to false
+			success: function(data) {
+				$('.loading-wrap').hide();
+				if(data=="success"){
+					swal({title:"Data Inserted!", text:"successfully insert bulk data", type:"success"},
+					function(){ 
+						location.reload();
+					});
+					$('.confirm').addClass('sweet-alert-success');
+				}else if(data=="main photo is empty"){
+					swal({title:"Main Photo Cannot Be Empty!", text:"Failed insert bulk data", type:"error"});
+				}else{
+					swal({title:"Failed!", text:"Failed insert bulk data", type:"error"});
+				}
+			}
+		});	
+	}
+
 	function save_guest(){
 		//$('#wait').show();
 		//$('#loading-wrap').show();
@@ -67,6 +104,39 @@
 	}
 	
 </script>
+
+<div class="modal fade" id="addBulk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title header_event_email" id="largeModalLabel" style="opacity:0.6">Insert Bulk Data</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalBodyEvent">
+				<form id="addBulkDataForm" action="" method="POST">
+					<div class="row">
+						<div class="col-md-12">     
+							<div class="form-group form-alert" id="lat-valid">
+								<label class="form-label" >File .xlsx/.xls/.csv</label>
+								<input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" class="" id="file_bulk" name="file_bulk"/>
+							</div>
+						</div>
+					</div>
+					<small>
+						*Make sure your data structure look like the template<br>
+						or you can download the tamplate <a href="/excel_guest_data/guest_data_structure_template.xlsx">here</a>
+					</small>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-outline-danger" type="button" data-dismiss="modal">Cancel</button>
+				<button class="btn btn-outline-primary" type="button" onclick="add_bulk()">Insert</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
 	
 <div class="modal fade" id="addGuest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-md" role="document">

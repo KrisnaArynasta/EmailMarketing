@@ -57,6 +57,17 @@ class AdminModel extends CI_Model {
 		return $query; 
 	}
 	
+	//GET SEMUA DATA QUESTIONNAIRE
+	public function get_questionnaire_all(){
+		$this->db->select('*, COUNT(sq.questionnaire_id) AS send_count, SUM(sq.questionnaire_fill_status) AS count_responnd ');
+		$this->db->from('tbl_questionnaire qn');
+		$this->db->join('tbl_send_questionnaire sq','qn.questionnaire_id = sq.questionnaire_id','left');
+		$this->db->join('tbl_user u','qn.user_id=u.user_id');
+		$this->db->group_by('qn.questionnaire_id');
+		$query = $this->db->get()->result();
+		return $query; 
+	}
+	
 	//GETS DETAIL DATA USER
 	public function get_user_detail($id){
 		$this->db->select('*');

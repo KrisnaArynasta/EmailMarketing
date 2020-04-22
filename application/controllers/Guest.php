@@ -7,6 +7,8 @@ class Guest extends CI_Controller {
 		$this->load->helper(array('form', 'url'));
 		$this->load->Model('GuestModel');
 		$this->load->library('session');
+		$this->load->library('upload');
+		$this->load->helper("file");
     }
 	
 	public function index(){
@@ -83,7 +85,64 @@ class Guest extends CI_Controller {
 		);	 
 		$this->GuestModel->guest_active_status($id,$data); 
 		echo "success";
-	}	
+	}
+
+	public function add_bulk(){
+		if($this->session->userdata('login_status')!=="login"){
+			redirect(base_url(),'location');
+		}
+		
+        // Load plugin PHPExcel nya
+        include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+	
+        $config['upload_path'] 		= './excel_guest_data/';
+        $config['allowed_types'] 	= 'xlsx|xls|csv';
+        //$config['max_size'] 		= '10000';
+        $config['file_name']  	 	= 'GuestData_'.$this->session->userdata('user_id').'_'.date("Ymdhis").'.xlsx';
+
+        $this->load->library('upload');
+		$this->upload->initialize($config);
+		
+        if (!$this->upload->do_upload('file_bulk')) {
+				$error = $this->upload->display_errors();
+				echo $error;
+				echo $this->input->post('file_bulk');
+				//echo "empty file";	
+        } else {
+
+            $data_upload = $this->upload->data();
+
+            $excelreader       = new PHPExcel_Reader_Excel2007();
+            $loadexcel         = $excelreader->load('excel_guest_data/'.$data_upload['file_name']); // Load file yang telah diupload ke folder excel
+            $sheet             = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+
+            $numrow = 1;
+            foreach($sheet as $row){
+				if($numrow > 1){
+					$data= array(
+						"guest_user_id" 		=> $row['A'],
+						"guest_name"     		=> $row['B'],
+						"guest_email"     		=> $row['C'],
+						"guest_country"      	=> $row['D'],
+						"user_id"      			=> $this->session->userdata('user_id'),
+						"guest_active_status"	=> 1,
+						"guest_insert_date"		=> date("Y-m-d"),
+						"guest_last_update"		=> date("Y-m-d")
+					);
+					$this->GuestModel->save_guest($data);
+				}
+				
+                $numrow++;
+            }
+            
+			//delete file from server
+            unlink(realpath('excel_guest_data/'.$data_upload['file_name']));
+
+            //upload success
+            echo "success";
+
+        }
+    }	
 
 }
 

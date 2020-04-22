@@ -96,6 +96,57 @@
 			$emails['data']=$this->UserModel->email_account($id);
 			$this->load->view('user/email_account',$emails);
 		}
+
+		public function save_local_email(){
+			if($this->session->userdata('login_status')!=="login"){
+				redirect(base_url(),'location');
+			}
+			
+			//include_once __DIR__.'/xmlapi-php-master/xmlapi.php';
+			include_once (APPPATH . 'xmlapi-php-master/xmlapi.php');
+			
+
+			$ip = 'krisnaarynasta.com'; // nama domain atau ip cpanel
+			$account = "krisnaar"; // nama user cpanel
+			$domain = "krisnaarynasta.com"; // domain email setelah @
+			$account_pass = "wh0sy0urdaddy?"; // passwrod cpanel
+			$new_email = $this->input->post('local_email'); //nama user email
+			$email_password ='wh0sy0urdaddy?'; //nama user email
+
+			$xmlapi = new xmlapi($ip);
+			$xmlapi->password_auth($account, $account_pass);
+			$xmlapi->set_output('json');
+			$xmlapi->set_port('2083'); // Need to Change.
+			$xmlapi->set_debug(1);
+
+			$results = json_decode($xmlapi->api2_query("serverusername", "Email", "addpop", 
+														array('domain' => $domain, 
+																'email' => $new_email, 
+																'password' => $email_password, 
+																'quota' => 'unlimited')
+														), true);
+			// JIKA EMAIL AKUN D CPANEL UDH D BUAT													
+			if($results['cpanelresult']['data'][0]['result']){
+				//DATA YANG DIINSERT KE TABEL EMAIL SENDER
+				$data = array(
+						  "user_id" 					=> $this->session->userdata('user_id'),
+						  "email" 						=> $this->input->post('local_email').'@'.$domain,
+						  "password" 					=> $email_password,
+						  "inbox_host"					=> '{mail.krisnaarynasta.com:993/imap/ssl/novalidate-cert}INBOX',
+						  "sender_host"					=> 'ssl://mail.krisnaarynasta.com',
+						  "limit_email"					=> '100'
+						);	
+				
+				
+				
+				$this->UserModel->save_email_account($data);
+				echo "success";
+			} else {
+				echo "Error creating email account:\n".$results['cpanelresult']['data'][0]['reason'];
+				//echo "Error";
+			}
+			
+		}	
 		
 		public function save_email_account(){
 			if($this->session->userdata('login_status')!=="login"){

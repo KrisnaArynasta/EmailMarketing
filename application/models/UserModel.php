@@ -72,7 +72,17 @@ class UserModel extends CI_Model {
 			}
 		// CEK KLO EMAILNYA UDH ADA BLM, KLO BLM:			
 		}else{	
-			$data = array('email' => $email);
+			
+			//Build API dan Secret Key
+			$API = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU1234567890"),0,15);
+			$API = date('hisYmd').$API;
+			$secret = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU1234567890!@#$%^&*)("),0,50);
+		
+			$data = array(
+							'email' => $email,
+							'API_key' => $API,
+							'secret_key' => $secret
+					);
 			
 			if($this->db->insert('tbl_user', $data)){
 				//BUAT SELECT YG TADI DI INSERT

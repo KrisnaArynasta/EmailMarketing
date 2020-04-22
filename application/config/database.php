@@ -75,10 +75,17 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+	
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
 	'database' => 'db_crm',
+	
+	// 'hostname' => 'krisnaarynasta.com',
+	// 'username' => 'krisnaar_admin',
+	// 'password' => 'wh0sy0urdaddy?',
+	// 'database' => 'krisnaar_db',
+	
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

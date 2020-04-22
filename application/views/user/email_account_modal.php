@@ -1,4 +1,26 @@
 <script>	
+
+	function save_local_email(){
+	  
+       $.ajax({
+        type: "POST", 
+        url: "<?php echo base_url(); ?>"+"Account/save_local_email",
+        datatype : "json", 
+        data: $("#addEmailLocalForm").serialize(), 
+        success: function(data) {
+			if(data=="success"){
+				swal({title:"Local Email Registered", text:"successfully register a local email", type:"success"},
+				function(){ 
+					location.reload(); 
+				});
+				$('.confirm').addClass('sweet-alert-success');
+			}else{
+				swal({title:"Failed!", text:"Failed to register a new local email", type:"error"});
+			}
+		   }
+		 });
+	}
+
 	function save_email_account(){
 		//$('#wait').show();
 		//$('#loading-wrap').show();
@@ -69,11 +91,42 @@
 	
 </script>
 	
+<div class="modal fade" id="createLocalEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title header_event_email" id="largeModalLabel" style="opacity:0.6">Create Local Email</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalBodyEvent">
+				<form id="addEmailLocalForm" action="" method="POST">
+					<div class="row">
+						<div class="col-md-12">     
+							<div class="input-group">
+								<input id="local_email" name="local_email" type="text" class="form-control" size="64" maxlength="64" placeholder="Enter your username" email-full-length="254" required="required">
+								<span id="" class="p-2" style="background-color: #eee;border: 1px solid #ccc;font-size:14.5px" title="@krisnaarynasta.com">
+									<span class="text-truncate domain-text">@krisnaarynasta.com</span>
+								</span>
+							</div>
+						</div>	
+					</div>	
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-outline-danger" type="button" data-dismiss="modal">Discard</button>
+				<button class="btn btn-outline-primary" type="button" onclick="save_local_email()">Save</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>	
+	
 <div class="modal fade" id="createEmailAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2 class="modal-title header_event_email" id="largeModalLabel" style="opacity:0.6">Create Email Account</h2>
+				<h2 class="modal-title header_event_email" id="largeModalLabel" style="opacity:0.6">Register Email Account</h2>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -83,13 +136,13 @@
 					<div class="row">
 						<div class="col-md-12">     
 							<div class="form-group form-alert" id="lat-valid">
-								<label class="form-label" >Email</label>
+								<label class="form-label" >Your Email</label>
 								<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="account_email" name="account_email" placeholder="e.g info@sweethotel.com" onchange="" onfocusout="">
 							</div>
 						</div>
 						<div class="col-md-12">     
 							<div class="form-group form-alert" id="lat-valid">
-								<label class="form-label" >Password</label>
+								<label class="form-label" >Your Password</label>
 								<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="account_password" name="account_password" placeholder="type your email password" onchange="" onfocusout="">
 							</div>
 						</div>
@@ -108,11 +161,17 @@
 						<div class="col-md-12">     
 							<div class="form-group form-alert" id="lat-valid">
 								<label class="form-label" >Email Sending Limit</label>
-								<input type="number" style="margin-right:5px;" class="col-md-4 form-control empty-validator" id="sending_limit" name="sending_limit" placeholder="e.g 250" onchange="" onfocusout="">
+								<input type="number" style="margin-right:5px;" class="col-md-4 form-control empty-validator" id="sending_limit" name="sending_limit" placeholder="e.g 250" onchange="" onfocusout=""><small>*See your limit sending email using SMTP.</small>
 							</div>
 						</div>	
 					</div>	
-				
+				    <small>*Note for gmail account :
+						<ul>
+							<li>login to your gmail account and Enable imap on the seting menu.</li>
+							<li>Non-activate less secure apps <a href="https://www.google.com/settings/security/lesssecureapps">here.</a></li>
+							<li>Go to: <a href="https://accounts.google.com/b/0/DisplayUnlockCaptcha">https://accounts.google.com/b/0/DisplayUnlockCaptcha</a> and enable access.</li>
+						</ul>
+					</small>	
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-outline-danger" type="button" data-dismiss="modal">Discard</button>
@@ -140,13 +199,13 @@
 					<div class="row">
 						<div class="col-md-12">     
 							<div class="form-group form-alert" id="lat-valid">
-								<label class="form-label" >Email</label>
+								<label class="form-label" >Your Email</label>
 								<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="edit_account_email" name="edit_account_email" placeholder="e.g info@sweethotel.com" onchange="" onfocusout="">
 							</div>
 						</div>
 						<div class="col-md-12">     
 							<div class="form-group form-alert" id="lat-valid">
-								<label class="form-label" >Password</label>
+								<label class="form-label" >Your Password</label>
 								<input type="text" style="margin-right:5px;" class="form-control empty-validator" id="edit_account_password" name="edit_account_password" placeholder="type your email password" onchange="" onfocusout="">
 							</div>
 						</div>
